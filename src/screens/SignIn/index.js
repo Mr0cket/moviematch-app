@@ -5,9 +5,7 @@ export default function SignIn() {
   // console.log("systemTheme:", systemTheme);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  /* useEffect(() => {
-    AsyncStorage.getItem("token").then();
-  }, [input]); */
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login Page</Text>
