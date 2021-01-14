@@ -1,12 +1,11 @@
 import axios from "axios";
-import { selectToken } from "./selectors";
+import apiUrl from "../../config/constants";
 import {
   appLoading,
   appDoneLoading,
   showMessageWithTimeout,
   setMessage,
 } from "../appState/actions";
-const apiUrl = "http://localhost:4000";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
@@ -77,10 +76,9 @@ export const login = (email, password) => {
   };
 };
 
-export const getUserWithStoredToken = () => {
+export const getUserWithStoredToken = (token) => {
   return async (dispatch, getState) => {
     // get token from the state
-    const token = selectToken(getState());
 
     // if we have no token, stop
     if (token === null) return;
@@ -94,9 +92,11 @@ export const getUserWithStoredToken = () => {
       });
 
       // token is still valid
-      dispatch(tokenStillValid(response.data));
+      dispatch(tokenStillValid({ ...response.data, token }));
       dispatch(appDoneLoading());
     } catch (error) {
+      console.log("got here");
+
       if (error.response) {
         console.log(error.response.data.message);
         if (error.response.data.message === "account blocked")
