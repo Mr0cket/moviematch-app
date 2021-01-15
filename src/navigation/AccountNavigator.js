@@ -2,14 +2,16 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import React from "react";
 
 // screens
-import Party from "../screens/Party";
+import MyParty from "../screens/MyParty";
+import MyAccount from "../screens/MyAccount";
 
 const Account = createMaterialTopTabNavigator();
 
 export default function AccountNavigator() {
   return (
     <Account.Navigator>
-      <Account.Screen name="Party" component={Party} />
+      <Account.Screen name="My Account" component={MyAccount} />
+      <Account.Screen name="My Party" component={MyParty} />
     </Account.Navigator>
   );
 }
