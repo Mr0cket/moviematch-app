@@ -1,28 +1,22 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { selectToken } from "../store/user/selectors";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserWithStoredToken } from "../store/user/actions";
 
 export default function useToken() {
   const dispatch = useDispatch();
-  let token = useSelector(selectToken);
+  const token = useSelector(selectToken);
   const getToken = async () => {
-    await AsyncStorage.getItem("token", (error, result) => {
-      console.log(
-        `[asyncStorage]: ${
-          error || !result
-            ? `error retrieving token: ${error ? error : "incorrect key"}`
-            : `token retrieved: ${result}`
-        }`
-      );
-
-      if (result) {
-        dispatch(getUserWithStoredToken(result));
-        token = result;
-      }
-    });
+    const cachedToken = await AsyncStorage.getItem("token");
+    console.log("cachedToken:", cachedToken);
+    if (cachedToken) {
+      dispatch(getUserWithStoredToken(cachedToken));
+    }
   };
-  getToken();
+  useEffect(() => {
+    if (!token) getToken();
+  }, [getToken]);
 
   return token;
 }
