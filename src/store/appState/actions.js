@@ -5,6 +5,7 @@ export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 
 export const appLoading = (calledBy) => ({ type: APP_LOADING, payload: calledBy });
 export const appDoneLoading = () => ({ type: APP_DONE_LOADING });
+
 export const clearMessage = () => ({ type: CLEAR_MESSAGE });
 
 export const setMessage = (variant, dismissable, text) => {

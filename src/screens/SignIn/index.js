@@ -1,22 +1,30 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-export default function SignIn() {
+import { useDispatch } from "react-redux";
+import { login } from "../../store/user/actions";
+import Button from "../../components/Button";
+export default function SignIn({ navigation }) {
   // console.log("systemTheme:", systemTheme);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Page</Text>
       <TextInput onChangeText={setEmail} style={styles.input} />
-      <TextInput onChangeText={setPassword} style={styles.input} />
-      <TouchableOpacity onPress={() => console.log("login")} style={styles.button}>
-        <Text style={styles.buttonText}>login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => console.log("signup")} style={styles.button}>
-        <Text style={styles.buttonText}>signUp</Text>
-      </TouchableOpacity>
+      <TextInput secureTextEntry={true} onChangeText={setPassword} style={styles.input} />
+      <Button
+        text="login"
+        onPress={() => dispatch(login(email, password))}
+        style={{ backgroundColor: "rgb(245, 201, 72)" }}
+      />
+
+      <Button
+        text="Sign Up"
+        onPress={() => navigation.navigate("SignUp")}
+        style={{ backgroundColor: "rgb(245, 201, 72)" }}
+      ></Button>
     </View>
   );
 }
@@ -24,7 +32,6 @@ export default function SignIn() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#d4d4f7",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -35,19 +42,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 15,
     paddingLeft: 10,
-  },
-  button: {
-    marginTop: 40,
-    justifyContent: "center",
-    backgroundColor: "rgb(245, 201, 72)",
-    width: 150,
-    height: 50,
-    borderRadius: 20,
-    alignItems: "center",
-  },
-  buttonText: {
-    fontSize: 14,
-    color: "#2e78b7",
   },
   title: {
     fontSize: 26,

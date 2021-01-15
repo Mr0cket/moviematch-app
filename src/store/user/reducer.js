@@ -10,6 +10,8 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
+      console.log("got to LOGIN_SUCCESS");
+      console.log("token:", action.payload.token);
       AsyncStorage.setItem("token", action.payload.token);
       return { ...state, ...action.payload };
 

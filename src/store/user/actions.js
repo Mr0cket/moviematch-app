@@ -1,5 +1,5 @@
 import axios from "axios";
-import apiUrl from "../../config/constants";
+import { apiUrl } from "../../config/constants";
 import {
   appLoading,
   appDoneLoading,
@@ -50,30 +50,27 @@ export const signUp = (name, email, password) => {
   };
 };
 
-export const login = (email, password) => {
-  return async (dispatch, getState) => {
-    dispatch(appLoading("user"));
-    try {
-      const response = await axios.post(`${apiUrl}/login`, {
-        email,
-        password,
-      });
-
-      dispatch(loginSuccess(response.data));
-      dispatch(showMessageWithTimeout("success", false, "welcome back!", 1500));
-      dispatch(appDoneLoading());
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.message);
-        if (error.response.data.message === "account blocked")
-          dispatch(setMessage("danger", true, "Account is Blocked. Please contact the retaurant"));
-      } else {
-        console.log(error.message);
-        dispatch(setMessage("danger", true, error.message));
-      }
-      dispatch(appDoneLoading());
+export const login = (email, password) => async (dispatch, getState) => {
+  dispatch(appLoading("user"));
+  try {
+    const response = await axios.post(`${apiUrl}/login`, {
+      email,
+      password,
+    });
+    dispatch(loginSuccess(response.data));
+    dispatch(showMessageWithTimeout("success", false, "welcome back!", 1500));
+    dispatch(appDoneLoading());
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data.message);
+      if (error.response.data.message === "account blocked")
+        dispatch(setMessage("danger", true, "Account is Blocked. Please contact the retaurant"));
+    } else {
+      console.log(error.message);
+      dispatch(setMessage("danger", true, error.message));
     }
-  };
+    dispatch(appDoneLoading());
+  }
 };
 
 export const getUserWithStoredToken = (token) => {
@@ -81,7 +78,7 @@ export const getUserWithStoredToken = (token) => {
     // get token from the state
 
     // if we have no token, stop
-    if (token === null) return;
+    if (!token) return;
 
     dispatch(appLoading("user"));
     try {
