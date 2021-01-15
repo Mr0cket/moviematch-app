@@ -1,11 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useReduxDevToolsExtension } from "@react-navigation/devtools";
-import { selectToken } from "../store/user/selectors";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserWithStoredToken } from "../store/user/actions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSelector } from "react-redux";
 
 // screens
 import MainTabsNavigator from "./MainTabs";
@@ -14,18 +11,18 @@ import SignInScreen from "../screens/SignIn";
 import SignUpScreen from "../screens/SignUp";
 import NotFoundScreen from "../screens/NotFound";
 import useToken from "../hooks/useToken";
+import { appLoading } from "../store/appState/actions";
 
 // create navigator
 const RootStack = createStackNavigator();
 
-export default function Navigation({ systemTheme }) {
+export default function Navigation() {
   const userToken = useToken();
-  console.log("userToken:", userToken);
-
   const navigationRef = useRef();
   // theme={systemTheme === "dark" ? DarkTheme : DefaultTheme}
   useReduxDevToolsExtension(navigationRef);
 
+  // get AppState from store
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator>
