@@ -1,6 +1,8 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { initSocket } from "../store/socket";
 
 // Tab Icons
 import { FontAwesome, Ionicons, MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
@@ -11,53 +13,55 @@ import AccountNavigator from "./AccountNavigator";
 
 const MainTabs = createMaterialTopTabNavigator();
 
-export default function MainTabsNavigator() {
+export default function MainTabsNavigator({ userToken }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // send socket the token to show what user this is.
+    // socket then gets the user from database.
+    initSocket(userToken, dispatch);
+  }, []);
+
+  /* Navigator Props 
+  showLabel={true/false}
+  tabBarBadge
+  swipeEnabled={true/false} => behaviour when swiping the tab left/right 
+  */
   return (
     <MainTabs.Navigator
       initialRouteName="Discover"
-      tabBarOptions={{ activeTintColor: "blue", inactiveTintColor: "black", showIcon: true }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          if (route.name === "Discover") {
-            return focused ? (
-              <FontAwesome name="search" size={24} color="black" />
-            ) : (
-              <AntDesign name="search1" size={24} color="black" />
-            );
-          }
-          if (route.name === "Account") {
-            return focused ? (
+      swipeEnabled={true}
+      tabBarOptions={{
+        activeTintColor: "blue",
+        inactiveTintColor: "black",
+        showIcon: true,
+        showLabel: false,
+      }}
+      // screenOptions={{}}
+    >
+      <MainTabs.Screen
+        name="Account"
+        component={AccountNavigator}
+        options={{
+          tabBarIcon: ({ focused, color }) =>
+            focused ? (
               <Ionicons name="person-circle-sharp" size={24} color="black" />
             ) : (
               <Ionicons name="person-circle-outline" size={24} color="black" />
-            );
-          }
-        },
-      })}
-    >
-      <MainTabs.Screen name="Account" component={AccountNavigator} />
-      <MainTabs.Screen name="Discover" component={DiscoverMovies} />
+            ),
+        }}
+      />
+      <MainTabs.Screen
+        name="Discover"
+        component={DiscoverMovies}
+        options={{
+          tabBarIcon: ({ focused, color }) =>
+            focused ? (
+              <FontAwesome name="search" size={24} color="black" />
+            ) : (
+              <AntDesign name="search1" size={24} color="black" />
+            ),
+        }}
+      />
     </MainTabs.Navigator>
   );
 }
-/* function TabBarIcon(props) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-} */
-
-/*         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }} */
-/* function TabBarIcon({ name, color }) {
-  console.log("props:", props);
-  return <MaterialCommunityIcons size={24} name={name} color={color} />;
-} */
-
-/* function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-} */
-
-/* {
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="movie-search-outline" color={color} />
-          ),
-        } */
