@@ -25,7 +25,7 @@ export default function Navigation() {
   // get AppState from store
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator>
+      <RootStack.Navigator /* headerMode="none"|"float"|"screen" */>
         {!userToken ? (
           <>
             <RootStack.Screen
@@ -45,8 +45,15 @@ export default function Navigation() {
           </>
         ) : (
           <>
-            <RootStack.Screen name="Main" component={MainTabsNavigator} />
-            <RootStack.Screen name="notificationModal" component={Modal} />
+            {/* https://reactnavigation.org/docs/screen#children */}
+            <RootStack.Screen name="Main">
+              {(props) => <MainTabsNavigator {...props} userToken={userToken} />}
+            </RootStack.Screen>
+            <RootStack.Screen
+              name="notificationModal"
+              component={Modal}
+              // options={{ headerShown: false }}
+            />
           </>
         )}
         <RootStack.Screen name="NotFound" component={NotFoundScreen} />
