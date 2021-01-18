@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/user/actions";
 import Button from "../../components/Button";
 export default function SignIn({ navigation }) {
@@ -9,11 +9,18 @@ export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const loginError = useSelector((state) => state.appState);
+  console.log("loginError:", loginError);
   return (
     <View style={styles.container}>
-      <TextInput onChangeText={setEmail} style={styles.input} />
-      <TextInput secureTextEntry={true} onChangeText={setPassword} style={styles.input} />
+      <Text>{loginError.error && loginError.error}</Text>
+      <TextInput onChangeText={setEmail} style={styles.input} placeholder="email" />
+      <TextInput
+        secureTextEntry={true}
+        onChangeText={setPassword}
+        style={styles.input}
+        placeholder="password"
+      />
       <Button
         text="login"
         onPress={() => dispatch(login(email, password))}
