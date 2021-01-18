@@ -1,9 +1,33 @@
-const initialState = [];
+import { FETCHED_MOVIES } from "./actions";
+import { DISLIKED_MOVIE, PARTY_LIKED_MOVIE, LIKED_MOVIE } from "../movies/actions";
+import {} from "../movies/actions";
+
+const initialState = {
+  list: [],
+  fetchCount: 0,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCHED_MOVIES: {
-      return [...state, ...action.payload];
+      console.log(`fetch count: ${state.fetchCount}`);
+      return {
+        ...state,
+        list: [...state.list, ...action.payload],
+        fetchCount: state.fetchCount + 1,
+      };
+    }
+    case DISLIKED_MOVIE: {
+      return { ...state, list: [...state.list.slice(1)] };
+    }
+    case LIKED_MOVIE: {
+      return { ...state, list: [...state.list.slice(1)] };
+    }
+    case PARTY_LIKED_MOVIE: {
+      return {
+        ...state,
+        list: [...state.list, ...action.payload],
+      };
     }
     default:
       return state;

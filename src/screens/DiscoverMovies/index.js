@@ -2,16 +2,20 @@ import { View, Text, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { selectTheme } from "../../store/theme/selectors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
-import axios from "axios";
-import { apiUrl } from "../../config/constants";
 import MovieCard from "./MovieCard";
 import Button from "../../components/Button";
+import { fetchStagingList } from "../../store/staging/actions";
+import { movieDisliked, movieliked } from "../../store/movies/actions";
+import { selectStagingList } from "../../store/staging/selectors";
 
 export default function index({ navigation }) {
-  const [screenState, setScreenState] = useState({ status: "idle", data: null, error: null });
-  const [stagingList, setStagingList] = useState([]);
+  const stagingList = useSelector(selectStagingList);
+  const dispatch = useDispatch();
+  const appLoading = useSelector((state) => state.appState.loading);
+  console.log("appLoading:", appLoading);
+  // const [screenState, setScreenState] = useState({ status: "idle", data: null, error: null });
   // FrontEnd request staged list of movies from API
   // BE provides List (checks for movies not in userMovies table)
   // adds any movies that have been liked by other users in the group
@@ -41,17 +45,8 @@ export default function index({ navigation }) {
   3.
   */
   useEffect(() => {
-    const fetchMovieList = async () => {
-      setScreenState({ ...screenState, status: "loading" });
-      try {
-        const response = await axios.get(apiUrl + "/stagedList");
-        setScreenState({ status: "success", data: response.data });
-      } catch (error) {
-        console.log(error.message);
-        setScreenState({ ...screenState, error });
-      }
-    };
-    fetchMovieList();
+    // initial list request
+    if (stagingList.length < 1) dispatch(fetchStagingList());
   }, []);
 
   const LoadingCard = styled.View`
@@ -66,48 +61,50 @@ export default function index({ navigation }) {
     flex-direction: row;
   `;
 
-  const handleLike = () => {
+  const handleLike = (movie) => {
     console.log("movie liked, dispatch action");
-    // send webSocket message to backend: liked movieId
+    // send webSocket message to backend: liked movie
     // remove item from the staging list
     // render the next Image?
     // some animations??
 
     // temporary (super hacky) way:
-    const arr = screenState.data;
-    const likedMovie = arr.shift();
-    setScreenState({ ...screenState, data: arr });
-    if (screenState.data.length < 3) {
+    dispatch(movieliked(movie));
+    if (stagingList.length < 3) {
       console.log("fetch more movies");
+      dispatch(fetchStagingList());
     }
   };
 
-  const handleDislike = () => {
+  const handleDislike = (movie) => {
     console.log("movie disliked, dispatch action");
     // dispatch redux action
-    // send webSocket message to backend: disLiked movieId
+    // send webSocket message to backend: disLiked movie
     // other stuff??
     // temporary (super hacky) way:
-    const arr = screenState.data;
-    const dislikedMovie = arr.shift();
-    setScreenState({ ...screenState, data: arr });
+    dispatch(movieDisliked(movie));
+    if (stagingList.length < 3) {
+      console.log("fetch more movies");
+      dispatch(fetchStagingList());
+    }
   };
 
-  if (screenState.status === "success") {
-    const movie1 = screenState.data[0];
+  if (stagingList.length > 1 && !appLoading) {
+    const movie = stagingList[0];
+    // console.log("movie in discoverMovies:", movie);
     return (
       <View style={styles.container}>
-        <MovieCard {...movie1} />
+        <MovieCard {...movie} />
         <ButtonRow>
           <Button
             text="dislike "
             style={{ backgroundColor: "rgb(244, 67, 54)" }}
-            onPress={handleDislike}
+            onPress={() => handleDislike(movie)}
           />
           <Button
             text="like "
             style={{ backgroundColor: "rgb(76, 175, 80)" }}
-            onPress={handleLike}
+            onPress={() => handleLike(movie)}
           />
         </ButtonRow>
       </View>
