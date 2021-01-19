@@ -48,7 +48,7 @@ export default function MovieCard({ posterUrl, overview, title, rating, releaseD
     /* align-self: flex-start; */
     margin-top: ${marginTop};
   `;
-  console.log("overview length:", overview.length);
+  // console.log("overview length:", overview.length);
   return (
     <MovieCard>
       <MoviePoster
