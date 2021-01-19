@@ -5,11 +5,19 @@ import { useDispatch } from "react-redux";
 import { initSocket } from "../store/socket";
 
 // Tab Icons
-import { FontAwesome, Ionicons, MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  AntDesign,
+} from "@expo/vector-icons";
 
 // screens / sub-Navigators
 import DiscoverMovies from "../screens/DiscoverMovies";
 import AccountNavigator from "./AccountNavigator";
+import Matches from "../screens/Matches";
+import LikedMovies from "../screens/LikedMovies";
 
 const MainTabs = createMaterialTopTabNavigator();
 
@@ -59,6 +67,30 @@ export default function MainTabsNavigator({ userToken }) {
               <FontAwesome name="search" size={24} color="black" />
             ) : (
               <AntDesign name="search1" size={24} color="black" />
+            ),
+        }}
+      />
+      <MainTabs.Screen
+        name="Matches"
+        component={Matches}
+        options={{
+          tabBarIcon: ({ focused, color }) =>
+            focused ? (
+              <MaterialIcons name="video-library" size={24} color="black" />
+            ) : (
+              <MaterialIcons name="video-library" size={24} color="black" />
+            ),
+        }}
+      />
+      <MainTabs.Screen
+        name="LikedMovies"
+        component={LikedMovies}
+        options={{
+          tabBarIcon: ({ focused, color }) =>
+            focused ? (
+              <MaterialIcons name="video-library" size={24} color="black" />
+            ) : (
+              <MaterialIcons name="video-library" size={24} color="black" />
             ),
         }}
       />
