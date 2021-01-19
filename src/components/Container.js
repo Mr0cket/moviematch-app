@@ -11,7 +11,7 @@ export default function Container({ children }) {
   return (
     <View style={styles.container}>
       <MessageBox>
-        <MessageText>{message && message}</MessageText>
+        <MessageText>{message && message.text}</MessageText>
       </MessageBox>
       {children}
     </View>
