@@ -10,9 +10,7 @@ export default function Container({ children }) {
   const MessageText = styled.Text``;
   return (
     <View style={styles.container}>
-      <MessageBox>
-        <MessageText>{message && message.text}</MessageText>
-      </MessageBox>
+      <MessageBox>{/* <MessageText>{message && message.text}</MessageText> */}</MessageBox>
       {children}
     </View>
   );
