@@ -8,12 +8,12 @@ export const newStagingList = (movieList) => ({
   payload: movieList,
 });
 
-export const fetchStagingList = () => async (dispatch, getState) => {
+export const fetchStagingList = (initialLoad) => async (dispatch, getState) => {
   // get user token
   const { token } = getState().user;
   const page = getState().staging.fetchCount;
   try {
-    dispatch(appLoading("staging"));
+    initialLoad && dispatch(appLoading("staging"));
     const response = await axios.get(`${apiUrl}/stagingList?page=${page}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ export const fetchStagingList = () => async (dispatch, getState) => {
     });
     const list = response.data;
     dispatch(newStagingList(list));
-    dispatch(appDoneLoading());
+    initialLoad && dispatch(appDoneLoading());
   } catch (error) {
     console.log(error);
   }

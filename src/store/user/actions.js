@@ -5,6 +5,7 @@ import {
   appDoneLoading,
   showMessageWithTimeout,
   setMessage,
+  ERROR,
 } from "../appState/actions";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
@@ -16,6 +17,10 @@ const loginSuccess = (userWithToken) => {
     payload: userWithToken,
   };
 };
+const loginError = (error) => ({
+  type: ERROR,
+  payload: error,
+});
 
 const tokenStillValid = (userWithoutToken) => ({
   type: TOKEN_STILL_VALID,
@@ -40,10 +45,12 @@ export const signUp = (name, email, password) => {
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message);
-        dispatch(setMessage("danger", true, error.response.data.message));
+        // dispatch(setMessage("danger", true, error.response.data.message));
       } else {
         console.log(error.message);
-        dispatch(setMessage("danger", true, error.message));
+        loginError(error.message);
+
+        // dispatch(setMessage("danger", true, error.message));
       }
       dispatch(appDoneLoading());
     }
@@ -62,12 +69,15 @@ export const login = (email, password) => async (dispatch, getState) => {
     dispatch(appDoneLoading());
   } catch (error) {
     if (error.response) {
-      console.log(error.response.data.message);
-      if (error.response.data.message === "account blocked")
-        dispatch(setMessage("danger", true, "Account is Blocked. Please contact the retaurant"));
+      console.log("here", error.response.data.message);
+      dispatch(loginError(error.response.data.message));
+      // if (error.response.data.message === "account blocked")
+      // dispatch(setMessage("danger", true, "Account is Blocked. Please contact the retaurant"));
     } else {
       console.log(error.message);
-      dispatch(setMessage("danger", true, error.message));
+      dispatch(loginError(error.message));
+
+      // dispatch(setMessage("danger", true, error.message));
     }
     dispatch(appDoneLoading());
   }
@@ -107,4 +117,23 @@ export const getUserWithStoredToken = (token) => {
       dispatch(appDoneLoading());
     }
   };
+};
+
+export const inviteFriend = (email) => async (dispatch, getState) => {
+  const token = getState().user.token;
+  console.log("email:", email);
+  try {
+    const response = await axios.post(
+      `${apiUrl}/party/invite`,
+      { email: email },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log("got here");
+    console.log("response:", response);
+    console.log(response.data.message);
+  } catch (error) {
+    console.log(error.message);
+  }
 };
