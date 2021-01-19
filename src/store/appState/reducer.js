@@ -1,7 +1,9 @@
-import { APP_LOADING, APP_DONE_LOADING } from "./actions";
+import { APP_LOADING, APP_DONE_LOADING, ERROR } from "./actions";
 
 const initialState = {
   loading: false,
+  error: null,
+  calledBy: null,
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +14,9 @@ export default (state = initialState, action) => {
     case APP_DONE_LOADING:
       return { ...state, loading: false, calledBy: null };
 
+    case ERROR: {
+      return { ...state, error: action.payload };
+    }
     default:
       return state;
   }

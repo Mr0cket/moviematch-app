@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../store/user/actions";
-
+import Button from "../../components/Button";
 export default function SignUp() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");

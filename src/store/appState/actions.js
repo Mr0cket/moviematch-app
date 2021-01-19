@@ -2,6 +2,7 @@ export const APP_LOADING = "APP_LOADING";
 export const APP_DONE_LOADING = "APP_DONE_LOADING";
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+export const ERROR = "ERROR";
 
 export const appLoading = (calledBy) => ({ type: APP_LOADING, payload: calledBy });
 export const appDoneLoading = () => ({ type: APP_DONE_LOADING });
