@@ -15,7 +15,10 @@ export const initSocket = (token, dispatch) => {
     socket.emit("user/join", token);
   });
 
-  socket.on("party/movieLiked", (movie) => dispatch(partyLiked(movie)));
+  socket.on("party/movieLiked", (movie) => {
+    console.log(`movie liked by party: ${movie.title}`);
+    dispatch(partyLiked(movie));
+  });
 };
 
 export default socket;
