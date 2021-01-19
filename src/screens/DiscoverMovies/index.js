@@ -46,7 +46,7 @@ export default function index({ navigation }) {
   */
   useEffect(() => {
     // initial list request
-    if (stagingList.length < 1) dispatch(fetchStagingList());
+    if (stagingList.length < 1) dispatch(fetchStagingList(true));
   }, []);
 
   const LoadingCard = styled.View`
@@ -70,9 +70,9 @@ export default function index({ navigation }) {
 
     // temporary (super hacky) way:
     dispatch(movieliked(movie));
-    if (stagingList.length < 3) {
+    if (stagingList.length < 2) {
       console.log("fetch more movies");
-      dispatch(fetchStagingList());
+      dispatch(fetchStagingList(false));
     }
   };
 
@@ -83,13 +83,13 @@ export default function index({ navigation }) {
     // other stuff??
     // temporary (super hacky) way:
     dispatch(movieDisliked(movie));
-    if (stagingList.length < 3) {
+    if (stagingList.length < 2) {
       console.log("fetch more movies");
-      dispatch(fetchStagingList());
+      dispatch(fetchStagingList(false));
     }
   };
 
-  if (stagingList.length > 1 && !appLoading) {
+  if (stagingList.length > 0 && !appLoading) {
     const movie = stagingList[0];
     // console.log("movie in discoverMovies:", movie);
     return (
@@ -115,6 +115,11 @@ export default function index({ navigation }) {
         <LoadingCard>
           <Text>loading...</Text>
         </LoadingCard>
+        <Button
+          text="reload movies "
+          style={{ backgroundColor: "rgb(244, 67, 54)" }}
+          onPress={() => dispatch(fetchStagingList())}
+        />
       </View>
     );
 }
