@@ -5,6 +5,7 @@ const initialState = {
   token: null, //getToken(), // This might be a problem
   name: null,
   email: null,
+  party: [], // list of members in your party
 };
 
 export default (state = initialState, action) => {
