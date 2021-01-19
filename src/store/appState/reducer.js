@@ -1,8 +1,8 @@
-import { APP_LOADING, APP_DONE_LOADING, ERROR } from "./actions";
+import { APP_LOADING, APP_DONE_LOADING, ERROR, SET_MESSAGE, CLEAR_MESSAGE } from "./actions";
 
 const initialState = {
   loading: false,
-  error: null,
+  message: null,
   calledBy: null,
 };
 
@@ -13,10 +13,13 @@ export default (state = initialState, action) => {
 
     case APP_DONE_LOADING:
       return { ...state, loading: false, calledBy: null };
-
     case ERROR: {
-      return { ...state, error: action.payload };
+      return { ...state, message: action.payload };
     }
+    case SET_MESSAGE:
+      return { ...state, message: action.payload };
+    case CLEAR_MESSAGE:
+      return { ...state, message: null };
     default:
       return state;
   }
