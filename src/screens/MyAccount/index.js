@@ -4,15 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 import { logOut } from "../../store/user/actions";
 import Button from "../../components/Button";
+import Container from "../../components/Container";
 export default function MyAccount() {
   const dispatch = useDispatch();
   const accountName = useSelector((state) => state.user.name);
 
-  const Container = styled.View`
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  `;
   return (
     <Container>
       <Button

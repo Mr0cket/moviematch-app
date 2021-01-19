@@ -4,6 +4,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
 import Button from "../../components/Button";
+import Container from "../../components/Container";
 import { inviteFriend } from "../../store/user/actions";
 
 export default function index() {
@@ -15,15 +16,15 @@ export default function index() {
   `;
 
   return (
-    <View>
+    <Container>
       <Title>Invite A Friend</Title>
       <TextInput style={styles.input} onChangeText={setEmail} placeholder="email" />
       <Button
-        text="dislike "
+        text="Invite a Friend "
         style={{ backgroundColor: "rgb(244, 67, 54)" }}
         onPress={() => dispatch(inviteFriend(email))}
       />
-    </View>
+    </Container>
   );
 }
 

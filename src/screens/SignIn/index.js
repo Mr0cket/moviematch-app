@@ -4,16 +4,18 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/user/actions";
 import Button from "../../components/Button";
+import { selectMessage } from "../../store/appState/selectors";
+import Container from "../../components/Container";
 export default function SignIn({ navigation }) {
   // console.log("systemTheme:", systemTheme);
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loginError = useSelector((state) => state.appState);
+  const loginError = useSelector(selectMessage);
   console.log("loginError:", loginError);
   return (
-    <View style={styles.container}>
-      <Text>{loginError.error && loginError.error}</Text>
+    <Container style={styles.container}>
+      <Text>{loginError && loginError}</Text>
       <TextInput onChangeText={setEmail} style={styles.input} placeholder="email" />
       <TextInput
         secureTextEntry={true}
@@ -32,7 +34,7 @@ export default function SignIn({ navigation }) {
         onPress={() => navigation.navigate("SignUp")}
         style={{ backgroundColor: "rgb(245, 201, 72)" }}
       ></Button>
-    </View>
+    </Container>
   );
 }
 

@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import { fetchStagingList } from "../../store/staging/actions";
 import { movieDisliked, movieliked } from "../../store/movies/actions";
 import { selectStagingList } from "../../store/staging/selectors";
+import Container from "../../components/Container";
 
 export default function index({ navigation }) {
   const stagingList = useSelector(selectStagingList);
@@ -93,7 +94,7 @@ export default function index({ navigation }) {
     const movie = stagingList[0];
     // console.log("movie in discoverMovies:", movie);
     return (
-      <View style={styles.container}>
+      <Container>
         <MovieCard {...movie} />
         <ButtonRow>
           <Button
@@ -107,11 +108,11 @@ export default function index({ navigation }) {
             onPress={() => handleLike(movie)}
           />
         </ButtonRow>
-      </View>
+      </Container>
     );
   } else
     return (
-      <View style={styles.container}>
+      <Container>
         <LoadingCard>
           <Text>loading...</Text>
         </LoadingCard>
@@ -120,15 +121,6 @@ export default function index({ navigation }) {
           style={{ backgroundColor: "rgb(244, 67, 54)" }}
           onPress={() => dispatch(fetchStagingList())}
         />
-      </View>
+      </Container>
     );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: "#d4d4f7",
-    alignItems: "center",
-    overflow: "scroll",
-  },
-});

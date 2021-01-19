@@ -4,6 +4,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../store/user/actions";
 import Button from "../../components/Button";
+import Container from "../../components/Container";
 export default function SignUp() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -11,7 +12,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
 
   return (
-    <View style={styles.container}>
+    <Container style={styles.container}>
       <Text style={styles.title}>Create an account</Text>
       <TextInput placeholder="name" onChangeText={setName} style={styles.input} />
       <TextInput placeholder="email" onChangeText={setEmail} style={styles.input} />
@@ -26,7 +27,7 @@ export default function SignUp() {
         onPress={() => dispatch(signUp(name, email, password))}
         text="Sign Up"
       />
-    </View>
+    </Container>
   );
 }
 const styles = StyleSheet.create({
