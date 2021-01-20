@@ -7,7 +7,7 @@ export default function MovieCard({ posterUrl, overview, title, rating, releaseD
   const MovieCard = styled.View`
     background-color: lightgrey;
     width: 85%;
-    height: 75%;
+    height: 80%;
     border-radius: 20px;
     align-items: center;
     margin-top: ${marginTop};
@@ -16,9 +16,9 @@ export default function MovieCard({ posterUrl, overview, title, rating, releaseD
   // moviePoster default dimensions: 320x250
   const MoviePoster = styled.Image`
     /* background-color: lightblue; */
-    width: 90%;
+    width: 95%;
     border-radius: 20px;
-    height: 50%;
+    height: 60%;
   `;
   const Title = styled.Text`
     font-size: 18px;
@@ -64,7 +64,7 @@ export default function MovieCard({ posterUrl, overview, title, rating, releaseD
         {title} - ({moment(releaseDate).format("YYYY") || "no date"}){" "}
       </Title>
       <Description>
-        {overview && overview.length < 250 ? overview : overview.slice(0, 249) + " ..."}{" "}
+        {overview && overview.length < 150 ? overview : overview.slice(0, 149) + " ..."}{" "}
       </Description>
       <Rating>Rating: {rating} </Rating>
       <GenreBadge style={{ backgroundColor: "grey" }}>{mainGenre || "GenreTag"} </GenreBadge>
