@@ -1,21 +1,18 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { selectTheme } from "../../store/theme/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 import MovieCard from "./MovieCard";
 import Button from "../../components/Button";
 import { fetchStagingList } from "../../store/staging/actions";
-import { movieDisliked, movieliked } from "../../store/movies/actions";
+import { movieDisliked, movieliked } from "../../store/socketActions";
 import { selectStagingList } from "../../store/staging/selectors";
 import Container from "../../components/Container";
 
 export default function index({ navigation }) {
   const stagingList = useSelector(selectStagingList);
   const dispatch = useDispatch();
-  const appLoading = useSelector((state) => state.appState.loading);
-  console.log("appLoading:", appLoading);
   // const [screenState, setScreenState] = useState({ status: "idle", data: null, error: null });
   // FrontEnd request staged list of movies from API
   // BE provides List (checks for movies not in userMovies table)
@@ -68,8 +65,6 @@ export default function index({ navigation }) {
     // remove item from the staging list
     // render the next Image?
     // some animations??
-
-    // temporary (super hacky) way:
     dispatch(movieliked(movie));
     if (stagingList.length < 2) {
       console.log("fetch more movies");
@@ -82,7 +77,6 @@ export default function index({ navigation }) {
     // dispatch redux action
     // send webSocket message to backend: disLiked movie
     // other stuff??
-    // temporary (super hacky) way:
     dispatch(movieDisliked(movie));
     if (stagingList.length < 2) {
       console.log("fetch more movies");
@@ -90,7 +84,7 @@ export default function index({ navigation }) {
     }
   };
 
-  if (stagingList.length > 0 && !appLoading) {
+  if (stagingList.length > 0) {
     const movie = stagingList[0];
     // console.log("movie in discoverMovies:", movie);
     return (
