@@ -2,8 +2,9 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { initSocket } from "../store/socket";
-
+import { initSocket } from "../store/socketActions";
+import Constants from "expo-constants";
+console.log("expo constants:", Constants);
 // Tab Icons
 import {
   FontAwesome,
@@ -26,6 +27,7 @@ export default function MainTabsNavigator({ userToken }) {
   useEffect(() => {
     // send socket the token to show what user this is.
     // socket then gets the user from database.
+    console.log("this was executed");
     initSocket(userToken, dispatch);
   }, []);
 
@@ -44,6 +46,7 @@ export default function MainTabsNavigator({ userToken }) {
         showIcon: true,
         showLabel: false,
       }}
+      style={{ paddingTop: Constants.statusBarHeight }}
       // screenOptions={{}}
     >
       <MainTabs.Screen
@@ -64,21 +67,11 @@ export default function MainTabsNavigator({ userToken }) {
         options={{
           tabBarIcon: ({ focused, color }) =>
             focused ? (
-              <FontAwesome name="search" size={24} color="black" />
+              <AntDesign name="find" size={24} color="black" />
             ) : (
-              <AntDesign name="search1" size={24} color="black" />
-            ),
-        }}
-      />
-      <MainTabs.Screen
-        name="Matches"
-        component={Matches}
-        options={{
-          tabBarIcon: ({ focused, color }) =>
-            focused ? (
-              <MaterialIcons name="video-library" size={24} color="black" />
-            ) : (
-              <MaterialIcons name="video-library" size={24} color="black" />
+              // <MaterialCommunityIcons name="movie-search" size={24} color="black" />
+              <AntDesign name="find" size={24} color="black" />
+              // <MaterialCommunityIcons name="movie-search-outline" size={24} color="black" />
             ),
         }}
       />
@@ -91,6 +84,18 @@ export default function MainTabsNavigator({ userToken }) {
               <MaterialIcons name="video-library" size={24} color="black" />
             ) : (
               <MaterialIcons name="video-library" size={24} color="black" />
+            ),
+        }}
+      />
+      <MainTabs.Screen
+        name="Matches"
+        component={Matches}
+        options={{
+          tabBarIcon: ({ focused, color }) =>
+            focused ? (
+              <MaterialCommunityIcons name="account-group" size={24} color="black" />
+            ) : (
+              <MaterialCommunityIcons name="account-group-outline" size={24} color="black" />
             ),
         }}
       />
