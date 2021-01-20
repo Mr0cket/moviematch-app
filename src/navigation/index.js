@@ -2,16 +2,13 @@ import React, { useRef } from "react";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useReduxDevToolsExtension } from "@react-navigation/devtools";
-import { useSelector } from "react-redux";
 
 // screens
 import MainTabsNavigator from "./MainTabs";
-import Modal from "../screens/Modal";
 import SignInScreen from "../screens/SignIn";
 import SignUpScreen from "../screens/SignUp";
 import NotFoundScreen from "../screens/NotFound";
 import useToken from "../hooks/useToken";
-import { appLoading } from "../store/appState/actions";
 
 // create navigator
 const RootStack = createStackNavigator();
@@ -23,9 +20,10 @@ export default function Navigation() {
   useReduxDevToolsExtension(navigationRef);
 
   // get AppState from store
+  // headerMode="none"|"float"|"screen"
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator /* headerMode="none"|"float"|"screen" */>
+      <RootStack.Navigator headerMode="none">
         {!userToken ? (
           <>
             <RootStack.Screen
@@ -49,11 +47,6 @@ export default function Navigation() {
             <RootStack.Screen name="Main">
               {(props) => <MainTabsNavigator {...props} userToken={userToken} />}
             </RootStack.Screen>
-            <RootStack.Screen
-              name="notificationModal"
-              component={Modal}
-              // options={{ headerShown: false }}
-            />
           </>
         )}
         <RootStack.Screen name="NotFound" component={NotFoundScreen} />
@@ -61,3 +54,9 @@ export default function Navigation() {
     </NavigationContainer>
   );
 }
+
+/*             <RootStack.Screen
+              name="notificationModal"
+              component={Modal}
+              // options={{ headerShown: false }}
+            /> */
