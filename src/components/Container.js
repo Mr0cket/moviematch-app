@@ -1,16 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { selectMessage } from "../store/appState/selectors";
+import { appLoading, selectMessage } from "../store/appState/selectors";
 
-export default function Container({ children }) {
+export default function Container({ children, style }) {
   const message = useSelector(selectMessage);
   const MessageBox = styled.View``;
   const MessageText = styled.Text``;
+  const loading = useSelector(appLoading);
+  if (loading) return <ActivityIndicator />;
+  if (message) console.log(`new app message: ${message.text}`);
   return (
-    <View style={styles.container}>
-      <MessageBox>{/* <MessageText>{message && message.text}</MessageText> */}</MessageBox>
+    <View style={{ ...styles.container, ...style }}>
+      <MessageBox>
+        <MessageText>{message && message.text}</MessageText>
+      </MessageBox>
       {children}
     </View>
   );
@@ -21,9 +26,6 @@ const styles = StyleSheet.create({
     // backgroundColor: "#d4d4f7",
     alignItems: "center",
     overflow: "scroll",
+    // alignContent: "center",
   },
 });
-
-/* flex: 1;
-align-items: "center";
-overflow: "scroll"; */
