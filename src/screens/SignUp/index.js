@@ -1,22 +1,40 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../store/user/actions";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
+import { selectMessage } from "../../store/appState/selectors";
 export default function SignUp() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const message = useSelector(selectMessage);
 
   return (
-    <Container style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>Create an account</Text>
-      <TextInput value={name} placeholder="name" onChangeText={setName} style={styles.input} />
-      <TextInput value={email} placeholder="email" onChangeText={setEmail} style={styles.input} />
+      {message && <Text style={styles.error}>{message.text}</Text>}
       <TextInput
+        autoCompleteType="name"
+        autoCapitalize="words"
+        value={name}
+        placeholder="name"
+        onChangeText={setName}
+        style={styles.input}
+      />
+      <TextInput
+        autoCompleteType="email"
+        autoCapitalize="none"
+        value={email}
+        placeholder="email"
+        onChangeText={setEmail}
+        style={styles.input}
+      />
+      <TextInput
+        autoCompleteType="password"
         placeholder="password"
         secureTextEntry={true}
         onChangeText={setPassword}
@@ -28,7 +46,7 @@ export default function SignUp() {
         onPress={() => dispatch(signUp(name, email, password))}
         text="Sign Up"
       />
-    </Container>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -49,5 +67,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     marginBottom: 100,
+  },
+  error: {
+    color: "#dc3545",
   },
 });
