@@ -5,16 +5,14 @@ import styled from "styled-components/native";
 import MovieCard from "./MovieCard";
 import Button from "../../components/Button";
 import { fetchStagingList } from "../../store/staging/actions";
-import { selectMatchModal } from "../../store/movies/selectors";
 import { movieDisliked, movieliked } from "../../store/socketActions";
 import { selectStagingList } from "../../store/staging/selectors";
 import Container from "../../components/Container";
+import MatchModal from "./MatchModal";
 export default function index({ navigation }) {
   const stagingList = useSelector(selectStagingList);
   const dispatch = useDispatch();
-  // const matchesModal = useSelector(selectMatchModal);
-  const [modalVisible, setModalVisible] = useState(false);
-  console.log("modalVisible:", modalVisible);
+
   useEffect(() => {
     // initial list request
     if (stagingList.length < 1) dispatch(fetchStagingList(true));
@@ -65,23 +63,8 @@ export default function index({ navigation }) {
             style={{ backgroundColor: "rgb(76, 175, 80)" }}
             onPress={() => handleLike(movie)}
           />
-          <Button
-            text="toggle Modal "
-            style={{ backgroundColor: "rgb(76, 175, 80)" }}
-            onPress={() => setModalVisible(!modalVisible)}
-          />
         </ButtonRow>
-
-        <Modal visible={modalVisible} animationType="slide" transparent={true}>
-          <View style={{ backgroundColor: "blue" }}>
-            <Text>Hello</Text>
-          </View>
-          <Button
-            text="toggle Modal "
-            style={{ backgroundColor: "rgb(76, 175, 80)" }}
-            onPress={() => setModalVisible(!modalVisible)}
-          />
-        </Modal>
+        <MatchModal />
       </Container>
     );
   } else
