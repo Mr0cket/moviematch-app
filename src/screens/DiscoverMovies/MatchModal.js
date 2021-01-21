@@ -1,19 +1,17 @@
 import { Modal, View, Text, TouchableHighlight, StyleSheet } from "react-native";
 import React from "react";
 import { clearModal } from "../../store/movies/actions";
-import { selectMatchModal } from "../../store/movies/selectors";
-import { useDispatch, useSelector } from "react-redux";
-export default function MatchModal() {
-  const dispatch = useDispatch();
-  const matchesModal = useSelector(selectMatchModal);
-  const modalVisible = Boolean(matchesModal);
-  const handleClick = () => {
-    console.log("clicked hide button");
-  };
+// import { selectMatchModal } from "../../store/movies/selectors";
+// import { useDispatch, useSelector } from "react-redux";
+export default function MatchModal({ modalMovie }) {
+  // const modalMovie = useSelector(selectMatchModal);
+  const modalVisible = Boolean(modalMovie);
+  const title = modalMovie?.title;
   return (
     <Modal visible={modalVisible} animationType="slide" transparent={true}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
+          <Text style={styles.modalText}>{title}</Text>
           <Text style={styles.modalText}>It's a Match!</Text>
         </View>
       </View>

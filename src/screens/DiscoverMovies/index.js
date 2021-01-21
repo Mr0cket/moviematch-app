@@ -8,11 +8,12 @@ import { fetchStagingList } from "../../store/staging/actions";
 import { movieDisliked, movieliked } from "../../store/socketActions";
 import { selectStagingList } from "../../store/staging/selectors";
 import Container from "../../components/Container";
+import { selectMatchModal } from "../../store/movies/selectors";
 import MatchModal from "./MatchModal";
 export default function index({ navigation }) {
   const stagingList = useSelector(selectStagingList);
   const dispatch = useDispatch();
-
+  const modalMovie = useSelector(selectMatchModal);
   useEffect(() => {
     // initial list request
     if (stagingList.length < 1) dispatch(fetchStagingList(true));
@@ -64,7 +65,7 @@ export default function index({ navigation }) {
             onPress={() => handleLike(movie)}
           />
         </ButtonRow>
-        <MatchModal />
+        {modalMovie && <MatchModal modalMovie={modalMovie} />}
       </Container>
     );
   } else
