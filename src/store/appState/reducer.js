@@ -1,3 +1,4 @@
+import { LOG_OUT } from "../user/actions";
 import { APP_LOADING, APP_DONE_LOADING, ERROR, SET_MESSAGE, CLEAR_MESSAGE } from "./actions";
 
 const initialState = {
@@ -20,6 +21,8 @@ export default (state = initialState, action) => {
       return { ...state, message: action.payload };
     case CLEAR_MESSAGE:
       return { ...state, message: null };
+    case LOG_OUT:
+      return initialState;
     default:
       return state;
   }
