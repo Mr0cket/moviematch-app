@@ -11,6 +11,7 @@ import { apiUrl } from "../../config/constants";
 // initialise socket.io here...?
 
 // noticing a lot of actions which are too similar..
+export const clearModal = () => ({ type: CLEAR_MODAL });
 export const newMatchesList = (matches) => ({
   type: FETCHED_MATCHES,
   payload: matches,
@@ -19,12 +20,12 @@ export const newLikedList = (likedMovies) => ({
   type: FETCHED_LIKED_MOVIES,
   payload: likedMovies,
 });
-export const newMatch = (movie) => {
-  setTimeout(() => dispatch({ type: CLEAR_MODAL }), 2000);
-  return {
+export const newMatch = (movie) => async (dispatch, getState) => {
+  setTimeout(() => dispatch(clearModal()), 3000);
+  dispatch({
     type: NEW_MATCH,
     payload: movie,
-  };
+  });
 };
 
 export const newLiked = (movie) => ({
