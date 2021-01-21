@@ -1,13 +1,14 @@
 export const DISLIKED_MOVIE = "DISLIKED_MOVIE";
 export const LIKED_MOVIE = "LIKED_MOVIE";
-export const PARTY_LIKED_MOVIE = "PARTY_LIKED_MOVIE";
+export const NEW_MATCH = "NEW_MATCH";
+export const CLEAR_MODAL = "CLEAR_MODAL";
+export const NEW_LIKED = "NEW_LIKED";
 export const FETCHED_MATCHES = "FETCHED_MATCHES";
 export const FETCHED_LIKED_MOVIES = "FETCHED_LIKED_MOVIES";
 
 import axios from "axios";
 import { apiUrl } from "../../config/constants";
 // initialise socket.io here...?
-import socket from "../socket";
 
 // noticing a lot of actions which are too similar..
 export const newMatchesList = (matches) => ({
@@ -18,8 +19,16 @@ export const newLikedList = (likedMovies) => ({
   type: FETCHED_LIKED_MOVIES,
   payload: likedMovies,
 });
-export const partyLiked = (movie) => ({
-  type: PARTY_LIKED_MOVIE,
+export const newMatch = (movie) => {
+  setTimeout(() => dispatch({ type: CLEAR_MODAL }), 2000);
+  return {
+    type: NEW_MATCH,
+    payload: movie,
+  };
+};
+
+export const newLiked = (movie) => ({
+  type: NEW_LIKED,
   payload: movie,
 });
 
@@ -29,21 +38,7 @@ export const dislikedMovie = (movieId) => ({
 });
 
 export const likedMovie = (movieId) => {
-  console.log("movieId:", movieId);
   return { type: LIKED_MOVIE, payload: movieId };
-};
-export const movieliked = (movie) => async (dispatch, getState) => {
-  // send socket.io message...?
-  // should initialise socket.io in one place... maybe a separate file?
-  console.log("socketId check:", socket.id);
-  socket.emit("user/likedMovie", movie);
-  dispatch(likedMovie(movie.id));
-};
-
-export const movieDisliked = (movie) => async (dispatch, getState) => {
-  // send socket.io message...?
-  socket.emit("user/dislikedMovie", movie);
-  dispatch(dislikedMovie(movie.id));
 };
 export const sendMovieLiked = () => {};
 
@@ -55,6 +50,7 @@ export const fetchMovieList = (type) => async (dispatch, getState) => {
     const response = await axios.get(`${apiUrl}/movies/${type}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    if (response.data?.message === "user has no party") return;
     dispatch(type === "matches" ? newMatchesList(response.data) : newLikedList(response.data));
   } catch (error) {
     console.log("error fetching Movies", error);
