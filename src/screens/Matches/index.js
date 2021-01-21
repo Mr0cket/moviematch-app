@@ -5,8 +5,9 @@ import Container from "../../components/Container";
 import { fetchMovieList } from "../../store/movies/actions";
 import { selectMatches } from "../../store/movies/selectors";
 import MovieRow from "../../components/MovieRow";
-import styled from "styled-components";
 import { appLoading } from "../../store/appState/selectors";
+import Title from "../../components/Title";
+import SubTitle from "../../components/SubTitle";
 
 export default function Matches() {
   const dispatch = useDispatch();
@@ -17,13 +18,6 @@ export default function Matches() {
     // initial list request
     if (matches.length < 1) dispatch(fetchMovieList("matches"));
   }, []);
-  const Title = styled.Text`
-    font-size: 18px;
-    font-weight: 700;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 10%;
-  `;
 
   // const matchesList = matches.map((movie) => <MovieRow key={movie.id} movie={movie} />);
   return (
@@ -31,8 +25,8 @@ export default function Matches() {
       ListHeaderComponent={<Title>Party Matches</Title>}
       ListEmptyComponent={
         <>
-          <Title>Your Matches list is empty</Title>
-          <Title>Join a party to find matches</Title>
+          <SubTitle>Your Matches list is empty</SubTitle>
+          <SubTitle>Join a party to find matches</SubTitle>
         </>
       }
       data={matches}

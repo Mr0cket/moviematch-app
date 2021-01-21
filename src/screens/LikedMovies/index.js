@@ -6,11 +6,13 @@ import { selectlikedMovies } from "../../store/movies/selectors";
 import MovieRow from "../../components/MovieRow";
 import { appLoading } from "../../store/appState/selectors";
 import Title from "../../components/Title";
+import SubTitle from "../../components/SubTitle";
 
 export default function LikedMovies() {
   const dispatch = useDispatch();
   const likedMovies = useSelector(selectlikedMovies);
   const loading = useSelector(appLoading);
+
   useEffect(() => {
     // initial list request
     if (likedMovies.length < 1) dispatch(fetchMovieList("liked"));
@@ -22,8 +24,8 @@ export default function LikedMovies() {
       ListHeaderComponent={<Title>Liked Movies</Title>}
       ListEmptyComponent={
         <>
-          <Title>Your liked list is empty</Title>
-          <Title>like some movies to add to the list</Title>
+          <SubTitle>Your liked list is empty</SubTitle>
+          <SubTitle>like some movies to add to the list</SubTitle>
         </>
       }
       data={likedMovies}

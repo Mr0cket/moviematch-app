@@ -1,12 +1,6 @@
 import axios from "axios";
 import { apiUrl } from "../../config/constants";
-import {
-  appLoading,
-  appDoneLoading,
-  showMessageWithTimeout,
-  setMessage,
-  ERROR,
-} from "../appState/actions";
+import { appLoading, appDoneLoading, showMessageWithTimeout, ERROR } from "../appState/actions";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
@@ -41,6 +35,11 @@ export const logOut = () => {
 export const signUp = (name, email, password) => {
   return async (dispatch, getState) => {
     dispatch(appLoading("user"));
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    // input validation
+    if (!name) return;
+    if (!email || !emailRegex.test(email))
+      return dispatch(showMessageWithTimeout("danger", true, "please provide valid email"));
     try {
       const response = await axios.post(`${apiUrl}/signup`, {
         name,
@@ -48,12 +47,11 @@ export const signUp = (name, email, password) => {
         password,
       });
       dispatch(loginSuccess(response.data));
-      dispatch(showMessageWithTimeout("success", true, "account created"));
       dispatch(appDoneLoading());
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message);
-        // dispatch(setMessage("danger", true, error.response.data.message));
+        dispatch(showMessageWithTimeout("danger", true, error.response.data.message));
       } else {
         console.log(error.message);
         loginError(error.message);
@@ -73,17 +71,16 @@ export const login = (email, password) => async (dispatch, getState) => {
       password,
     });
     dispatch(loginSuccess(response.data));
-    dispatch(showMessageWithTimeout("success", false, "welcome back!", 1500));
+    // dispatch(showMessageWithTimeout("success", false, "welcome back!", 1000));
     dispatch(appDoneLoading());
   } catch (error) {
     if (error.response) {
-      console.log("here", error.response.data.message);
-      dispatch(loginError(error.response.data.message));
+      dispatch(showMessageWithTimeout("danger", true, error.response.data.message));
       // if (error.response.data.message === "account blocked")
       // dispatch(setMessage("danger", true, "Account is Blocked. Please contact the retaurant"));
     } else {
       console.log(error.message);
-      dispatch(loginError(error.message));
+      dispatch(showMessageWithTimeout("danger", true, error.message));
 
       // dispatch(setMessage("danger", true, error.message));
     }
@@ -114,8 +111,8 @@ export const getUserWithStoredToken = (token) => {
 
       if (error.response) {
         console.log(error.response.data.message);
-        if (error.response.data.message === "account blocked")
-          dispatch(showMessageWithTimeout("danger", true, "Your Account may be blocked...", 2000));
+        // if (error.response.data.message === "account blocked")
+        // dispatch(showMessageWithTimeout("danger", true, "Your Account may be blocked...", 2000));
       } else {
         console.log(error);
       }
@@ -129,7 +126,6 @@ export const getUserWithStoredToken = (token) => {
 
 export const inviteFriend = (email) => async (dispatch, getState) => {
   const token = getState().user.token;
-  console.log("email:", email);
   try {
     const response = await axios.post(
       `${apiUrl}/party/invite`,
@@ -139,7 +135,11 @@ export const inviteFriend = (email) => async (dispatch, getState) => {
       }
     );
     dispatch(addedUserToParty(response.data));
+    dispatch(showMessageWithTimeout("success", false, "user added to party", 2000));
   } catch (error) {
-    console.log(error.message);
+    console.log("error response:", error.response.data);
+    if (error.response)
+      dispatch(showMessageWithTimeout("danger", false, error.response.data.message, 2000));
+    else dispatch(showMessageWithTimeout("danger", false, error.message, 2000));
   }
 };

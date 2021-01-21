@@ -14,13 +14,14 @@ export default function SignUp() {
   return (
     <Container style={styles.container}>
       <Text style={styles.title}>Create an account</Text>
-      <TextInput placeholder="name" onChangeText={setName} style={styles.input} />
-      <TextInput placeholder="email" onChangeText={setEmail} style={styles.input} />
+      <TextInput value={name} placeholder="name" onChangeText={setName} style={styles.input} />
+      <TextInput value={email} placeholder="email" onChangeText={setEmail} style={styles.input} />
       <TextInput
         placeholder="password"
         secureTextEntry={true}
         onChangeText={setPassword}
         style={styles.input}
+        value={password}
       />
       <Button
         style={{ backgroundColor: "rgb(245, 201, 72)" }}

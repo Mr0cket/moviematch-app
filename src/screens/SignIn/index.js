@@ -1,27 +1,28 @@
-import { View, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch, useSelector } from "react-redux";
+import { TextInput } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
 import { login } from "../../store/user/actions";
 import Button from "../../components/Button";
-import { selectMessage } from "../../store/appState/selectors";
 import Container from "../../components/Container";
+import Constants from "expo-constants";
+
 export default function SignIn({ navigation }) {
   // console.log("systemTheme:", systemTheme);
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loginError = useSelector(selectMessage);
+  const statusBarHeight = Constants.statusBarHeight;
   return (
     <Container style={styles.container}>
-      <Text>{loginError && loginError.text}</Text>
       <Text style={styles.title}>Login</Text>
-      <TextInput onChangeText={setEmail} style={styles.input} placeholder="email" />
+      <TextInput value={email} onChangeText={setEmail} style={styles.input} placeholder="email" />
       <TextInput
         secureTextEntry={true}
         onChangeText={setPassword}
         style={styles.input}
         placeholder="password"
+        value={password}
       />
       <Button
         text="login"
@@ -40,6 +41,7 @@ export default function SignIn({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Constants.statusBarHeight,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

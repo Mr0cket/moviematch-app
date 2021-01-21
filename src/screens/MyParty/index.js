@@ -28,11 +28,14 @@ export default function index() {
       <Title>My party</Title>
       {partyList}
       <SubTitle>Invite A Friend</SubTitle>
-      <TextInput style={styles.input} onChangeText={setEmail} placeholder="email" />
+      <TextInput value={email} style={styles.input} onChangeText={setEmail} placeholder="email" />
       <Button
         text="Invite a Friend "
         style={{ backgroundColor: "rgb(244, 67, 54)" }}
-        onPress={() => dispatch(inviteFriend(email))}
+        onPress={() => {
+          dispatch(inviteFriend(email));
+          setEmail("");
+        }}
       />
     </Container>
   );
