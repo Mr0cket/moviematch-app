@@ -30,6 +30,8 @@ export default function LikedMovies() {
       }
       data={likedMovies}
       renderItem={MovieRow}
+      initialNumToRender={4}
+      removeClippedSubviews={true}
       keyExtractor={(item) => item.id.toString()}
       refreshControl={
         <RefreshControl refreshing={loading} onRefresh={() => dispatch(fetchMovieList("liked"))} />
