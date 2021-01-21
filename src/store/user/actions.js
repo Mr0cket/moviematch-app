@@ -107,8 +107,6 @@ export const getUserWithStoredToken = (token) => {
       });
 
       // token is still valid
-      console.log("response check:");
-      console.log(response.data);
       dispatch(tokenStillValid({ ...response.data, token }));
       dispatch(appDoneLoading());
     } catch (error) {
@@ -140,8 +138,6 @@ export const inviteFriend = (email) => async (dispatch, getState) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log("got here");
-    console.log("response:", response.data);
     dispatch(addedUserToParty(response.data));
   } catch (error) {
     console.log(error.message);
