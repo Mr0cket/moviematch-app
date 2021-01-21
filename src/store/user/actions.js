@@ -10,6 +10,8 @@ import {
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
+export const FETCHED_PARTY_MEMBERS = "FETCHED_PARTY_MEMBERS";
+export const NEW_USER_IN_PARTY = "NEW_USER_IN_PARTY";
 
 const loginSuccess = (userWithToken) => {
   return {
@@ -27,7 +29,14 @@ const tokenStillValid = (userWithoutToken) => ({
   payload: userWithoutToken,
 });
 
-export const logOut = () => ({ type: LOG_OUT });
+const addedUserToParty = (newUser) => ({
+  type: NEW_USER_IN_PARTY,
+  payload: newUser,
+});
+
+export const logOut = () => {
+  return { type: LOG_OUT };
+};
 
 export const signUp = (name, email, password) => {
   return async (dispatch, getState) => {
@@ -38,7 +47,6 @@ export const signUp = (name, email, password) => {
         email,
         password,
       });
-
       dispatch(loginSuccess(response.data));
       dispatch(showMessageWithTimeout("success", true, "account created"));
       dispatch(appDoneLoading());
@@ -99,6 +107,8 @@ export const getUserWithStoredToken = (token) => {
       });
 
       // token is still valid
+      console.log("response check:");
+      console.log(response.data);
       dispatch(tokenStillValid({ ...response.data, token }));
       dispatch(appDoneLoading());
     } catch (error) {
@@ -131,8 +141,8 @@ export const inviteFriend = (email) => async (dispatch, getState) => {
       }
     );
     console.log("got here");
-    console.log("response:", response);
-    console.log(response.data.message);
+    console.log("response:", response.data);
+    dispatch(addedUserToParty(response.data));
   } catch (error) {
     console.log(error.message);
   }
