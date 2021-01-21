@@ -10,7 +10,7 @@ export default function Container({ children, style }) {
   const MessageText = styled.Text``;
   const loading = useSelector(appLoading);
   if (loading) return <ActivityIndicator />;
-  if (message) console.log(`new app message: ${message.text}`);
+  if (message) console.log(`App message: ${message.text}`);
   return (
     <View style={{ ...styles.container, ...style }}>
       <MessageBox>

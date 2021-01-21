@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
 import styled from "styled-components";
 import moment from "moment";
 

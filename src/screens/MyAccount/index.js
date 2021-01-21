@@ -5,12 +5,15 @@ import styled from "styled-components/native";
 import { logOut } from "../../store/user/actions";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
+import Title from "../../components/Title";
 export default function MyAccount() {
   const dispatch = useDispatch();
   const accountName = useSelector((state) => state.user.name);
 
   return (
     <Container>
+      <Title>{accountName}</Title>
+
       <Button
         style={{ backgroundColor: "rgb(245, 201, 72)" }}
         onPress={() => dispatch(logOut())}

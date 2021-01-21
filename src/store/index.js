@@ -8,5 +8,4 @@ const composeEnhancers = window ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 const enhancer = composeEnhancers(applyMiddleware(ReduxThunk));
 
 const store = createStore(reducer, enhancer);
-
 export default store;

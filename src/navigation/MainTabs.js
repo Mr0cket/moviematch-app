@@ -1,10 +1,9 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { initSocket } from "../store/socketActions";
 import Constants from "expo-constants";
-console.log("expo constants:", Constants);
+// console.log("expo constants:", Constants);
 // Tab Icons
 import {
   FontAwesome,
@@ -23,12 +22,8 @@ import LikedMovies from "../screens/LikedMovies";
 const MainTabs = createMaterialTopTabNavigator();
 
 export default function MainTabsNavigator({ userToken }) {
-  const dispatch = useDispatch();
   useEffect(() => {
-    // send socket the token to show what user this is.
-    // socket then gets the user from database.
-    console.log("this was executed");
-    initSocket(userToken, dispatch);
+    initSocket();
   }, []);
 
   /* Navigator Props 

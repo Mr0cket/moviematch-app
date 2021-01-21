@@ -12,10 +12,10 @@ export default function SignIn({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const loginError = useSelector(selectMessage);
-  console.log("loginError:", loginError);
   return (
     <Container style={styles.container}>
-      <Text>{loginError && loginError}</Text>
+      <Text>{loginError && loginError.text}</Text>
+      <Text style={styles.title}>Login</Text>
       <TextInput onChangeText={setEmail} style={styles.input} placeholder="email" />
       <TextInput
         secureTextEntry={true}

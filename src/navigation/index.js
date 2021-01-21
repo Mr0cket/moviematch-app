@@ -20,7 +20,6 @@ export default function Navigation() {
   useReduxDevToolsExtension(navigationRef);
 
   // get AppState from store
-  // headerMode="none"|"float"|"screen"
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator headerMode="none">

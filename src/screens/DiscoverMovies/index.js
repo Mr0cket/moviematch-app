@@ -1,47 +1,20 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
-import { selectTheme } from "../../store/theme/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 import MovieCard from "./MovieCard";
 import Button from "../../components/Button";
 import { fetchStagingList } from "../../store/staging/actions";
+import { selectMatchModal } from "../../store/movies/selectors";
 import { movieDisliked, movieliked } from "../../store/socketActions";
 import { selectStagingList } from "../../store/staging/selectors";
 import Container from "../../components/Container";
-
 export default function index({ navigation }) {
   const stagingList = useSelector(selectStagingList);
   const dispatch = useDispatch();
-  // const [screenState, setScreenState] = useState({ status: "idle", data: null, error: null });
-  // FrontEnd request staged list of movies from API
-  // BE provides List (checks for movies not in userMovies table)
-  // adds any movies that have been liked by other users in the group
-  /* 
-  Behaviour: 
-  - display the list 1st movie (item) to last, 
-  - remove item from list after user Interaction? 
-  - redux action does this??
-  
-  Redux Behaviour
-  when fetched new movies, all movie data is sent to movies slice, id added to staging slice
-  movies slice: all movie data fetched. Keyed by movie Ids.
-  staging list slice: array of movie Ids
-  When movie interacted with: 
-  1. Like:
-  - remove from staging list\
-  - (actions to backend)
-  - [on backend response] add to liked list
-  - if <3 movies remain in queue, fetch more movies
-
-  2. Dislike:
-  - remove from staging List
-  - (actions to backend)
-  - [on backend response] ??
-  - if <3 movies remain in queue, fetch more movies
-  
-  3.
-  */
+  // const matchesModal = useSelector(selectMatchModal);
+  const [modalVisible, setModalVisible] = useState(false);
+  console.log("modalVisible:", modalVisible);
   useEffect(() => {
     // initial list request
     if (stagingList.length < 1) dispatch(fetchStagingList(true));
@@ -60,11 +33,6 @@ export default function index({ navigation }) {
   `;
 
   const handleLike = (movie) => {
-    console.log("movie liked, dispatch action");
-    // send webSocket message to backend: liked movie
-    // remove item from the staging list
-    // render the next Image?
-    // some animations??
     dispatch(movieliked(movie));
     if (stagingList.length < 2) {
       console.log("fetch more movies");
@@ -73,10 +41,6 @@ export default function index({ navigation }) {
   };
 
   const handleDislike = (movie) => {
-    console.log("movie disliked, dispatch action");
-    // dispatch redux action
-    // send webSocket message to backend: disLiked movie
-    // other stuff??
     dispatch(movieDisliked(movie));
     if (stagingList.length < 2) {
       console.log("fetch more movies");
@@ -101,7 +65,23 @@ export default function index({ navigation }) {
             style={{ backgroundColor: "rgb(76, 175, 80)" }}
             onPress={() => handleLike(movie)}
           />
+          <Button
+            text="toggle Modal "
+            style={{ backgroundColor: "rgb(76, 175, 80)" }}
+            onPress={() => setModalVisible(!modalVisible)}
+          />
         </ButtonRow>
+
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+          <View style={{ backgroundColor: "blue" }}>
+            <Text>Hello</Text>
+          </View>
+          <Button
+            text="toggle Modal "
+            style={{ backgroundColor: "rgb(76, 175, 80)" }}
+            onPress={() => setModalVisible(!modalVisible)}
+          />
+        </Modal>
       </Container>
     );
   } else
