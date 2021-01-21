@@ -6,16 +6,22 @@ import { appLoading, selectMessage } from "../store/appState/selectors";
 
 export default function Container({ children, style }) {
   const message = useSelector(selectMessage);
-  const MessageBox = styled.View``;
-  const MessageText = styled.Text``;
   const loading = useSelector(appLoading);
-  if (loading) return <ActivityIndicator />;
+  const backgroundColor = !message ? "white" : message.variant === "success" ? "green" : "red";
+  const MessageBox = styled.View`
+    width: 100%;
+    align-items: center;
+  `;
+  const MessageText = styled.Text``;
+  // if (loading) return <ActivityIndicator />;
   if (message) console.log(`App message: ${message.text}`);
   return (
     <View style={{ ...styles.container, ...style }}>
-      <MessageBox>
-        <MessageText>{message && message.text}</MessageText>
-      </MessageBox>
+      {message && (
+        <MessageBox style={{ backgroundColor }}>
+          <MessageText>{message.text}</MessageText>
+        </MessageBox>
+      )}
       {children}
     </View>
   );
@@ -25,7 +31,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "#d4d4f7",
     alignItems: "center",
-    overflow: "scroll",
+    height: "100%",
+    justifyContent: "center",
     // alignContent: "center",
   },
 });
