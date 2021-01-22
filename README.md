@@ -2,7 +2,6 @@
 
 An app to help you discover and choose movies with friends. When you and your friends like the same movie, it's a match!
 
-<<<<<<< HEAD
 ## Project info
 
 - [Wireframe](https://wireframepro.mockflow.com/view/Mb154b8103fbc27f9c5278251fb67604f1610192783846)
@@ -19,6 +18,3 @@ An app to help you discover and choose movies with friends. When you and your fr
 6. use the app!
 
 ##
-=======
-This is a cross platform native mobile app
->>>>>>> 2371f7b71516042e689c3850a30f37995b8d4057
