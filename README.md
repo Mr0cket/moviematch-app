@@ -4,7 +4,8 @@ An app to help you discover and choose movies with friends. When you and your fr
 
 [backend repo](https://github.com/Mr0cket/movieMatch-backend)
 
-<img src="DiscoverMovies.png" height="450" /> <img src="PartyMatches.png" />
+Screens:
+<img src="DiscoverMovies.png" height="500" /> <img src="PartyMatches.png" height="500" /> <img src="LikedMovies.png" height="500" />
 
 ### Who am I?
 I am a student at Codaisseur from a far away land of Crocodiles and kangaroos.
