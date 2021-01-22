@@ -4,6 +4,8 @@ An app to help you discover and choose movies with friends. When you and your fr
 
 [backend repo](https://github.com/Mr0cket/movieMatch-backend)
 
+<img src="./discoverMovies.png" />
+
 ### Who am I?
 I am a student at Codaisseur from a far away land of Crocodiles and kangaroos.
 I started coding in 2020 this is my portfolio assignment to build an MVP over a period of 2 weeks
