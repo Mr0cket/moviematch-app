@@ -5,20 +5,20 @@ An app to help you discover and choose movies with friends. When you and your fr
 [backend repo](https://github.com/Mr0cket/movieMatch-backend)
 
 Screens:
-<img src="DiscoverMovies.png" height="500" /> <img src="PartyMatches.png" height="500" /> <img src="LikedMovies.png" height="500" />
+<img alt="Discover Movies Tab" src="/assets/DiscoverMovies.png" height="500" /> <img alt="Party Matches Tab" src="/assets/PartyMatches.png" height="500" /> <img alt="Liked Movies Tab" src="/assets/LikedMovies.png" height="500" />
 
 ### Who am I?
+
 I am a student at Codaisseur from a far away land of Crocodiles and kangaroos.
 I started coding in 2020 this is my portfolio assignment to build an MVP over a period of 2 weeks
 
 My idea with this app was to make a fun game to help friends and partners decide what movies to watch.
 
-
 I decided to use serveral technologies that I haven't tried previously:
+
 - [React Native](https://reactnative.dev/) - A framework for building native react apps.
 - [Socket.IO](https://socket.io/) - A solution for real time bi-directional communcation between server <=> client allowing multiple clients to interact with each other.
-- 
-
+-
 
 ## Project info
 
@@ -38,28 +38,36 @@ I decided to use serveral technologies that I haven't tried previously:
 7. Expo will load and open the App
 
 ### socket events (self explanatory)
+
 - user/join
 - user/likedMovie
 - user/dislikedMovie
 - party/match
 
 ### HTTP Endpoints
+
 Most endpoints are OAuth 2.0 Bearer Token Authenticated (auth)
 
 #### User authentication
+
 - POST /login
 - POST /signup
 - GET /me - (auth)
 
 #### /movies - Fetch user movie lists
+
 - GET /movies/liked (auth) - fetches the user's list of liked movies
 - GET /movies/matches - (auth) - fetches the user's list of party matched movies
 
 #### /party
+
 - GET /party (auth) - fetches the user's party members
-- POST /party/invite (auth) - 
+- POST /party/invite (auth) -
+
 #### GET /stagingList - dynamic Lists of movies shown to user
+
 uses an algorithm which weights:
-- movies liked by other users in the party, 
-- movies previously the user has already interacted with 
+
+- movies liked by other users in the party,
+- movies previously the user has already interacted with
 - etc...
