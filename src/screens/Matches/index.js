@@ -9,7 +9,7 @@ import { appLoading } from "../../store/appState/selectors";
 import Title from "../../components/Title";
 import SubTitle from "../../components/SubTitle";
 
-export default function Matches() {
+export default function Matches({ navigation }) {
   const dispatch = useDispatch();
   const matches = useSelector(selectMatches);
   const loading = useSelector(appLoading);
@@ -20,6 +20,7 @@ export default function Matches() {
   }, []);
 
   // const matchesList = matches.map((movie) => <MovieRow key={movie.id} movie={movie} />);
+  // const matchesWeakload = navigation.isFocused() ? matches : matches.slice(0, 10);
   return (
     <FlatList
       ListHeaderComponent={<Title>Party Matches</Title>}

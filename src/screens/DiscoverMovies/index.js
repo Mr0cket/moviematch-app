@@ -10,6 +10,8 @@ import { selectStagingList } from "../../store/staging/selectors";
 import Container from "../../components/Container";
 import { selectMatchModal } from "../../store/movies/selectors";
 import MatchModal from "./MatchModal";
+// import TinderCard from "react-tinder-card";
+
 export default function index({ navigation }) {
   const stagingList = useSelector(selectStagingList);
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ export default function index({ navigation }) {
   `;
   const ButtonRow = styled.View`
     flex-direction: row;
+    margin-top: 15%;
   `;
 
   const handleLike = (movie) => {
@@ -52,7 +55,9 @@ export default function index({ navigation }) {
     // console.log("movie in discoverMovies:", movie);
     return (
       <Container>
+        {/* <TinderCard> */}
         <MovieCard {...movie} />
+        {/* </TinderCard> */}
         <ButtonRow>
           <Button
             text="dislike "

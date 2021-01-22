@@ -8,7 +8,7 @@ import { appLoading } from "../../store/appState/selectors";
 import Title from "../../components/Title";
 import SubTitle from "../../components/SubTitle";
 
-export default function LikedMovies() {
+export default function LikedMovies({ navigation }) {
   const dispatch = useDispatch();
   const likedMovies = useSelector(selectlikedMovies);
   const loading = useSelector(appLoading);
@@ -18,7 +18,7 @@ export default function LikedMovies() {
     if (likedMovies.length < 1) dispatch(fetchMovieList("liked"));
   }, []);
 
-  // const likedMoviesList = likedMovies.map((movie) => <MovieRow key={movie.id} movie={movie} />);
+  // const moviesLimitedLoad = navigation.isFocused() ? likedMovies : likedMovies.slice(0, 10);
   return (
     <FlatList
       ListHeaderComponent={<Title>Liked Movies</Title>}

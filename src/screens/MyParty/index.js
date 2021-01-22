@@ -19,6 +19,8 @@ export default function index() {
     font-size: 20px;
     margin-bottom: 5%;
     margin-top: 15%;
+    margin-left: 15%;
+    align-self: flex-start;
   `;
   console.log("partyUsers length:", partyUsers.length);
   const partyList = partyUsers.map((user) => <UserItem key={user.id} user={user} />);
@@ -26,6 +28,7 @@ export default function index() {
   return (
     <Container>
       <Title>My party</Title>
+      <SubTitle>Users</SubTitle>
       {partyList}
       <SubTitle>Invite A Friend</SubTitle>
       <TextInput value={email} style={styles.input} onChangeText={setEmail} placeholder="email" />

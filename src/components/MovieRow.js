@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
+import GenreBadge from "./GenreBadge";
+import { View } from "react-native";
 
 export default function MovieRow({ index, item, separators }) {
-  const { posterUrl, title, releaseDate, rating } = item;
+  const { posterUrl, title, releaseDate, rating, mainGenre, overview } = item;
   const Row = styled.View`
     flex-direction: row;
     background-color: white;
@@ -36,8 +38,12 @@ export default function MovieRow({ index, item, separators }) {
   const Rating = styled.Text`
     font-weight: 700;
     /* align-self: flex-start; */
-    margin-bottom: 5%;
   `;
+  const genres = mainGenre.split(",", 3).map((genre, index) => (
+    <GenreBadge key={index} style={{ borderRadius: 15 }}>
+      {genre + "  "}
+    </GenreBadge>
+  ));
 
   /*   const no = new Array(Math.floor(rating / 2));
   const stars = no.map((item) => "⭐️");
@@ -49,6 +55,10 @@ export default function MovieRow({ index, item, separators }) {
         <Title>{title} </Title>
         <Rating>Released: {moment(releaseDate).format("YYYY")} </Rating>
         <Rating> Rating: {rating} </Rating>
+        {/* <Description>
+          {overview && overview.length < 100 ? overview : overview.slice(0, 99) + " ..."}
+        </Description> */}
+        <View style={{ flexDirection: "row" }}>{genres}</View>
       </MovieDetails>
     </Row>
   );

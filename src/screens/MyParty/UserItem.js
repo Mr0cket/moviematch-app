@@ -6,7 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 export default function UserItem({ user }) {
   const { name } = user;
   const Row = styled.View`
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: row;
     margin-bottom: 5px;
     width: 80%;
