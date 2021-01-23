@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, Modal } from "react-native";
+import { View, Text, StyleSheet, Modal, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 import MovieCard from "./MovieCard";
-import Button from "../../components/Button";
+import Button from "./LikeButton";
 import { fetchStagingList } from "../../store/staging/actions";
 import { movieDisliked, movieliked } from "../../store/socketActions";
 import { selectStagingList } from "../../store/staging/selectors";
@@ -31,7 +31,7 @@ export default function index({ navigation }) {
   `;
   const ButtonRow = styled.View`
     flex-direction: row;
-    margin-top: 15%;
+    margin-top: 24%;
   `;
 
   const handleLike = (movie) => {
@@ -77,7 +77,7 @@ export default function index({ navigation }) {
     return (
       <Container>
         <LoadingCard>
-          <Text>loading...</Text>
+          <ActivityIndicator size="large" />
         </LoadingCard>
         <Button
           text="reload movies "
