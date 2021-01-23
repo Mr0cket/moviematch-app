@@ -21,6 +21,14 @@ export const initSocket = () => {
     console.log(`movie liked by party: ${movie.title}`);
     store.dispatch(newMatch(movie));
   });
+  // handling connection errors
+  socket.on("connect_failed", () =>
+    console.log(`[socket]: connection failed with: ${socket?.user?.name}`)
+  );
+  socket.on("reconnect", () =>
+    console.log(`[socket]: reconnected to client: ${socket?.user?.name}`)
+  );
+  socket.on("error", () => console.log(`[socket]: error: ${socket?.user?.name}`));
 };
 
 export const movieliked = (movie) => async (dispatch, getState) => {
