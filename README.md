@@ -35,15 +35,16 @@ I decided to use serveral technologies that I haven't tried previously:
 3. Install all dependencies `npm init`
 4. Install the expo client app on your device ([android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [ios](https://itunes.com/apps/exponent)
 5. start the project through expo with either `npm start` or `expo start`
-6. using your expo-client app on your `Android` or `IOS` device, scan the QR code generated through the expo client (`android`) or your camera (`ios`)
+6. using your expo-client app on your `Android` or `IOS` device, check you and the computer are on the same network, scan the QR code generated in the terminal/browser. 
+- you can scan the QR code through the expo client app for `android`, or your camera for `ios`
 7. Expo will load and open the App
 
 ### socket events (self explanatory)
 
-- user/join
-- user/likedMovie
-- user/dislikedMovie
-- party/match
+- user/join - an event which the client sends on successful connection with the server containing user authentication details
+- user/likedMovie - event emitted by client when the user likes a movie
+- user/dislikedMovie - event emitted by client when the user likes a movie
+- party/match - event emitted by server when it detects a party match.
 
 ### HTTP Endpoints
 
@@ -72,3 +73,13 @@ uses an algorithm which weights:
 - movies liked by other users in the party,
 - movies previously the user has already interacted with
 - etc...
+
+## Future Features:
+- a Movie Details screen/modal which is accessed by clicking on a movie card.
+- Improved Discover Movies page
+   - Ability to use touch gestures (swiping) to like/dislike a movie
+   - Dynamic Animations for like & dislike events
+- Improved UI/UX for signup, My Account screen, My Party screen & Match popup modal
+- Better interface to manage parties 
+   - mechanism for user to accept or decline a party invitation when invited
+   - ability to remove a user from your party, or join another party
