@@ -21,6 +21,7 @@ export const newLikedList = (likedMovies) => ({
   payload: likedMovies,
 });
 export const newMatch = (movie) => async (dispatch, getState) => {
+  // show modal for 3 seconds then clear
   setTimeout(() => dispatch(clearModal()), 3000);
   dispatch({
     type: NEW_MATCH,
@@ -44,8 +45,6 @@ export const likedMovie = (movieId) => {
 export const sendMovieLiked = () => {};
 
 export const fetchMovieList = (type) => async (dispatch, getState) => {
-  console.log("type", type);
-  console.log("isMatches:", type === "matches");
   const token = getState().user.token;
   try {
     const response = await axios.get(`${apiUrl}/movies/${type}`, {

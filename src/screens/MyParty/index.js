@@ -22,7 +22,6 @@ export default function index() {
     margin-left: 15%;
     align-self: flex-start;
   `;
-  console.log("partyUsers length:", partyUsers.length);
   const partyList = partyUsers.map((user) => <UserItem key={user.id} user={user} />);
 
   return (

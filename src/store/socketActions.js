@@ -32,7 +32,6 @@ export const initSocket = () => {
 };
 
 export const movieliked = (movie) => async (dispatch, getState) => {
-  console.log("emitting likedMovie to socket");
   store.dispatch(likedMovie(movie));
   socket.emit("user/likedMovie", movie);
 };

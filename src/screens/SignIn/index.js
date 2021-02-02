@@ -9,7 +9,6 @@ import Constants from "expo-constants";
 import { selectMessage } from "../../store/appState/selectors";
 
 export default function SignIn({ navigation }) {
-  // console.log("systemTheme:", systemTheme);
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,12 +72,3 @@ const styles = StyleSheet.create({
     color: "#dc3545",
   },
 });
-
-/* 
-
-const StyledView = styled.View`
-  flex-direction: column;
-  background-color: #d4d4f7;
-  align-items: center;
-  justify-content: center;
-`; */

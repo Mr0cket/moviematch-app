@@ -18,7 +18,10 @@ export default (state = initialState, action) => {
       return { ...state, liked: action.payload };
     }
     case NEW_MATCH: {
-      return { ...state, matches: [...state.matches, action.payload], matchModal: action.payload };
+      const newMatchesArr = !state.matches.includes(action.payload)
+        ? [...state.matches, action.payload]
+        : state.matches;
+      return { ...state, matches: newMatchesArr, matchModal: action.payload };
     }
     case CLEAR_MODAL: {
       return { ...state, matchModal: null };
