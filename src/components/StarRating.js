@@ -18,7 +18,7 @@ export default function StarRating({ rating, size }) {
       ""
     );
 
-  const stars = [...Array(starsCalc)].map((_, index) => (
+  const stars = Array.from({ length: starsCalc }, (_, index) => (
     <FontAwesome key={index} name="star" size={size || 30} color="#fcbe39" />
   ));
   halfStar && stars.push(halfStar);
