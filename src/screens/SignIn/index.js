@@ -17,7 +17,7 @@ export default function SignIn({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      {message && <Text style={styles.error}>{message.text}</Text>}
+      {<Text style={styles.error}>{message && message.text}</Text>}
       <TextInput
         autoCompleteType="email"
         autoCapitalize="none"

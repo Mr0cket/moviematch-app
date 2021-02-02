@@ -10,21 +10,17 @@ const Rating = styled.Text`
 `;
 
 export default function StarRating({ rating, size }) {
+  const starsCalc = Math.floor(rating / 2);
   const halfStar =
     (Math.floor(rating) / 2) % 1 ? (
-      <FontAwesome name="star-half" size={size || 30} color="#fcbe39" />
+      <FontAwesome key={starsCalc + 1} name="star-half" size={size || 30} color="#fcbe39" />
     ) : (
       ""
     );
 
-  const stars = new Array(Math.floor(rating / 2)).fill(
-    <FontAwesome name="star" size={size || 30} color="#fcbe39" />
-  );
-
-  return (
-    <Rating>
-      {stars}
-      {halfStar}
-    </Rating>
-  );
+  const stars = [...Array(starsCalc)].map((_, index) => (
+    <FontAwesome key={index} name="star" size={size || 30} color="#fcbe39" />
+  ));
+  halfStar && stars.push(halfStar);
+  return <Rating>{stars}</Rating>;
 }

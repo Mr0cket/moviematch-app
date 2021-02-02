@@ -9,7 +9,6 @@ export default function useToken() {
   const token = useSelector(selectToken);
   const getToken = async () => {
     const cachedToken = await AsyncStorage.getItem("token");
-    console.log("cachedToken:", cachedToken);
     if (cachedToken) {
       dispatch(getUserWithStoredToken(cachedToken));
     }

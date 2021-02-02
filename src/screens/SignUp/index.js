@@ -16,7 +16,7 @@ export default function SignUp() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create an account</Text>
-      {message && <Text style={styles.error}>{message.text}</Text>}
+      {<Text style={styles.error}>{message && message.text}</Text>}
       <TextInput
         autoCompleteType="name"
         autoCapitalize="words"

@@ -12,6 +12,19 @@ import { selectMatchModal } from "../../store/movies/selectors";
 import MatchModal from "./MatchModal";
 // import TinderCard from "react-tinder-card";
 
+const LoadingCard = styled.View`
+  background-color: lightgrey;
+  width: 85%;
+  height: 75%;
+  border-radius: 20px;
+  align-items: center;
+  margin-top: 5%;
+`;
+const ButtonRow = styled.View`
+  flex-direction: row;
+  margin-top: 24%;
+`;
+
 export default function index({ navigation }) {
   const stagingList = useSelector(selectStagingList);
   const dispatch = useDispatch();
@@ -21,23 +34,10 @@ export default function index({ navigation }) {
     if (stagingList.length < 1) dispatch(fetchStagingList(true));
   }, []);
 
-  const LoadingCard = styled.View`
-    background-color: lightgrey;
-    width: 85%;
-    height: 75%;
-    border-radius: 20px;
-    align-items: center;
-    margin-top: 5%;
-  `;
-  const ButtonRow = styled.View`
-    flex-direction: row;
-    margin-top: 24%;
-  `;
-
   const handleLike = (movie) => {
     dispatch(movieliked(movie));
     if (stagingList.length < 2) {
-      console.log("fetch more movies");
+      console.log("fetching more movies");
       dispatch(fetchStagingList(false));
     }
   };
@@ -45,14 +45,13 @@ export default function index({ navigation }) {
   const handleDislike = (movie) => {
     dispatch(movieDisliked(movie));
     if (stagingList.length < 2) {
-      console.log("fetch more movies");
+      console.log("fetching more movies");
       dispatch(fetchStagingList(false));
     }
   };
 
   if (stagingList.length > 0) {
     const movie = stagingList[0];
-    // console.log("movie in discoverMovies:", movie);
     return (
       <Container>
         {/* <TinderCard> */}
