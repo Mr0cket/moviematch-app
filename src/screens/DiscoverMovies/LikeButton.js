@@ -10,12 +10,13 @@ export default function Button({ text, onPress, style }) {
 }
 const styles = StyleSheet.create({
   button: {
-    marginTop: 40,
     justifyContent: "center",
-    width: 150,
-    height: 50,
-    borderRadius: 20,
+    width: 70,
+    height: 70,
+    borderRadius: 70,
     alignItems: "center",
+    marginHorizontal: "15%",
+    borderWidth: 2,
   },
   buttonText: {
     fontSize: 14,

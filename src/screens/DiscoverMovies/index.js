@@ -2,6 +2,10 @@ import { View, Text, StyleSheet, Modal, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
+//icons
+import { Entypo } from "@expo/vector-icons";
+
+// components
 import MovieCard from "./MovieCard";
 import Button from "./LikeButton";
 import { fetchStagingList } from "../../store/staging/actions";
@@ -22,7 +26,7 @@ const LoadingCard = styled.View`
 `;
 const ButtonRow = styled.View`
   flex-direction: row;
-  margin-top: 24%;
+  margin-top: 2%;
 `;
 
 export default function index({ navigation }) {
@@ -59,13 +63,13 @@ export default function index({ navigation }) {
         {/* </TinderCard> */}
         <ButtonRow>
           <Button
-            text="dislike "
-            style={{ backgroundColor: "rgb(244, 67, 54)" }}
+            text={<Entypo name="thumbs-down" size={36} color="white" />}
+            style={{ backgroundColor: "#e82020", borderColor: "#941313" }}
             onPress={() => handleDislike(movie)}
           />
           <Button
-            text="like "
-            style={{ backgroundColor: "rgb(76, 175, 80)" }}
+            text={<Entypo name="thumbs-up" size={36} color="white" />}
+            style={{ backgroundColor: "#24d44d", borderColor: "#147d2c" }}
             onPress={() => handleLike(movie)}
           />
         </ButtonRow>
@@ -78,11 +82,11 @@ export default function index({ navigation }) {
         <LoadingCard>
           <ActivityIndicator size="large" />
         </LoadingCard>
-        <Button
+        {/* <Button
           text="reload movies "
           style={{ backgroundColor: "rgb(244, 67, 54)" }}
           onPress={() => dispatch(fetchStagingList())}
-        />
+        /> */}
       </Container>
     );
 }
