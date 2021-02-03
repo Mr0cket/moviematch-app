@@ -8,6 +8,7 @@ import Constants from "expo-constants";
 import { Dimensions } from "react-native";
 const platform = Object.keys(Constants.platform)[0];
 console.log("screen Dimensions:", Dimensions.get("screen"));
+
 export default function MovieCard({ posterUrl, overview, title, rating, releaseDate, mainGenre }) {
   const shadow = platform === "ios" ? styles.ios : styles.android;
   const titleFontSize =
@@ -56,16 +57,15 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.3,
     shadowColor: "black",
-    borderRadius: 25,
+    borderRadius: 15,
   },
   android: {
-    elevation: 16,
-    borderRadius: 25,
+    elevation: 21,
+    borderRadius: 15,
     overflow: "hidden",
   },
   poster: {
     resizeMode: "contain",
-    borderRadius: 13,
     width: 352,
     height: 528,
   },

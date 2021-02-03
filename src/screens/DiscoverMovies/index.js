@@ -63,13 +63,13 @@ export default function index({ navigation }) {
         {/* </TinderCard> */}
         <ButtonRow>
           <Button
-            text={<Entypo name="thumbs-down" size={36} color="white" />}
-            style={{ backgroundColor: "#e82020", borderColor: "#941313" }}
+            text={<Entypo name="thumbs-down" size={32} color="#f0ece3" />}
+            style={{ backgroundColor: "#900d0d", borderColor: "#810000" }}
             onPress={() => handleDislike(movie)}
           />
           <Button
-            text={<Entypo name="thumbs-up" size={36} color="white" />}
-            style={{ backgroundColor: "#24d44d", borderColor: "#147d2c" }}
+            text={<Entypo name="thumbs-up" size={32} color="#f0ece3" />}
+            style={{ backgroundColor: "#158467", borderColor: "#065446" }}
             onPress={() => handleLike(movie)}
           />
         </ButtonRow>
