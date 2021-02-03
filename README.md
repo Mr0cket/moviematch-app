@@ -19,7 +19,6 @@ I decided to use serveral technologies that I haven't tried previously:
 
 - [React Native](https://reactnative.dev/) - A framework for building native react apps.
 - [Socket.IO](https://socket.io/) - A solution for real time bi-directional communcation between server <=> client allowing multiple clients to interact with each other.
--
 
 ## Project info
 
