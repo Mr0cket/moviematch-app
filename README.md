@@ -28,15 +28,18 @@ I decided to use serveral technologies that I haven't tried previously:
 
 ## Installation
 
-1. clone the Repo
+1. clone the app Repo
    `git clone https://github.com/Mr0cket/moviematch-app.git`
 2. Install expo command line tools `npm install --global expo-cli`
 3. Install all dependencies `npm init`
-4. Install the expo client app on your device ([android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [ios](https://itunes.com/apps/exponent)
-5. start the project through expo with either `npm start` or `expo start`
-6. using your expo-client app on your `Android` or `IOS` device, check you and the computer are on the same network, scan the QR code generated in the terminal/browser. 
+4. clone & install dependencies for backend repo
+5. Install the expo client app on your device ([android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [ios](https://itunes.com/apps/exponent)
+6. start the project through expo with either `npm start` or `expo start`
+7. using your expo-client app on your `Android` or `IOS` device, check you and the computer are on the same network, scan the QR code generated in the terminal/browser. 
 - you can scan the QR code through the expo client app for `android`, or your camera for `ios`
 7. Expo will load and open the App
+8. in the backend repo, start the server `npm start` & copy the local area network address of the BE
+9. in FE repo navigate to `/src/config/constants.js` replace the address in line 4 with the address for your own backend.
 
 ### socket events (self explanatory)
 
