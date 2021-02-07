@@ -9,6 +9,7 @@ import SignInScreen from "../screens/SignIn";
 import SignUpScreen from "../screens/SignUp";
 import NotFoundScreen from "../screens/NotFound";
 import useToken from "../hooks/useToken";
+import MovieDetails from "../screens/MovieDetails";
 
 // create navigator
 const RootStack = createStackNavigator();
@@ -22,7 +23,7 @@ export default function Navigation() {
   // get AppState from store
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator headerMode="none">
+      <RootStack.Navigator mode="modal" headerMode="none">
         {!userToken ? (
           <>
             <RootStack.Screen
@@ -46,6 +47,7 @@ export default function Navigation() {
             <RootStack.Screen name="Main">
               {(props) => <MainTabsNavigator {...props} userToken={userToken} />}
             </RootStack.Screen>
+            <RootStack.Screen name="MovieDetails" component={MovieDetails} />
           </>
         )}
         <RootStack.Screen name="NotFound" component={NotFoundScreen} />
