@@ -2,6 +2,10 @@ import { View, Text, StyleSheet, Modal, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
+//icons
+import { Entypo } from "@expo/vector-icons";
+
+// components
 import MovieCard from "./MovieCard";
 import Button from "./LikeButton";
 import { fetchStagingList } from "../../store/staging/actions";
@@ -20,9 +24,9 @@ const LoadingCard = styled.View`
   align-items: center;
   margin-top: 5%;
 `;
+
 const ButtonRow = styled.View`
   flex-direction: row;
-  margin-top: 24%;
 `;
 
 export default function index({ navigation }) {
@@ -52,20 +56,19 @@ export default function index({ navigation }) {
 
   if (stagingList.length > 0) {
     const movie = stagingList[0];
+
     return (
       <Container>
-        {/* <TinderCard> */}
-        <MovieCard {...movie} />
-        {/* </TinderCard> */}
+        <MovieCard movie={movie} navigation={navigation} />
         <ButtonRow>
           <Button
-            text="dislike "
-            style={{ backgroundColor: "rgb(244, 67, 54)" }}
+            text={<Entypo name="thumbs-down" size={32} color="#f0ece3" />}
+            style={{ backgroundColor: "#900d0d", borderColor: "#810000" }}
             onPress={() => handleDislike(movie)}
           />
           <Button
-            text="like "
-            style={{ backgroundColor: "rgb(76, 175, 80)" }}
+            text={<Entypo name="thumbs-up" size={32} color="#f0ece3" />}
+            style={{ backgroundColor: "#158467", borderColor: "#065446" }}
             onPress={() => handleLike(movie)}
           />
         </ButtonRow>
@@ -78,11 +81,6 @@ export default function index({ navigation }) {
         <LoadingCard>
           <ActivityIndicator size="large" />
         </LoadingCard>
-        <Button
-          text="reload movies "
-          style={{ backgroundColor: "rgb(244, 67, 54)" }}
-          onPress={() => dispatch(fetchStagingList())}
-        />
       </Container>
     );
 }

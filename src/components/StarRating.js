@@ -4,9 +4,8 @@ import styled from "styled-components/native";
 
 const Rating = styled.Text`
   margin-top: 1%;
-  margin-bottom: 2%;
-  font-weight: 700;
-  /* text-align: center; */
+  margin-bottom: 1%;
+  font-weight: 600;
 `;
 
 export default function StarRating({ rating, size }) {
