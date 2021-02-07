@@ -26,7 +26,6 @@ const LoadingCard = styled.View`
 `;
 const ButtonRow = styled.View`
   flex-direction: row;
-  margin-top: 2%;
 `;
 
 export default function index({ navigation }) {
@@ -56,11 +55,10 @@ export default function index({ navigation }) {
 
   if (stagingList.length > 0) {
     const movie = stagingList[0];
+
     return (
       <Container>
-        {/* <TinderCard> */}
-        <MovieCard {...movie} />
-        {/* </TinderCard> */}
+        <MovieCard movie={movie} navigation={navigation} />
         <ButtonRow>
           <Button
             text={<Entypo name="thumbs-down" size={32} color="#f0ece3" />}
@@ -82,11 +80,6 @@ export default function index({ navigation }) {
         <LoadingCard>
           <ActivityIndicator size="large" />
         </LoadingCard>
-        {/* <Button
-          text="reload movies "
-          style={{ backgroundColor: "rgb(244, 67, 54)" }}
-          onPress={() => dispatch(fetchStagingList())}
-        /> */}
       </Container>
     );
 }
