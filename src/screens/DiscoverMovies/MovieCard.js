@@ -1,15 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import styled from "styled-components/native";
 import moment from "moment";
 import GenreBadge from "../../components/GenreBadge";
 import StarRating from "../../components/StarRating";
 import Constants from "expo-constants";
 import { Dimensions } from "react-native";
+import { useDispatch } from "react-redux";
 const platform = Object.keys(Constants.platform)[0];
-console.log("screen Dimensions:", Dimensions.get("screen"));
+// console.log("screen Dimensions:", Dimensions.get("screen"));
 
-export default function MovieCard({ posterUrl, overview, title, rating, releaseDate, mainGenre }) {
+export default function MovieCard({ movie, navigation }) {
+  const { movieId, posterUrl, overview, title, rating, releaseDate, mainGenre } = movie;
   const shadow = platform === "ios" ? styles.ios : styles.android;
   const titleFontSize =
     title.length < 16
@@ -28,24 +30,39 @@ export default function MovieCard({ posterUrl, overview, title, rating, releaseD
       {genre + "  "}
     </GenreBadge>
   ));
-  console.log("title:", title);
+  const openMovieDetails = (movieId) => {
+    // console.log("navigating to movie details page");
+    navigation.navigate("MovieDetails", { movie });
+
+    // navigate to movie details, & give the movie ID, title, rating etc.???
+    // loading screen shows until 1st req is finished.
+    // loading screen displays movie title & poster & activity indicator
+    // query TMDB API with 2 requests
+    // 1. movie details: https://api.themoviedb.org/3/movie/${movieId}?api_key=eb066629e9e5aca99797f3955400c4bd
+    // 2. watch providers: https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=eb066629e9e5aca99797f3955400c4bd
+    // store in redux state w/ movie?
+  };
+  console.log("title:", title, title.length);
+  console.log("movieId:", movieId);
   return (
     <>
-      <View style={shadow}>
-        <MoviePoster
-          source={{
-            uri: posterUrl,
-          }}
-          defaultSource={require("../../../assets/placeholder.png")} // need to figure out how to rescale the poster to display the top part
-          style={styles.poster}
-        />
-      </View>
+      <TouchableHighlight onPress={openMovieDetails} style={{ borderRadius: 25 }}>
+        <View style={shadow}>
+          <MoviePoster
+            source={{
+              uri: posterUrl,
+            }}
+            defaultSource={require("../../../assets/placeholder.png")} // need to figure out how to rescale the poster to display the top part
+            style={styles.poster}
+          />
+        </View>
+      </TouchableHighlight>
       <Details>
         <View style={{ flexDirection: "row" }}>
-          <Text style={{ ...styles.title, fontSize: titleFontSize }}>{title + "    "} </Text>
-          <Year>({moment(releaseDate).format("YYYY") || "no date"})</Year>
+          <Text style={{ ...styles.title, fontSize: titleFontSize }}>{title + "  "} </Text>
+          <Year>({releaseDate ? moment(releaseDate).format("YYYY") : "N/A"})</Year>
         </View>
-        <StarRating rating={rating} />
+        <StarRating size={25} rating={rating} />
         <View style={{ flexDirection: "row" }}>{genres}</View>
       </Details>
     </>
@@ -91,7 +108,6 @@ const MoviePoster = styled.Image`
 `;
 
 const Year = styled.Text`
-  margin-left: 5px;
   font-size: 18px;
   align-self: flex-end;
 `;

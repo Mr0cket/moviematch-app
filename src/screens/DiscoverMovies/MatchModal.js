@@ -1,4 +1,4 @@
-import { Modal, View, Text, TouchableHighlight, StyleSheet } from "react-native";
+import { Modal, View, Text, TouchableHighlight, StyleSheet, Image } from "react-native";
 import React from "react";
 import { clearModal } from "../../store/movies/actions";
 // import { selectMatchModal } from "../../store/movies/selectors";
@@ -6,12 +6,13 @@ import { clearModal } from "../../store/movies/actions";
 export default function MatchModal({ modalMovie }) {
   // const modalMovie = useSelector(selectMatchModal);
   const modalVisible = Boolean(modalMovie);
-  const title = modalMovie?.title;
+  const { title, posterUrl } = modalMovie;
   return (
     <Modal visible={modalVisible} animationType="slide" transparent={true}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>{title}</Text>
+          <Image style={styles.poster} source={{ uri: posterUrl }} />
+          <Text style={{ ...styles.modalText, fontWeight: "600" }}>{title}</Text>
           <Text style={styles.modalText}>It's a Match!</Text>
         </View>
       </View>
@@ -26,9 +27,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
   },
+  poster: {
+    width: 200,
+    height: 300,
+    borderRadius: 20,
+  },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#373950",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -44,5 +50,6 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    fontSize: 18,
   },
 });

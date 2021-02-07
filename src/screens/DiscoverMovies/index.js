@@ -24,6 +24,7 @@ const LoadingCard = styled.View`
   align-items: center;
   margin-top: 5%;
 `;
+
 const ButtonRow = styled.View`
   flex-direction: row;
 `;
