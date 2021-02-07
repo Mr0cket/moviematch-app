@@ -4,8 +4,9 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../store/user/actions";
 import Button from "../../components/Button";
-import Container from "../../components/Container";
 import { selectMessage } from "../../store/appState/selectors";
+import Logo from "../../components/Logo";
+
 export default function SignUp() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -15,7 +16,8 @@ export default function SignUp() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Create an account</Text>
+      <Logo />
+      <Text style={styles.title}>Create an account </Text>
       {<Text style={styles.error}>{message && message.text}</Text>}
       <TextInput
         autoCompleteType="name"
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    marginBottom: 100,
+    marginBottom: 40,
   },
   error: {
     color: "#dc3545",
