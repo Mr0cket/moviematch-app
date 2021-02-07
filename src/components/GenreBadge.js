@@ -4,7 +4,7 @@ import React, { Children } from "react";
 const GenreContainer = styled.View`
   padding: 1% 3%;
   border-radius: 15px;
-  background-color: #007bff;
+  background-color: #bbbdbc; //#007bff;
   font-weight: 700;
   margin-right: 1%;
 `;
