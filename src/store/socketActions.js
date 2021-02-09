@@ -32,7 +32,7 @@ export const initSocket = () => {
 };
 
 export const movieliked = (movie) => async (dispatch, getState) => {
-  store.dispatch(likedMovie(movie));
+  store.dispatch(likedMovie(movie.movieId));
   socket.emit("user/likedMovie", movie);
 };
 

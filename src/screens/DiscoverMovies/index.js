@@ -10,7 +10,7 @@ import MovieCard from "./MovieCard";
 import Button from "./LikeButton";
 import { fetchStagingList } from "../../store/staging/actions";
 import { movieDisliked, movieliked } from "../../store/socketActions";
-import { selectStagingList } from "../../store/staging/selectors";
+import { selectStagingList } from "../../store/movies/selectors";
 import Container from "../../components/Container";
 import { selectMatchModal } from "../../store/movies/selectors";
 import MatchModal from "./MatchModal";

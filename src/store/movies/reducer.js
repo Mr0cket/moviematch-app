@@ -7,18 +7,34 @@ import {
   LIKED_MOVIE,
   CLEAR_MODAL,
   FETCHED_MOVIE_DETAILS,
+  DISLIKED_MOVIE,
 } from "./actions";
 // all lists store movie Ids. when lists are selected, array is mapped to the values of the entries in cachedMovies.
 const initialState = {
   cachedMovies: {}, // movies stored with key = movie Id
   matches: [], // list of movie Ids
   liked: [], // list of movie Ids
-  // staging: [], // should I move staging list here?
+  staging: [], // should I move staging list here?
   matchModal: null, // movie Id
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FETCHED_STAGING: {
+      const newCachedMovies = state.cachedMovies;
+      const staging = action.payload.map((movie) => {
+        const movieId = movie.movieId;
+        if (!newCachedMovies[movieId]) newCachedMovies[movieId] = movie;
+        return movieId;
+      });
+
+      return {
+        ...state,
+        staging: [...state.staging, ...staging],
+        cachedMovies: newCachedMovies,
+      };
+    }
+
     case FETCHED_MATCHES: {
       const newCachedMovies = { ...state.cachedMovies };
       const matches = action.payload.map((movie) => {
@@ -50,8 +66,16 @@ export default (state = initialState, action) => {
       const newLiked = !state.liked.includes(action.payload)
         ? [...state.liked, action.payload]
         : state.liked;
-      return { ...state, liked: newLiked };
+      return {
+        ...state,
+        liked: [...state.liked, action.payload],
+        staging: [...state.staging.slice(1)],
+      };
     }
+    case DISLIKED_MOVIE: {
+      return { ...state, staging: [...state.staging.slice(1)] };
+    }
+
     case FETCHED_MOVIE_DETAILS: {
       return {
         ...state,
