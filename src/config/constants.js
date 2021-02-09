@@ -2,4 +2,6 @@ export const apiUrl =
   process.env.NODE_ENV === "production"
     ? "https://movie-match-api.herokuapp.com"
     : "https://movie-match-api.herokuapp.com";
-// : "http://192.168.1.20:4000";
+
+export const tmdbBaseUrl = "https://api.themoviedb.org/3";
+export const tmdbApiKey = "eb066629e9e5aca99797f3955400c4bd";

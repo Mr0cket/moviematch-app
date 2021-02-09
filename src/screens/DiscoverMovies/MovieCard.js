@@ -2,11 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import styled from "styled-components/native";
 import moment from "moment";
-import GenreBadge from "../../components/GenreBadge";
 import StarRating from "../../components/StarRating";
 import Constants from "expo-constants";
 import { Dimensions } from "react-native";
 import { useDispatch } from "react-redux";
+import Genres from "../../components/Genres";
 const platform = Object.keys(Constants.platform)[0];
 // console.log("screen Dimensions:", Dimensions.get("screen"));
 
@@ -24,15 +24,9 @@ export default function MovieCard({ movie, navigation }) {
       ? 20
       : 16;
 
-  // map genre badges
-  const genres = mainGenre.split(",", 3).map((genre, index) => (
-    <GenreBadge key={index} style={{ borderRadius: 15 }}>
-      {genre + "  "}
-    </GenreBadge>
-  ));
   const openMovieDetails = (movieId) => {
     // console.log("navigating to movie details page");
-    navigation.navigate("MovieDetails", { movie });
+    navigation.navigate("MovieDetails", { movieId });
 
     // navigate to movie details, & give the movie ID, title, rating etc.???
     // loading screen shows until 1st req is finished.
@@ -42,11 +36,9 @@ export default function MovieCard({ movie, navigation }) {
     // 2. watch providers: https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=eb066629e9e5aca99797f3955400c4bd
     // store in redux state w/ movie?
   };
-  console.log("title:", title, title.length);
-  console.log("movieId:", movieId);
   return (
     <>
-      <TouchableHighlight onPress={openMovieDetails} style={{ borderRadius: 25 }}>
+      <TouchableHighlight onPress={() => openMovieDetails(movieId)} style={{ borderRadius: 25 }}>
         <View style={shadow}>
           <MoviePoster
             source={{
@@ -63,7 +55,7 @@ export default function MovieCard({ movie, navigation }) {
           <Year>({releaseDate ? moment(releaseDate).format("YYYY") : "N/A"})</Year>
         </View>
         <StarRating size={25} rating={rating} />
-        <View style={{ flexDirection: "row" }}>{genres}</View>
+        <Genres genreList={mainGenre} />
       </Details>
     </>
   );

@@ -29,7 +29,7 @@ export default function LikedMovies({ navigation }) {
         </>
       }
       data={likedMovies}
-      renderItem={MovieRow}
+      renderItem={(props) => MovieRow({ ...props, navigation })}
       initialNumToRender={4}
       removeClippedSubviews={true}
       keyExtractor={(item) => item.id.toString()}
