@@ -6,9 +6,11 @@ const Rating = styled.Text`
   margin-top: 1%;
   margin-bottom: 1%;
   font-weight: 600;
+  font-size: 20px;
+  color: #fcbe39;
 `;
 
-export default function StarRating({ rating, size }) {
+export default function StarRating({ rating, size, numeric }) {
   const starsCalc = Math.floor(rating / 2);
   const halfStar =
     (Math.floor(rating) / 2) % 1 ? (
@@ -21,5 +23,10 @@ export default function StarRating({ rating, size }) {
     <FontAwesome key={index} name="star" size={size || 30} color="#fcbe39" />
   ));
   halfStar && stars.push(halfStar);
-  return <Rating>{stars}</Rating>;
+  return (
+    <Rating>
+      {stars}
+      {numeric && "   " + rating / 2}
+    </Rating>
+  );
 }
