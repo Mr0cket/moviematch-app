@@ -1,4 +1,4 @@
-import { FETCHED_MOVIES } from "./actions";
+import { FETCHED_STAGING } from "./actions";
 import { DISLIKED_MOVIE, PARTY_LIKED_MOVIE, LIKED_MOVIE } from "../movies/actions";
 import {} from "../movies/actions";
 import { LOG_OUT } from "../user/actions";
@@ -10,7 +10,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCHED_MOVIES: {
+    case FETCHED_STAGING: {
       console.log(`fetch count: ${state.fetchCount}`);
       return {
         ...state,
