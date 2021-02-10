@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { Children } from "react";
 
 const GenreContainer = styled.View`
-  padding: 1% 3%;
+  padding: 1% 1.5%;
   border-radius: 15px;
   background-color: #bbbdbc; //#007bff;
   font-weight: 700;
@@ -13,10 +13,12 @@ const GenreText = styled.Text`
   color: white;
 `;
 
-export default function GenreBadge({ children }) {
+export default function GenreBadge({ children, size }) {
+  let fontSize = 14;
+  if (size === "small") fontSize = 11;
   return (
     <GenreContainer>
-      <GenreText>{children}</GenreText>
+      <GenreText style={{ fontSize }}>{children}</GenreText>
     </GenreContainer>
   );
 }

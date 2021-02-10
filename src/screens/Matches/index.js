@@ -31,7 +31,7 @@ export default function Matches({ navigation }) {
         </>
       }
       data={matches}
-      renderItem={MovieRow}
+      renderItem={(props) => MovieRow({ ...props, navigation })}
       keyExtractor={(item) => item.id.toString()}
       refreshControl={
         <RefreshControl
