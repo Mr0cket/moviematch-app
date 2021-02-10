@@ -31,14 +31,6 @@ export default function MovieDetails({ route, navigation }) {
 
   if (movie) {
     const { title, backdropUrl, overview, rating, runtime, mainGenre, watchProviders } = movie;
-    // const whereToWatch =
-    //   watchProviders &&
-    //   Object.values(watchProviders)[1].buy.map((provider) => {
-    //     return (
-    //
-    //     );
-    //   });
-    // if (whereToWatch.length > 4) whereToWatch.length = 4;
     const stringifiedRuntime = `${Math.floor(runtime / 60)}h ${runtime % 60}m`;
     return (
       <View>
@@ -55,7 +47,7 @@ export default function MovieDetails({ route, navigation }) {
           <Text style={styles.subTitle}>Overview: </Text>
           <Text style={styles.body}>{overview}</Text>
           <Text style={styles.subTitle}>Where to Watch:</Text>
-          {watchProviders && <WatchProviders watchProviders={watchProviders} />}
+          {/* {watchProviders && <WatchProviders watchProviders={watchProviders} />} */}
           {/* <View style={{ flexDirection: "row" }}>{whereToWatch}</View> */}
         </View>
       </View>
@@ -91,7 +83,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 0.4,
   },
   subTitle: {
-    fontWeight: "600",
+    fontWeight: "700",
     fontSize: 18,
     marginTop: 25,
   },

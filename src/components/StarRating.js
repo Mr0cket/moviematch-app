@@ -26,7 +26,7 @@ export default function StarRating({ rating, size, numeric }) {
   return (
     <Rating>
       {stars}
-      {numeric && "   " + rating / 2}
+      {numeric && "   " + rating}
     </Rating>
   );
 }
