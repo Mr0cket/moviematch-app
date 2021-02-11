@@ -11,6 +11,7 @@ import SetLocale from "./SetLocale";
 export default function MyAccount() {
   const dispatch = useDispatch();
   const accountName = useSelector((state) => state.user.name);
+  const { width, height } = Dimensions.get("screen");
 
   return (
     <Container>
@@ -19,7 +20,7 @@ export default function MyAccount() {
       <SubTitle>Set Locale</SubTitle>
       <SetLocale />
       <Button
-        style={{ backgroundColor: "rgb(245, 201, 72)", marginTop: Dimensions.width / 6 }}
+        style={{ backgroundColor: "rgb(245, 201, 72)", marginTop: height / 2.5 }}
         onPress={() => dispatch(logOut())}
         text="Sign Out"
       />
