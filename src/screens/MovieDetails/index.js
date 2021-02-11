@@ -17,6 +17,7 @@ import Genres from "../../components/Genres";
 import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import WatchProviders from "./WatchProviders";
+import moment from "moment";
 
 export default function MovieDetails({ route, navigation }) {
   const dispatch = useDispatch();
@@ -30,7 +31,17 @@ export default function MovieDetails({ route, navigation }) {
   }, [movieId]);
 
   if (movie) {
-    const { title, backdropUrl, overview, rating, runtime, mainGenre, watchProviders } = movie;
+    const {
+      title,
+      backdropUrl,
+      posterUrl,
+      overview,
+      rating,
+      runtime,
+      mainGenre,
+      watchProviders,
+      releaseDate,
+    } = movie;
     const stringifiedRuntime = `${Math.floor(runtime / 60)}h ${runtime % 60}m`;
     return (
       <View>
@@ -39,10 +50,14 @@ export default function MovieDetails({ route, navigation }) {
             <Ionicons name="arrow-back-circle-outline" size={30} color="white" />
           </TouchableOpacity>
         </ImageBackground>
+        <Image source={{ uri: posterUrl }} style={styles.poster} />
         <View style={styles.details}>
-          <StarRating size={25} rating={rating} numeric={true} />
-          <Text style={styles.title}>{title + "  "} </Text>
-          <Genres style={{ marginTop: 5 }} genreList={mainGenre} size="small" />
+          <View>
+            <StarRating size={25} rating={rating} numeric={true} />
+            <Text style={styles.title}>{title + "  "} </Text>
+            <Genres style={{ marginTop: 5 }} genreList={mainGenre} size="small" />
+          </View>
+          <Text style={{ marginTop: 20 }}>{moment(releaseDate).format("MMMM YYYY")}</Text>
           <Text style={{ marginTop: 20 }}>Runtime: {"  " + stringifiedRuntime}</Text>
           <Text style={styles.subTitle}>Overview: </Text>
           <Text style={styles.body}>{overview}</Text>
@@ -94,5 +109,12 @@ const styles = StyleSheet.create({
     width: 30,
     marginLeft: 15,
     marginTop: 25,
+  },
+  poster: {
+    width: width / 4,
+    resizeMode: "cover",
+    position: "absolute",
+    zIndex: 100,
+    backgroundColor: "black",
   },
 });
