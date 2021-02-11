@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 //icons
 import { Entypo } from "@expo/vector-icons";
+import * as Localization from "expo-localization";
+console.log("Localization:", Localization);
 
 // components
 import MovieCard from "./MovieCard";
@@ -72,7 +74,7 @@ export default function index({ navigation }) {
             onPress={() => handleLike(movie)}
           />
         </ButtonRow>
-        {modalMovie && <MatchModal modalMovie={modalMovie} />}
+        {modalMovie && <MatchModal navigation={navigation} modalMovie={modalMovie} />}
       </Container>
     );
   } else
