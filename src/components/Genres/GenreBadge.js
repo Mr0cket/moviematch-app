@@ -13,11 +13,11 @@ const GenreText = styled.Text`
   color: white;
 `;
 
-export default function GenreBadge({ children, size }) {
+export default function GenreBadge({ color, children, size }) {
   let fontSize = 14;
   if (size === "small") fontSize = 11;
   return (
-    <GenreContainer>
+    <GenreContainer style={{ backgroundColor: color }}>
       <GenreText style={{ fontSize }}>{children}</GenreText>
     </GenreContainer>
   );
