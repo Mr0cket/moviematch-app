@@ -24,10 +24,7 @@ export default function WatchProviders({ watchProviders, navigation }) {
   if (watchProviders[locale]) {
     const { flatrate, rent, buy } = watchProviders[locale];
     const servicesList = Object.keys(watchProviders[locale]);
-    console.log(watchProviders[locale]);
-    console.log(`service types in ${country}:`, servicesList.join(", "));
     const serviceToShow = flatrate || rent || buy;
-    console.log(serviceToShow);
     return (
       <>
         <Text style={styles.subTitle}>
