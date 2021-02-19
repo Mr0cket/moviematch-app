@@ -10,15 +10,17 @@ export default function Button({ text, onPress, style }) {
 }
 const styles = StyleSheet.create({
   button: {
-    marginTop: 40,
     justifyContent: "center",
-    width: 150,
-    height: 50,
-    borderRadius: 20,
+    marginHorizontal: "12%",
+    marginTop: 29,
     alignItems: "center",
+    width: 120,
+    height: 60,
+    borderWidth: 1.6,
+    borderRadius: 34,
   },
   buttonText: {
-    fontSize: 14,
+    fontSize: 15,
     // color: "#2e78b7",
   },
 });

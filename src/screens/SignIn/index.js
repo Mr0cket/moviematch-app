@@ -7,17 +7,18 @@ import Button from "../../components/Button";
 import Container from "../../components/Container";
 import Constants from "expo-constants";
 import { selectMessage } from "../../store/appState/selectors";
+import Logo from "../../components/Logo";
 
 export default function SignIn({ navigation }) {
-  // console.log("systemTheme:", systemTheme);
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const message = useSelector(selectMessage);
   return (
     <View style={styles.container}>
+      <Logo />
       <Text style={styles.title}>Login</Text>
-      {message && <Text style={styles.error}>{message.text}</Text>}
+      {<Text style={styles.error}>{message && message.text}</Text>}
       <TextInput
         autoCompleteType="email"
         autoCapitalize="none"
@@ -36,7 +37,7 @@ export default function SignIn({ navigation }) {
       />
 
       <Button
-        text="login"
+        text="Login"
         onPress={() => dispatch(login(email, password))}
         style={{ backgroundColor: "rgb(245, 201, 72)" }}
       />
@@ -67,18 +68,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    marginBottom: 100,
   },
   error: {
     color: "#dc3545",
   },
 });
-
-/* 
-
-const StyledView = styled.View`
-  flex-direction: column;
-  background-color: #d4d4f7;
-  align-items: center;
-  justify-content: center;
-`; */

@@ -15,10 +15,11 @@ I started coding in 2020 this is my portfolio assignment to build an MVP over a 
 
 My idea with this app was to make a fun game to help friends and partners decide what movies to watch.
 
-I decided to use serveral technologies that I haven't tried previously:
+I use several key technologies to buid this app:
 
 - [React Native](https://reactnative.dev/) - A framework for building native react apps.
-- [Socket.IO](https://socket.io/) - A solution for real time bi-directional communcation between server <=> client allowing multiple clients to interact with each other.
+- [Socket.IO](https://socket.io/) () - A solution for real time bi-directional communcation (server <=> client) using the WebSocket protocol. This allows user clients to interact with each other without needing the client to constantly check for updates.
+- [Redux] - A predictable & robust global state management system
 
 ## Project info
 
@@ -41,14 +42,25 @@ I decided to use serveral technologies that I haven't tried previously:
 8. in the backend repo, start the server `npm start` & copy the local area network address of the BE
 9. in FE repo navigate to `/src/config/constants.js` replace the address in line 4 with the address for your own backend.
 
-### socket events (self explanatory)
+## Future Features:
+- Improved Discover Movies page
+   - Ability to use touch gestures (swiping) to like/dislike a movie
+   - Dynamic Animations for like & dislike events
+- Improved UI/UX for signup, My Account screen, My Party screen & Match popup modal
+- Better interface to manage parties 
+   - mechanism for user to accept or decline a party invitation when invited
+   - ability to remove a user from your party, or join another party
+   
+## The Backend stuff:
+
+#### socket events
 
 - user/join - an event which the client sends on successful connection with the server containing user authentication details
 - user/likedMovie - event emitted by client when the user likes a movie
 - user/dislikedMovie - event emitted by client when the user likes a movie
 - party/match - event emitted by server when it detects a party match.
 
-### HTTP Endpoints
+#### HTTP Endpoints
 
 Most endpoints are OAuth 2.0 Bearer Token Authenticated (auth)
 
@@ -75,13 +87,3 @@ uses an algorithm which weights:
 - movies liked by other users in the party,
 - movies previously the user has already interacted with
 - etc...
-
-## Future Features:
-- a Movie Details screen/modal which is accessed by clicking on a movie card.
-- Improved Discover Movies page
-   - Ability to use touch gestures (swiping) to like/dislike a movie
-   - Dynamic Animations for like & dislike events
-- Improved UI/UX for signup, My Account screen, My Party screen & Match popup modal
-- Better interface to manage parties 
-   - mechanism for user to accept or decline a party invitation when invited
-   - ability to remove a user from your party, or join another party

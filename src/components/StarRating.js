@@ -4,27 +4,29 @@ import styled from "styled-components/native";
 
 const Rating = styled.Text`
   margin-top: 1%;
-  margin-bottom: 2%;
-  font-weight: 700;
-  /* text-align: center; */
+  margin-bottom: 1%;
+  font-weight: 600;
+  font-size: 20px;
+  color: #fcbe39;
 `;
 
-export default function StarRating({ rating, size }) {
+export default function StarRating({ rating, size, numeric }) {
+  const starsCalc = Math.floor(rating / 2);
   const halfStar =
     (Math.floor(rating) / 2) % 1 ? (
-      <FontAwesome name="star-half" size={size || 30} color="#fcbe39" />
+      <FontAwesome key={starsCalc + 1} name="star-half" size={size || 30} color="#fcbe39" />
     ) : (
       ""
     );
 
-  const stars = new Array(Math.floor(rating / 2)).fill(
-    <FontAwesome name="star" size={size || 30} color="#fcbe39" />
-  );
-
+  const stars = Array.from({ length: starsCalc }, (_, index) => (
+    <FontAwesome key={index} name="star" size={size || 30} color="#fcbe39" />
+  ));
+  halfStar && stars.push(halfStar);
   return (
     <Rating>
       {stars}
-      {halfStar}
+      {numeric && "   " + rating}
     </Rating>
   );
 }

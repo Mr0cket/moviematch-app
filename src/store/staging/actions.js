@@ -1,10 +1,10 @@
 import axios from "axios";
 import { apiUrl } from "../../config/constants";
 import { appDoneLoading, appLoading } from "../appState/actions";
-export const FETCHED_MOVIES = "FETCHED_MOVIES";
+export const FETCHED_STAGING = "FETCHED_STAGING";
 
 export const newStagingList = (movieList) => ({
-  type: FETCHED_MOVIES,
+  type: FETCHED_STAGING,
   payload: movieList,
 });
 
