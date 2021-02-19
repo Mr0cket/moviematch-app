@@ -10,8 +10,7 @@ export default function UserItem({ user, addList }) {
   const { email, name } = user;
   const backgroundColor = randomColor().hexString();
   const Row = styled.View`
-    /* justify-content: flex-start; */
-    align-items: flex-end;
+    justify-content: flex-start;
     flex-direction: row;
     margin-bottom: 5px;
     width: 80%;
@@ -47,6 +46,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 10,
-    marginStart: 115,
+    marginLeft: 20,
   },
 });

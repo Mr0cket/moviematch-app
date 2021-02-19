@@ -9,6 +9,7 @@ import SignInScreen from "../screens/SignIn";
 import SignUpScreen from "../screens/SignUp";
 import NotFoundScreen from "../screens/NotFound";
 import useToken from "../hooks/useToken";
+import useLocale from "../hooks/useLocale";
 import MovieDetails from "../screens/MovieDetails";
 
 // create navigator
@@ -16,6 +17,7 @@ const RootStack = createStackNavigator();
 
 export default function Navigation() {
   const userToken = useToken();
+  useLocale();
   const navigationRef = useRef();
   // theme={systemTheme === "dark" ? DarkTheme : DefaultTheme}
   useReduxDevToolsExtension(navigationRef);

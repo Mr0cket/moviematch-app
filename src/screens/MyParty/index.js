@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components/native";
-import Button from "../../components/Button";
 import Title from "../../components/Title";
 import Container from "../../components/Container";
 import UserItem from "./UserItem";
@@ -13,7 +11,6 @@ console.log(process.env);
 export default function index() {
   // const userSearchState = useSelector(selectUserSearch)
   const partyUsers = useSelector(selectParty);
-  const dispatch = useDispatch();
   const partyList = partyUsers.map((user) => <UserItem key={user.id} user={user} />);
   return (
     <Container>
@@ -22,14 +19,6 @@ export default function index() {
       {partyList}
       <SubTitle>Invite A Friend</SubTitle>
       <SearchForUser />
-      {/* <Button
-        text="Invite a Friend "
-        style={{ backgroundColor: "rgb(244, 67, 54)" }}
-        onPress={() => {
-          dispatch(inviteFriend(email));
-          setEmail("");
-        }}
-      /> */}
     </Container>
   );
 }

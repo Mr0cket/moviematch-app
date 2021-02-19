@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 //icons
 import { Entypo } from "@expo/vector-icons";
-import * as Localization from "expo-localization";
-console.log("Localization:", Localization);
 
 // components
 import MovieCard from "./MovieCard";
