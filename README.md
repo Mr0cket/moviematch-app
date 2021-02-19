@@ -6,7 +6,7 @@ An app to help you discover and choose movies with friends. When you and your fr
 
 ### Screenshots:
 
-<img alt="Discover Movies Tab" src="/assets/DiscoverMovies.jpg" height="400" /> <img alt="Party Matches Tab" src="/assets/PartyMatches.png" height="400" /> <img alt="Liked Movies Tab" src="/assets/LikedMovies.png" height="400" /> <img alt="MovieDetails Screen" src="/assets/MovieDetails.jpg" height="400" />
+<img alt="Discover Movies Tab" src="/assets/DiscoverMovies.jpg" height="400" /> <img alt="Party Matches Tab" src="/assets/PartyMatches.png" height="400" /> <img alt="Match Modal view" src="/assets/MatchView.jpg" height="400" /> <img alt="MovieDetails Screen" src="/assets/MovieDetails.jpg" height="400" />
 
 ### Who am I?
 
