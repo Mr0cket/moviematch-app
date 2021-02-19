@@ -19,7 +19,7 @@ export const initSocket = () => {
 
   socket.on("party/match", (movie) => {
     console.log(`movie liked by party: ${movie.title}`);
-    store.dispatch(newMatch(movie));
+    store.dispatch(newMatch(movie.movieId));
   });
   // handling connection errors
   socket.on("connect_failed", () =>
