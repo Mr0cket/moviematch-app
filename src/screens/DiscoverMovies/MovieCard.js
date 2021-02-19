@@ -8,7 +8,6 @@ import { Dimensions } from "react-native";
 import { useDispatch } from "react-redux";
 import Genres from "../../components/Genres";
 const platform = Object.keys(Constants.platform)[0];
-// console.log("screen Dimensions:", Dimensions.get("screen"));
 
 export default function MovieCard({ movie, navigation }) {
   const { movieId, posterUrl, overview, title, rating, releaseDate, mainGenre } = movie;
@@ -27,14 +26,6 @@ export default function MovieCard({ movie, navigation }) {
   const openMovieDetails = (movieId) => {
     // console.log("navigating to movie details page");
     navigation.navigate("MovieDetails", { movieId });
-
-    // navigate to movie details, & give the movie ID, title, rating etc.???
-    // loading screen shows until 1st req is finished.
-    // loading screen displays movie title & poster & activity indicator
-    // query TMDB API with 2 requests
-    // 1. movie details: https://api.themoviedb.org/3/movie/${movieId}?api_key=eb066629e9e5aca99797f3955400c4bd
-    // 2. watch providers: https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=eb066629e9e5aca99797f3955400c4bd
-    // store in redux state w/ movie?
   };
   return (
     <>

@@ -5,6 +5,7 @@ import {
   TOKEN_STILL_VALID,
   FETCHED_PARTY_MEMBERS,
   NEW_USER_IN_PARTY,
+  NEW_LOCALE,
 } from "./actions";
 
 const initialState = {
@@ -32,6 +33,11 @@ export default (state = initialState, action) => {
     }
     case NEW_USER_IN_PARTY: {
       return { ...state, party: [...state.party, action.payload] };
+    }
+    case NEW_LOCALE: {
+      AsyncStorage.setItem("locale", action.payload);
+      console.log("locale:", action.payload);
+      return { ...state, locale: action.payload };
     }
     default:
       return state;

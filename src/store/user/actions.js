@@ -6,6 +6,7 @@ export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
 export const FETCHED_PARTY_MEMBERS = "FETCHED_PARTY_MEMBERS";
 export const NEW_USER_IN_PARTY = "NEW_USER_IN_PARTY";
+export const NEW_LOCALE = "NEW_LOCALE";
 
 const loginSuccess = (userWithToken) => {
   return {
@@ -32,14 +33,21 @@ export const logOut = () => {
   return { type: LOG_OUT };
 };
 
+export const setLocale = (newLocale) => ({
+  type: NEW_LOCALE,
+  payload: newLocale,
+});
+
 export const signUp = (name, email, password) => {
   return async (dispatch, getState) => {
     dispatch(appLoading("user"));
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     // input validation
-    if (!name) return;
+    if (!name) return dispatch(showMessageWithTimeout("danger", true, "please enter a name"));
     if (!email || !emailRegex.test(email))
       return dispatch(showMessageWithTimeout("danger", true, "please provide valid email"));
+    if (!password)
+      return dispatch(showMessageWithTimeout("danger", true, "please enter a password"));
     try {
       const response = await axios.post(`${apiUrl}/signup`, {
         name,
@@ -111,8 +119,6 @@ export const getUserWithStoredToken = (token) => {
 
       if (error.response) {
         console.log(error.response.data.message);
-        // if (error.response.data.message === "account blocked")
-        // dispatch(showMessageWithTimeout("danger", true, "Your Account may be blocked...", 2000));
       } else {
         console.log(error);
       }

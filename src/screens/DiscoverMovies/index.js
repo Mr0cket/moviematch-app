@@ -72,7 +72,7 @@ export default function index({ navigation }) {
             onPress={() => handleLike(movie)}
           />
         </ButtonRow>
-        {modalMovie && <MatchModal modalMovie={modalMovie} />}
+        {modalMovie && <MatchModal navigation={navigation} modalMovie={modalMovie} />}
       </Container>
     );
   } else

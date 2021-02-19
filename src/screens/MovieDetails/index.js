@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   Image,
+  SafeAreaView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieDetails } from "../../store/movies/actions";
@@ -14,9 +15,10 @@ import Container from "../../components/Container";
 import StarRating from "../../components/StarRating";
 import { selectMovie } from "../../store/movies/selectors";
 import Genres from "../../components/Genres";
-import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import WatchProviders from "./WatchProviders";
+import moment from "moment";
 
 export default function MovieDetails({ route, navigation }) {
   const dispatch = useDispatch();
@@ -30,27 +32,43 @@ export default function MovieDetails({ route, navigation }) {
   }, [movieId]);
 
   if (movie) {
-    const { title, backdropUrl, overview, rating, runtime, mainGenre, watchProviders } = movie;
+    const {
+      title,
+      backdropUrl,
+      posterUrl,
+      overview,
+      rating,
+      runtime,
+      mainGenre,
+      watchProviders,
+      releaseDate,
+    } = movie;
     const stringifiedRuntime = `${Math.floor(runtime / 60)}h ${runtime % 60}m`;
     return (
-      <View>
+      <ScrollView style={styles.container}>
         <ImageBackground source={{ uri: backdropUrl }} style={styles.background}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back-circle-outline" size={30} color="white" />
           </TouchableOpacity>
         </ImageBackground>
+        {/* <Image source={{ uri: posterUrl }} style={styles.poster} /> */}
         <View style={styles.details}>
-          <StarRating size={25} rating={rating} numeric={true} />
-          <Text style={styles.title}>{title + "  "} </Text>
-          <Genres style={{ marginTop: 5 }} genreList={mainGenre} size="small" />
+          <View>
+            <StarRating size={25} rating={rating} numeric={true} />
+            <Text style={styles.title}>{title + "  "} </Text>
+            <Genres style={{ marginTop: 5 }} genreList={mainGenre} size="small" />
+          </View>
+          <Text style={{ marginTop: 20 }}>{moment(releaseDate).format("MMMM YYYY")}</Text>
           <Text style={{ marginTop: 20 }}>Runtime: {"  " + stringifiedRuntime}</Text>
           <Text style={styles.subTitle}>Overview: </Text>
           <Text style={styles.body}>{overview}</Text>
-          <Text style={styles.subTitle}>Where to Watch:</Text>
-          {/* {watchProviders && <WatchProviders watchProviders={watchProviders} />} */}
-          {/* <View style={{ flexDirection: "row" }}>{whereToWatch}</View> */}
+          {watchProviders ? (
+            <WatchProviders watchProviders={watchProviders} />
+          ) : (
+            <ActivityIndicator />
+          )}
         </View>
-      </View>
+      </ScrollView>
     );
   } else
     return (
@@ -63,15 +81,20 @@ export default function MovieDetails({ route, navigation }) {
 }
 const { width, height } = Dimensions.get("screen");
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    overflow: "hidden",
+    backgroundColor: "white",
+  },
   background: {
     height: height / 2.1,
   },
   details: {
     height: height / 1.8,
     paddingHorizontal: 15,
-    position: "absolute",
+    // position: "absolute",
     borderRadius: 30,
-    top: height / 2.2,
+    top: -27,
     backgroundColor: "white",
     overflow: "hidden",
   },
@@ -94,5 +117,12 @@ const styles = StyleSheet.create({
     width: 30,
     marginLeft: 15,
     marginTop: 25,
+  },
+  poster: {
+    width: width / 4,
+    resizeMode: "cover",
+    position: "absolute",
+    zIndex: 100,
+    backgroundColor: "black",
   },
 });

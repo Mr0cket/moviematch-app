@@ -1,20 +1,23 @@
 import { Modal, View, Text, TouchableHighlight, StyleSheet, Image } from "react-native";
 import React from "react";
 import { clearModal } from "../../store/movies/actions";
+import { TouchableOpacity } from "react-native-gesture-handler";
 // import { selectMatchModal } from "../../store/movies/selectors";
 // import { useDispatch, useSelector } from "react-redux";
-export default function MatchModal({ modalMovie }) {
+export default function MatchModal({ modalMovie, navigation }) {
   // const modalMovie = useSelector(selectMatchModal);
   const modalVisible = Boolean(modalMovie);
-  const { title, posterUrl } = modalMovie;
+  const { movieid, title, posterUrl } = modalMovie;
   return (
     <Modal visible={modalVisible} animationType="slide" transparent={true}>
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Image style={styles.poster} source={{ uri: posterUrl }} />
-          <Text style={{ ...styles.modalText, fontWeight: "600" }}>{title}</Text>
-          <Text style={styles.modalText}>It's a Match!</Text>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("MovieDetails", { movieid })}>
+          <View style={styles.modalView}>
+            <Image style={styles.poster} source={{ uri: posterUrl }} />
+            <Text style={{ ...styles.modalText, fontWeight: "600" }}>{title}</Text>
+            <Text style={styles.modalText}>It's a Match!</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </Modal>
   );

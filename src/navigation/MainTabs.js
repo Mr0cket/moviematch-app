@@ -1,9 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useEffect } from "react";
 import { initSocket } from "../store/socketActions";
 import Constants from "expo-constants";
-// console.log("expo constants:", Constants);
 // Tab Icons
 import {
   FontAwesome,
