@@ -17,7 +17,7 @@ export default function MyAccount() {
     <Container>
       <Title>{name}</Title>
       <SubTitle style={styles.subtitle}>Email: {email}</SubTitle>
-      <SubTitle style={styles.subtitle}>My Country: {matchCountry(locale)}</SubTitle>
+      <SubTitle style={styles.subtitle}>My Country: {matchCountry(locale) || "not set"}</SubTitle>
       <SubTitle style={styles.subtitle}>Change Country</SubTitle>
       <SetLocale />
       <Button
@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontWeight: "600",
-    marginTop: 50,
+    marginTop: 20,
   },
 });

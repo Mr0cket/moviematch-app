@@ -63,7 +63,7 @@ export default function MovieDetails({ route, navigation }) {
           <Text style={styles.subTitle}>Overview: </Text>
           <Text style={styles.body}>{overview}</Text>
           {watchProviders ? (
-            <WatchProviders watchProviders={watchProviders} />
+            <WatchProviders watchProviders={watchProviders} navigation={navigation} />
           ) : (
             <ActivityIndicator />
           )}

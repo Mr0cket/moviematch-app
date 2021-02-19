@@ -5,13 +5,20 @@ import { useSelector } from "react-redux";
 import { selectLocale } from "../../store/user/selectors";
 import { tmdbImageUrl } from "../../config/constants";
 import matchCountry from "../../lib/matchCountry";
-export default function WatchProviders({ watchProviders }) {
+import Button from "../../components/Button";
+export default function WatchProviders({ watchProviders, navigation }) {
   const locale = useSelector(selectLocale);
   const country = matchCountry(locale);
   if (!locale)
     return (
       <View>
-        <Text>choose your country to see where to watch</Text>
+        <Text style={styles.subTitle}>Where to Watch</Text>
+        <Text>To find out where you can watch this movie, set a country</Text>
+        <Button
+          style={{ backgroundColor: "yellow" }}
+          text={"Set Country"}
+          onPress={() => navigation.navigate("Account")}
+        />
       </View>
     );
   if (watchProviders[locale]) {
