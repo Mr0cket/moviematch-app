@@ -90,13 +90,10 @@ const styles = StyleSheet.create({
     height: height / 2.1,
   },
   details: {
-    height: height / 1.8,
     paddingHorizontal: 15,
-    // position: "absolute",
     borderRadius: 30,
     top: -27,
     backgroundColor: "white",
-    overflow: "hidden",
   },
   title: {
     fontWeight: "700",

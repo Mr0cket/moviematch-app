@@ -24,28 +24,31 @@ export default function WatchProviders({ watchProviders, navigation }) {
   if (watchProviders[locale]) {
     const { flatrate, rent, buy } = watchProviders[locale];
     const servicesList = Object.keys(watchProviders[locale]);
+    console.log(watchProviders[locale]);
     console.log(`service types in ${country}:`, servicesList.join(", "));
     const serviceToShow = flatrate || rent || buy;
+    console.log(serviceToShow);
     return (
       <>
         <Text style={styles.subTitle}>
-          Where to{" "}
           {servicesList.includes("flatrate")
-            ? "stream"
+            ? "Stream"
             : servicesList.includes("rent")
-            ? "rent"
-            : "buy"}{" "}
+            ? "Rent"
+            : "Buy"}{" "}
           in {country}:
         </Text>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", marginBottom: 25 }}>
           {serviceToShow &&
             serviceToShow.map((provider) => (
-              <View key={provider.provider_id} style={styles.logo}>
-                <Image
-                  source={{ uri: `${tmdbImageUrl}${provider.logo_path}` }}
-                  style={{ width: "100%", height: "100%", borderRadius: 15 }}
-                />
-                <Text style={{ fontSize: 12 }}>{provider.provider_name}</Text>
+              <View key={provider.provider_id}>
+                <View style={styles.logo}>
+                  <Image
+                    source={{ uri: `${tmdbImageUrl}${provider.logo_path}` }}
+                    style={{ width: "100%", height: "100%", borderRadius: 15 }}
+                  />
+                  <Text style={{ fontSize: 12 }}>{provider.provider_name}</Text>
+                </View>
               </View>
             ))}
         </View>
