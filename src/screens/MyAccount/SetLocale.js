@@ -38,14 +38,13 @@ export default function SetLocale() {
           value={searchLocale.name}
         />
         <TouchableOpacity style={styles.setButton} onPress={setNewLocale}>
-          <Text>Set </Text>
+          <Text style={{ color: "white" }}>Set country </Text>
         </TouchableOpacity>
       </View>
       {searchPredictions.length > 0 && (
         <FlatList
           data={searchPredictions}
           renderItem={({ item, index, separators }) => {
-            console.log(separators);
             const fontWeight = index === 0 ? "700" : "500";
             return (
               <TouchableOpacity
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 14,
     padding: 10,
-    backgroundColor: "yellow",
+    backgroundColor: "blue",
     borderRadius: 15,
   },
   separator: {
