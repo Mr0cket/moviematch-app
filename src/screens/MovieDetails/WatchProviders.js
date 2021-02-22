@@ -54,11 +54,11 @@ export default function WatchProviders({ watchProviders, navigation }) {
   } else {
     const countriesAvailable = Object.keys(watchProviders);
     console.log(`${countriesAvailable.length} watch countries available`);
-    console.log(`${countriesAvailable[0]}:`, watchProviders[countriesAvailable[0]]);
+    console.log(`${country} (${locale}):`, watchProviders[locale]);
     return (
       <>
         <Text style={styles.subTitle}>Watch in {country}</Text>
-        <Text>No watch information available</Text>
+        <Text>No stream information available</Text>
       </>
     );
   }
