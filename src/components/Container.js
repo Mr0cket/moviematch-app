@@ -7,8 +7,7 @@ import { appLoading, selectMessage } from "../store/appState/selectors";
 export default function Container({ children, style }) {
   const message = useSelector(selectMessage);
   const loading = useSelector(appLoading);
-  const backgroundColor = !message ? "" : message.variant === "success" ? "green" : "red";
-
+  const backgroundColor = message === null ? null : message.variant === "success" ? "green" : "red";
   if (message) console.log(`App message: ${message.text}`);
   return (
     <View style={{ ...styles.container, ...style }}>
