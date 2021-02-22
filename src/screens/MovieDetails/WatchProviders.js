@@ -33,9 +33,9 @@ export default function WatchProviders({ watchProviders, navigation }) {
             : servicesList.includes("rent")
             ? "Rent"
             : "Buy"}{" "}
-          in {country}:
+          in {country}
         </Text>
-        <View style={{ flexDirection: "row", marginBottom: 25 }}>
+        <View style={{ flexDirection: "row", marginVertical: 25 }}>
           {serviceToShow &&
             serviceToShow.map((provider) => (
               <View key={provider.provider_id}>
@@ -44,28 +44,31 @@ export default function WatchProviders({ watchProviders, navigation }) {
                     source={{ uri: `${tmdbImageUrl}${provider.logo_path}` }}
                     style={{ width: "100%", height: "100%", borderRadius: 15 }}
                   />
-                  <Text style={{ fontSize: 12 }}>{provider.provider_name}</Text>
+                  <Text style={{ fontSize: 11 }}>{provider.provider_name}</Text>
                 </View>
               </View>
             ))}
         </View>
       </>
     );
-  } else
+  } else {
+    const countriesAvailable = Object.keys(watchProviders);
+    console.log(`${countriesAvailable.length} watch countries available`);
+    console.log(`${countriesAvailable[0]}:`, watchProviders[countriesAvailable[0]]);
     return (
       <>
         <Text style={styles.subTitle}>Watch in {country}</Text>
         <Text>No watch information available</Text>
       </>
     );
+  }
 }
 
 const styles = StyleSheet.create({
   logo: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     borderRadius: 15,
-    marginTop: 15,
     marginHorizontal: 10,
     resizeMode: "cover",
   },
