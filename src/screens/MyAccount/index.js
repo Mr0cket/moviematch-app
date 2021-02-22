@@ -9,26 +9,36 @@ import Title from "../../components/Title";
 import SubTitle from "../../components/SubTitle";
 import SetLocale from "./SetLocale";
 import matchCountry from "../../lib/matchCountry";
+import { Entypo } from "@expo/vector-icons";
+import Setting from "./Setting";
 export default function MyAccount() {
   const dispatch = useDispatch();
   const { locale, name, email } = useSelector((state) => state.user);
   const { width, height } = Dimensions.get("screen");
   return (
-    <Container>
-      <Title>{name}</Title>
-      <SubTitle style={styles.subtitle}>Email: {email}</SubTitle>
-      <SubTitle style={styles.subtitle}>My Country: {matchCountry(locale) || "not set"}</SubTitle>
+    <Container style={styles.container}>
+      <SubTitle style={styles.subtitle}>Account Name </SubTitle>
+      <Setting>{name}</Setting>
+      <SubTitle style={styles.subtitle}>Email </SubTitle>
+      <Setting>{email}</Setting>
+      <SubTitle style={styles.subtitle}>Country</SubTitle>
+      <Setting>
+        <Entypo name="location-pin" size={30} color="blue" />
+        {matchCountry(locale) || "not set"} {locale && `(${locale})`}
+      </Setting>
       <SubTitle style={styles.subtitle}>Change Country</SubTitle>
       <SetLocale />
       <Button
-        style={{ backgroundColor: "rgb(245, 201, 72)", marginTop: height / 2.5 }}
+        style={{ backgroundColor: "rgb(245, 201, 72)", marginTop: height / 4.5 }}
         onPress={() => dispatch(logOut())}
         text="Sign Out"
       />
     </Container>
   );
 }
+
 const styles = StyleSheet.create({
+  container: {},
   button: {
     marginTop: 40,
     justifyContent: "center",
@@ -43,7 +53,7 @@ const styles = StyleSheet.create({
     color: "#2e78b7",
   },
   subtitle: {
-    fontWeight: "600",
-    marginTop: 20,
+    marginTop: 15,
+    marginLeft: 20,
   },
 });
