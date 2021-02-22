@@ -14,7 +14,7 @@ export default function MatchModal({ modalMovie, navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate("MovieDetails", { movieid })}>
           <View style={styles.modalView}>
             <Image style={styles.poster} source={{ uri: posterUrl }} />
-            <Text style={{ ...styles.modalText, fontWeight: "600" }}>{title + " "}</Text>
+            <Text style={{ ...styles.modalText, fontWeight: "700" }}>{title + "  "}</Text>
             <Text style={styles.modalText}>It's a Match!</Text>
           </View>
         </TouchableOpacity>
@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 20,
+    // fontWeight: "700",
     color: "#efeeed",
   },
 });
