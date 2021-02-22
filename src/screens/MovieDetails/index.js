@@ -19,6 +19,8 @@ import { ScrollView, TouchableHighlight, TouchableOpacity } from "react-native-g
 import { Ionicons } from "@expo/vector-icons";
 import WatchProviders from "./WatchProviders";
 import moment from "moment";
+import Cast from "./Cast";
+const { width, height } = Dimensions.get("screen");
 
 export default function MovieDetails({ route, navigation }) {
   const dispatch = useDispatch();
@@ -42,6 +44,8 @@ export default function MovieDetails({ route, navigation }) {
       mainGenre,
       watchProviders,
       releaseDate,
+      cast,
+      language,
     } = movie;
     const stringifiedRuntime = `${Math.floor(runtime / 60)}h ${runtime % 60}m`;
     return (
@@ -58,10 +62,22 @@ export default function MovieDetails({ route, navigation }) {
             <Text style={styles.title}>{title + "  "} </Text>
             <Genres style={{ marginTop: 5 }} genreList={mainGenre} size="small" />
           </View>
-          <Text style={{ marginTop: 20 }}>{moment(releaseDate).format("MMMM YYYY")}</Text>
-          <Text style={{ marginTop: 20 }}>Runtime: {"  " + stringifiedRuntime}</Text>
-          <Text style={styles.subTitle}>Overview: </Text>
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
+            <MinorDetailItem name="Length" value={stringifiedRuntime} />
+            <MinorDetailItem
+              name="Released"
+              value={moment(releaseDate).format("MMMM YYYY") + "  "}
+            />
+            {language && (
+              <MinorDetailItem
+                name="Language"
+                value={language === "en" ? "English" : language.toUpperCase()}
+              />
+            )}
+          </View>
+          <Text style={styles.subTitle}>Overview </Text>
           <Text style={styles.body}>{overview}</Text>
+          {cast && <Cast cast={cast} />}
           {watchProviders ? (
             <WatchProviders watchProviders={watchProviders} navigation={navigation} />
           ) : (
@@ -79,7 +95,14 @@ export default function MovieDetails({ route, navigation }) {
       </Container>
     );
 }
-const { width, height } = Dimensions.get("screen");
+
+const MinorDetailItem = ({ name, value }) => (
+  <View style={{ marginHorizontal: width / 18 }}>
+    <Text style={styles.detailName}>{name} </Text>
+    <Text style={styles.detailValue}>{value}</Text>
+  </View>
+);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -97,7 +120,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "700",
-    fontSize: 22,
+    fontSize: 23,
     textShadowOffset: { width: 1, height: 1 },
     textShadowColor: "lightgrey",
     textShadowRadius: 0.4,
@@ -106,6 +129,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 18,
     marginTop: 25,
+  },
+  detailName: { color: "grey", fontSize: 18 },
+  detailValue: {
+    fontSize: 15,
+    fontWeight: "700",
   },
   body: {
     fontSize: 14,
@@ -119,7 +147,6 @@ const styles = StyleSheet.create({
     width: width / 4,
     resizeMode: "cover",
     position: "absolute",
-    zIndex: 100,
     backgroundColor: "black",
   },
 });

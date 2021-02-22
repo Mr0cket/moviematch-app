@@ -63,24 +63,39 @@ export const fetchMovieList = (type) => async (dispatch, getState) => {
 };
 
 export const fetchMovieDetails = (movieId) => async (dispatch, getState) => {
-  // query TMDB API with 2 requests simultaneously
-  console.log(`fetching additional details of movie: ${movieId}`);
+  // query TMDB API with n requests simultaneously
   const endpoints = [
-    `${tmdbBaseUrl}/movie/${movieId}?api_key=${tmdbApiKey}`,
-    `${tmdbBaseUrl}/movie/${movieId}/watch/providers?api_key=${tmdbApiKey}`,
+    `${tmdbBaseUrl}/movie/${movieId}?api_key=${tmdbApiKey}`, // more movie details
+    `${tmdbBaseUrl}/movie/${movieId}/watch/providers?api_key=${tmdbApiKey}`, // watchProviders
+    `${tmdbBaseUrl}/movie/${movieId}/credits?api_key=${tmdbApiKey}`, // movie cast / credits
   ];
   try {
     const promises = endpoints.map((endpoint) => axios.get(endpoint).then((res) => res.data));
     const results = await Promise.all(promises);
-    if (results.find((data) => !data)) return console.log("fetchMovieDetails req failed");
-    const { backdrop_path, runtime, production_countries } = results[0];
+    if (results.find((data) => !data)) return console.log("a fetchMovieDetails request failed");
+    const {
+      backdrop_path,
+      runtime,
+      production_countries,
+      original_language: language,
+    } = results[0];
     const backdropUrl = "https://image.tmdb.org/t/p/w1280" + backdrop_path;
     const watchProviders = results[1].results;
+    const cast = results[2].cast;
+
     // get watchProviders stuff from watchProviders stuff endpoint
 
     dispatch({
       type: FETCHED_MOVIE_DETAILS,
-      payload: { movieId, backdropUrl, runtime, production_countries, watchProviders },
+      payload: {
+        movieId,
+        backdropUrl,
+        runtime,
+        production_countries,
+        language,
+        watchProviders,
+        cast,
+      },
     });
   } catch (e) {
     console.log("fetchMovieDetails error:", e.message);
