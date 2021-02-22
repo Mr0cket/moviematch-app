@@ -8,11 +8,7 @@ export default function Container({ children, style }) {
   const message = useSelector(selectMessage);
   const loading = useSelector(appLoading);
   const backgroundColor = !message ? "" : message.variant === "success" ? "green" : "red";
-  const MessageBox = styled.View`
-    width: 100%;
-    align-items: center;
-  `;
-  const MessageText = styled.Text``;
+
   if (message) console.log(`App message: ${message.text}`);
   return (
     <View style={{ ...styles.container, ...style }}>
@@ -25,6 +21,12 @@ export default function Container({ children, style }) {
     </View>
   );
 }
+const MessageBox = styled.View`
+  width: 100%;
+  align-items: center;
+`;
+const MessageText = styled.Text``;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

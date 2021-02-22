@@ -11,15 +11,15 @@ export default function WatchProviders({ watchProviders, navigation }) {
   const country = matchCountry(locale);
   if (!locale)
     return (
-      <View>
+      <>
         <Text style={styles.subTitle}>Where to Watch</Text>
-        <Text>To find out where you can watch this movie, set a country</Text>
+        <Text>To see where to watch this movie, set a country</Text>
         <Button
-          style={{ backgroundColor: "yellow" }}
+          style={{ backgroundColor: "blue" }}
           text={"Set Country"}
           onPress={() => navigation.navigate("Account")}
         />
-      </View>
+      </>
     );
   if (watchProviders[locale]) {
     const { flatrate, rent, buy } = watchProviders[locale];
@@ -53,10 +53,10 @@ export default function WatchProviders({ watchProviders, navigation }) {
     );
   } else
     return (
-      <View>
-        <Text style={styles.subTitle}>Where to Watch in {country}:</Text>
+      <>
+        <Text style={styles.subTitle}>Watch in {country}</Text>
         <Text>No watch information available</Text>
-      </View>
+      </>
     );
 }
 
