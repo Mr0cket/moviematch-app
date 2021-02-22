@@ -15,12 +15,22 @@ export default function Cast({ cast }) {
 }
 
 function ActorItem({ actor }) {
-  // console.log(actor);
-  const { profile_path, name } = actor;
-  // console.log(profile_path);
+  const { profile_path, name, gender } = actor;
+  console.log(gender);
   return (
     <View style={styles.actorItem}>
-      <Image style={styles.profilePic} source={{ uri: tmdbImageUrl + profile_path }} />
+      {profile_path ? (
+        <Image style={styles.profilePic} source={{ uri: tmdbImageUrl + profile_path }} />
+      ) : (
+        <Image
+          style={styles.profilePic}
+          source={
+            gender < 2
+              ? require("../../../assets/female-profile-icon.png")
+              : require("../../../assets/Men-Profile-Image.png")
+          }
+        />
+      )}
       <Text style={styles.actorName}>{name}</Text>
     </View>
   );
