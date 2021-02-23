@@ -24,7 +24,6 @@ export default function MovieCard({ movie, navigation }) {
       : 16;
 
   const openMovieDetails = (movieId) => {
-    // console.log("navigating to movie details page");
     navigation.navigate("MovieDetails", { movieId });
   };
   return (
@@ -76,12 +75,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 0.4,
   },
 });
-
-const marginTop = "10%";
-const Card = styled.View`
-  border-radius: 25px;
-  overflow: hidden;
-`;
 
 // moviePoster default dimensions: 750*500
 const MoviePoster = styled.Image`
