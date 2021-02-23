@@ -55,7 +55,6 @@ export default function MovieDetails({ route, navigation }) {
             <Ionicons name="arrow-back-circle-outline" size={30} color="white" />
           </TouchableOpacity>
         </ImageBackground>
-        {/* <Image source={{ uri: posterUrl }} style={styles.poster} /> */}
         <View style={styles.details}>
           <View>
             <StarRating size={25} rating={rating} numeric={true} />
@@ -63,11 +62,11 @@ export default function MovieDetails({ route, navigation }) {
             <Genres style={{ marginTop: 5 }} genreList={mainGenre} size="small" />
           </View>
           <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <MinorDetailItem name="Length" value={stringifiedRuntime} />
             <MinorDetailItem
               name="Released"
               value={moment(releaseDate).format("MMMM YYYY") + "  "}
             />
+            <MinorDetailItem name="Length" value={stringifiedRuntime} />
             {language && (
               <MinorDetailItem
                 name="Language"
