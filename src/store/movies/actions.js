@@ -7,7 +7,7 @@ export const FETCHED_MATCHES = "FETCHED_MATCHES";
 export const FETCHED_LIKED_MOVIES = "FETCHED_LIKED_MOVIES";
 export const FETCHED_MOVIE_DETAILS = "FETCHED_MOVIE_DETAILS";
 import axios from "axios";
-import { showMessageWithTimeout } from "../appState/actions";
+import { appDoneLoading, appLoading, showMessageWithTimeout } from "../appState/actions";
 import { apiUrl, tmdbBaseUrl, tmdbApiKey } from "../../config/constants";
 // initialise socket.io here...?
 
@@ -69,6 +69,7 @@ export const fetchMovieDetails = (movieId) => async (dispatch, getState) => {
     `${tmdbBaseUrl}/movie/${movieId}/watch/providers?api_key=${tmdbApiKey}`, // watchProviders
     `${tmdbBaseUrl}/movie/${movieId}/credits?api_key=${tmdbApiKey}`, // movie cast / credits
   ];
+  dispatch(appLoading("movies"));
   try {
     const promises = endpoints.map((endpoint) => axios.get(endpoint).then((res) => res.data));
     const results = await Promise.all(promises);
@@ -97,6 +98,7 @@ export const fetchMovieDetails = (movieId) => async (dispatch, getState) => {
         cast,
       },
     });
+    dispatch(appDoneLoading());
   } catch (e) {
     console.log("fetchMovieDetails error:", e.message);
     dispatch(showMessageWithTimeout("danger", true, `unable to fetch movie details: ${e.message}`));
