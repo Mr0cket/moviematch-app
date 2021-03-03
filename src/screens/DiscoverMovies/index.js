@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Modal, ActivityIndicator } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 //icons
@@ -29,15 +29,14 @@ const ButtonRow = styled.View`
   flex-direction: row;
 `;
 
-export default function index({ navigation }) {
+export default function index({ navigation, route }) {
   const stagingList = useSelector(selectStagingList);
   const dispatch = useDispatch();
   const modalMovie = useSelector(selectMatchModal);
   useEffect(() => {
     // initial list request
-    if (stagingList.length < 1) dispatch(fetchStagingList(true));
+    if (stagingList.length < 2) dispatch(fetchStagingList(true));
   }, []);
-
   const handleLike = (movie) => {
     dispatch(movieliked(movie));
     if (stagingList.length < 2) {
@@ -59,7 +58,7 @@ export default function index({ navigation }) {
 
     return (
       <Container>
-        <MovieCard movie={movie} navigation={navigation} />
+        <MovieCard movie={movie} navigation={navigation} like={handleLike} dislike={handleLike} />
         <ButtonRow>
           <Button
             text={<Entypo name="thumbs-down" size={32} color="#f0ece3" />}

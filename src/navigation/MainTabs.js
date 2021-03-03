@@ -32,7 +32,7 @@ export default function MainTabsNavigator({ userToken }) {
   return (
     <MainTabs.Navigator
       initialRouteName="Discover"
-      swipeEnabled={true}
+      swipeEnabled={false}
       tabBarOptions={{
         activeTintColor: "blue",
         inactiveTintColor: "black",
@@ -40,7 +40,6 @@ export default function MainTabsNavigator({ userToken }) {
         showLabel: false,
       }}
       style={{ paddingTop: Constants.statusBarHeight }}
-      // screenOptions={{}}
     >
       <MainTabs.Screen
         name="Account"
@@ -52,6 +51,7 @@ export default function MainTabsNavigator({ userToken }) {
             ) : (
               <Ionicons name="person-circle-outline" size={24} color="black" />
             ),
+          swipeEnabled: false,
         }}
       />
       <MainTabs.Screen
