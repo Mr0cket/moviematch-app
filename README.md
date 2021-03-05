@@ -19,7 +19,7 @@ I use several key technologies to buid this app:
 
 - [React Native](https://reactnative.dev/) - A framework for building native react apps.
 - [Socket.IO](https://socket.io/) () - A solution for real time bi-directional communcation (server <=> client) using the WebSocket protocol. This allows user clients to interact with each other without needing the client to constantly check for updates.
-- [Redux] - A predictable & robust global state management system
+- [Redux](https://redux.js.org/) - A predictable & robust global state management system
 
 ## Project info
 
