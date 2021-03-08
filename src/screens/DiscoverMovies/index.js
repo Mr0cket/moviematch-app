@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Modal, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, Modal, ActivityIndicator, Dimensions } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
@@ -14,7 +14,8 @@ import { selectStagingList } from "../../store/movies/selectors";
 import Container from "../../components/Container";
 import { selectMatchModal } from "../../store/movies/selectors";
 import MatchModal from "./MatchModal";
-// import TinderCard from "react-tinder-card";
+// import MovieDetails from "./MovieDetails";
+// import { useSprings, animated } from "react-spring/native";
 
 const LoadingCard = styled.View`
   background-color: lightgrey;
@@ -31,6 +32,12 @@ const ButtonRow = styled.View`
 
 export default function index({ navigation, route }) {
   const stagingList = useSelector(selectStagingList);
+  // const [props, setSprings] = useSprings(stagingList.length, (i) => ({
+  //   x: 0,
+  //   y: i * height * -1,
+  //   scale: 1,
+  //   opacity: 1,
+  // }));
   const dispatch = useDispatch();
   const modalMovie = useSelector(selectMatchModal);
   useEffect(() => {
@@ -54,11 +61,24 @@ export default function index({ navigation, route }) {
   };
 
   if (stagingList.length > 0) {
-    const movie = stagingList[0];
+    // const movie = stagingList[0];
+    // what should happen when like/dislike movie?
+    // definitely not re-render the current list.
+    // How do I not rerender the list?
+    // don't remove the movie from the list in redux until all the movies of a stack have been interacted with.
+    // need two staging lists in redux. current staging list & future staging list.
+    // also don't add movies to the list (this will also cause a rerender). need a future list & a current list. maybe several current lists.
+    // once all the movies have been interacted with:
+    // unmount the first stack (don't unmount 2nd stack)
+    // add a new list of movies
+    // remount & set position to be underneath the second stack
+    const movies = stagingList.map((movie) => <MovieCard movie={movie} navigation={navigation} />);
 
     return (
       <Container>
-        <MovieCard movie={movie} navigation={navigation} like={handleLike} dislike={handleLike} />
+        {movies}
+        {/* <MovieCard movie={movie} navigation={navigation} /> */}
+        {/* <MovieDetails movie={movie} /> */}
         <ButtonRow>
           <Button
             text={<Entypo name="thumbs-down" size={32} color="#f0ece3" />}
@@ -82,4 +102,10 @@ export default function index({ navigation, route }) {
         </LoadingCard>
       </Container>
     );
+}
+
+function MovieStack({ movies, onAllSwiped }) {
+  const [swiped, setSwiped] = useState([]);
+
+  return movies.map((movie) => <MovieCard movie={movie} />);
 }

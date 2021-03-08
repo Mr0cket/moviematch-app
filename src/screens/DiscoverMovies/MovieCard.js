@@ -14,9 +14,8 @@ const platform = Object.keys(Constants.platform)[0];
 const { width, height } = Dimensions.get("screen");
 const AnimatedView = animated(View);
 
-export default function MovieCard({ movie, navigation, like, dislike, index }) {
+export default function MovieCard({ movie, navigation, like, dislike }) {
   const { movieId, posterUrl, overview, title, rating, releaseDate, mainGenre } = movie;
-  const shadow = platform === "ios" ? styles.ios : styles.android;
   const titleFontSize =
     title.length < 16
       ? 30
@@ -66,6 +65,7 @@ export default function MovieCard({ movie, navigation, like, dislike, index }) {
         console.log("touchDuration:", touchDuration);
         if (touchDuration < 80 && !triggered) {
           // check the length of the touch. if it is <~ 100ms, it was a tap rather than a move gesture...?
+          console.log("tap detected");
           setSpring({ x: 0, y: 0, scale: 1, opacity: 1 });
           navigation.navigate("MovieDetails", { movieId });
         } else if (triggered) {
@@ -77,7 +77,7 @@ export default function MovieCard({ movie, navigation, like, dislike, index }) {
           });
           setTimeout(() => {
             // gestureState.vx > 0 ? like(movie) : dislike(movie);
-            setSpring({ x: 0, y: 0, scale: 1, opacity: 1 });
+            // setSpring({ x: 0, y: 0, scale: 1, opacity: 1 });
           }, 1000);
         } else {
           // animate the card back to the starting position
@@ -88,10 +88,14 @@ export default function MovieCard({ movie, navigation, like, dislike, index }) {
   ).current;
 
   return (
-    <>
+    <View style={styles.cardContainer}>
       <AnimatedView
         {...filthyPanHandlers.panHandlers}
-        style={[shadow, { transform: [{ translateX: x }, { translateY: y }, { scale: scale }] }]}
+        style={[
+          shadow,
+          styles.card,
+          { transform: [{ translateX: x }, { translateY: y }, { scale: scale }] },
+        ]}
       >
         <MoviePoster
           source={{
@@ -109,7 +113,7 @@ export default function MovieCard({ movie, navigation, like, dislike, index }) {
         <StarRating size={25} rating={rating} />
         <Genres genreList={mainGenre} />
       </AnimatedView>
-    </>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -118,17 +122,18 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.3,
     shadowColor: "black",
-    borderRadius: 15,
   },
   android: {
     elevation: 21,
-    borderRadius: 15,
-    overflow: "hidden",
   },
   poster: {
     resizeMode: "contain",
     width: 352,
     height: 528,
+  },
+  card: {
+    borderRadius: 15,
+    overflow: "hidden",
   },
   title: {
     fontWeight: "700",
@@ -142,8 +147,14 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     marginLeft: 25,
     marginRight: 25,
+    backgroundColor: "white",
+    // position: "absolute",
+  },
+  cardContainer: {
+    position: "absolute",
   },
 });
+const shadow = platform === "ios" ? styles.ios : styles.android;
 
 // moviePoster default dimensions: 750*500
 const MoviePoster = styled.Image`
