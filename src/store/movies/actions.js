@@ -85,7 +85,6 @@ export const fetchMovieDetails = (movieId) => async (dispatch, getState) => {
     const cast = results[2].cast;
 
     // get watchProviders stuff from watchProviders stuff endpoint
-
     dispatch({
       type: FETCHED_MOVIE_DETAILS,
       payload: {

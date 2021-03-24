@@ -4,18 +4,18 @@ import moment from "moment";
 import StarRating from "./StarRating";
 import Genres from "./Genres";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Dimensions } from "react-native";
+import { Dimensions, View } from "react-native";
 const { width, height } = Dimensions.get("screen");
 const Row = styled.View`
   flex-direction: row;
   background-color: white;
   width: 100%;
   margin-top: 5px;
+  margin-left: 3px;
   height: 200px;
 `;
 const MoviePoster = styled.Image`
-  background-color: lightblue;
-  width: ${width / 3}px;
+  height: 100%;
   border-radius: 10px;
 `;
 const MovieDetails = styled.View`
@@ -46,7 +46,12 @@ export default function MovieRow({ index, item, separators, navigation }) {
 
   return (
     <Row>
-      <MoviePoster source={{ uri: posterUrl }} />
+      <TouchableOpacity
+        onPress={() => navigation.navigate("MovieDetails", { movieId })}
+        style={{ width: width / 3, borderRadius: 10 }}
+      >
+        <MoviePoster source={{ uri: posterUrl }} />
+      </TouchableOpacity>
       <MovieDetails>
         <TouchableOpacity onPress={() => navigation.navigate("MovieDetails", { movieId })}>
           <Title>{title} </Title>

@@ -6,3 +6,5 @@ export const selectlikedMovies = (state) =>
 export const selectMovie = (movieId) => (state) => state.movies.cachedMovies[movieId];
 export const selectStagingList = (state) =>
   state.movies.staging.map((movieId) => state.movies.cachedMovies[movieId]);
+// export const selectStagingList = (listId) => (state) =>
+//   state.movies.staging[listId].map((movieId) => state.movies.cachedMovies[movieId]);

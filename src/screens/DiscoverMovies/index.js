@@ -1,12 +1,11 @@
-import { View, Text, StyleSheet, Modal, ActivityIndicator, Dimensions } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { View, ActivityIndicator, Dimensions } from "react-native";
+import React, { createRef, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 //icons
 import { Entypo } from "@expo/vector-icons";
 
 // components
-import MovieCard from "./MovieCard";
 import Button from "./LikeButton";
 import { fetchStagingList } from "../../store/staging/actions";
 import { movieDisliked, movieliked } from "../../store/socketActions";
@@ -14,81 +13,66 @@ import { selectStagingList } from "../../store/movies/selectors";
 import Container from "../../components/Container";
 import { selectMatchModal } from "../../store/movies/selectors";
 import MatchModal from "./MatchModal";
+import Title from "../../components/Title";
+import MovieStack from "./MovieStack";
 // import MovieDetails from "./MovieDetails";
 // import { useSprings, animated } from "react-spring/native";
 
-const LoadingCard = styled.View`
-  background-color: lightgrey;
-  width: 85%;
-  height: 75%;
-  border-radius: 20px;
-  align-items: center;
-  margin-top: 5%;
-`;
+const { width, height } = Dimensions.get("window");
 
 const ButtonRow = styled.View`
   flex-direction: row;
 `;
 
 export default function index({ navigation, route }) {
-  const stagingList = useSelector(selectStagingList);
-  // const [props, setSprings] = useSprings(stagingList.length, (i) => ({
-  //   x: 0,
-  //   y: i * height * -1,
-  //   scale: 1,
-  //   opacity: 1,
-  // }));
   const dispatch = useDispatch();
   const modalMovie = useSelector(selectMatchModal);
+  const stagingLists = useSelector(selectStagingList);
+  const [swipe, setSwipe] = useState({ dir: "", count: 0 });
   useEffect(() => {
     // initial list request
-    if (stagingList.length < 2) dispatch(fetchStagingList(true));
+    if (stagingLists.length < 2) dispatch(fetchStagingList(true));
   }, []);
   const handleLike = (movie) => {
     dispatch(movieliked(movie));
-    if (stagingList.length < 2) {
-      console.log("fetching more movies");
-      dispatch(fetchStagingList(false));
-    }
   };
 
   const handleDislike = (movie) => {
     dispatch(movieDisliked(movie));
-    if (stagingList.length < 2) {
-      console.log("fetching more movies");
-      dispatch(fetchStagingList(false));
+  };
+  const handleSwipe = (direction, movie) => {
+    console.log("[handleSwipe] direction:", direction);
+    switch (direction) {
+      case "RIGHT":
+        return handleLike(movie);
+      case "LEFT":
+        return handleDislike(movie);
     }
   };
 
-  if (stagingList.length > 0) {
-    // const movie = stagingList[0];
-    // what should happen when like/dislike movie?
-    // definitely not re-render the current list.
-    // How do I not rerender the list?
-    // don't remove the movie from the list in redux until all the movies of a stack have been interacted with.
-    // need two staging lists in redux. current staging list & future staging list.
-    // also don't add movies to the list (this will also cause a rerender). need a future list & a current list. maybe several current lists.
-    // once all the movies have been interacted with:
-    // unmount the first stack (don't unmount 2nd stack)
-    // add a new list of movies
-    // remount & set position to be underneath the second stack
-    const movies = stagingList.map((movie) => <MovieCard movie={movie} navigation={navigation} />);
-
+  if (stagingLists.length > 0) {
+    console.log("here");
     return (
       <Container>
-        {movies}
-        {/* <MovieCard movie={movie} navigation={navigation} /> */}
-        {/* <MovieDetails movie={movie} /> */}
+        <View style={{ width: width / 1.17, height: height / 1.26 }}>
+          <MovieStack
+            listId={0}
+            onAllSwiped={() => dispatch(fetchStagingList(false))}
+            handleSwipe={handleSwipe}
+            navigation={navigation}
+            swipe={swipe}
+          />
+        </View>
         <ButtonRow>
           <Button
             text={<Entypo name="thumbs-down" size={32} color="#f0ece3" />}
             style={{ backgroundColor: "#900d0d", borderColor: "#810000" }}
-            onPress={() => handleDislike(movie)}
+            onPress={() => setSwipe({ dir: "LEFT", count: swipe.count++ })}
           />
           <Button
             text={<Entypo name="thumbs-up" size={32} color="#f0ece3" />}
             style={{ backgroundColor: "#158467", borderColor: "#065446" }}
-            onPress={() => handleLike(movie)}
+            onPress={() => setSwipe({ dir: "RIGHT", count: swipe.count++ })}
           />
         </ButtonRow>
         {modalMovie && <MatchModal navigation={navigation} modalMovie={modalMovie} />}
@@ -96,16 +80,9 @@ export default function index({ navigation, route }) {
     );
   } else
     return (
-      <Container>
-        <LoadingCard>
-          <ActivityIndicator size="large" />
-        </LoadingCard>
+      <Container style={{ justifyContent: "center" }}>
+        <Title>Loading Movies</Title>
+        <ActivityIndicator size="large" color="blue" />
       </Container>
     );
-}
-
-function MovieStack({ movies, onAllSwiped }) {
-  const [swiped, setSwiped] = useState([]);
-
-  return movies.map((movie) => <MovieCard movie={movie} />);
 }

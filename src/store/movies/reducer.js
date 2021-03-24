@@ -16,6 +16,7 @@ const initialState = {
   liked: [], // list of movie Ids
   staging: [], // should I move staging list here?
   matchModal: null, // movie Id
+  // stagingCount: 0,
 };
 
 export default (state = initialState, action) => {
@@ -24,13 +25,13 @@ export default (state = initialState, action) => {
       const newCachedMovies = state.cachedMovies;
       const staging = action.payload.map((movie) => {
         const movieId = movie.movieId;
-        if (!newCachedMovies[movieId]) newCachedMovies[movieId] = movie;
+        newCachedMovies[movieId] = movie;
         return movieId;
       });
 
       return {
         ...state,
-        staging: [...state.staging, ...staging],
+        staging: staging,
         cachedMovies: newCachedMovies,
       };
     }
@@ -69,11 +70,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         liked: [...state.liked, action.payload],
-        staging: [...state.staging.slice(1)],
       };
     }
     case DISLIKED_MOVIE: {
-      return { ...state, staging: [...state.staging.slice(1)] };
+      return { ...state };
     }
 
     case FETCHED_MOVIE_DETAILS: {
@@ -88,7 +88,33 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case FETCHED_STAGING:
+    case LOG_OUT:
+      return initialState;
+    default:
+      return state;
+  }
+};
+
+/* FETCHED_STAGING
+      const newCachedMovies = { ...state.cachedMovies };
+      const newStagingList = action.payload.map((movie) => {
+        const movieId = movie.movieId;
+        if (!newCachedMovies[movieId]) newCachedMovies[movieId] = movie;
+        return movieId;
+      });
+      const useList = state.stagingCount % 1 ? 1 : 0;
+      const newStaging = [...state.staging];
+      newStaging[useList] = newStagingList;
+      return {
+        ...state,
+        staging: newStaging,
+        cachedMovies: newCachedMovies,
+        stagingCount: state.stagingCount + 1,
+      };
+
+*/
+
+/*     case FETCHED_STAGING:
       const newCachedMovies = state.cachedMovies;
       action.payload.forEach((movie) => {
         const movieId = movie.movieId;
@@ -96,9 +122,4 @@ export default (state = initialState, action) => {
         return movieId;
       });
       return { ...state, cachedMovies: newCachedMovies };
-    case LOG_OUT:
-      return initialState;
-    default:
-      return state;
-  }
-};
+ */
