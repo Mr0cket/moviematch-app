@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get("window");
 const AnimatedView = animated(View);
 
 const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRef) => {
-  const { movieId, posterUrl, overview, title, rating, releaseDate, mainGenre } = movie;
+  const { movieId, posterUrl, title, rating, releaseDate, mainGenre } = movie;
 
   const titleFontSize =
     title.length < 16
@@ -47,7 +47,7 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
       x: gesture.vx * multiplier,
       opacity: 0,
     });
-    await new Promise((resolve) => setTimeout(() => resolve(), 500));
+    await new Promise((resolve) => setTimeout(() => resolve(), 500))
   };
   let startTime;
   const filthyPanHandlers = useRef(
@@ -80,7 +80,7 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
         if (touchDuration < 80 && !triggered) {
           // check the length of the touch. if it is <~ 100ms, it was a tap rather than a move gesture...?
           console.log("tap detected");
-          setSpring({ x: 0, y: 0, scale: 1 });
+          setSpring({ x: 0, y: 0, scale: 1 })
           navigation.navigate("MovieDetails", { movieId });
         } else if (triggered) {
           const direction = getSwipeDirection(gestureState);
@@ -136,7 +136,6 @@ export default MovieCard;
 const styles = StyleSheet.create({
   ios: {
     shadowOffset: { width: 0, height: 10 },
-    shadowOffset: { width: 0, height: 10 },
     shadowRadius: 10,
     shadowOpacity: 0.3,
     shadowColor: "black",
@@ -157,7 +156,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "700",
-    textShadowOffset: { width: 1, height: 1 },
     textShadowOffset: { width: 1, height: 1 },
     textShadowColor: "lightgrey",
     textShadowRadius: 0.4,
