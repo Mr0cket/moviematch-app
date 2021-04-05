@@ -8,6 +8,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
+import Container from '../../components/Container'
 import { matchSorter } from "match-sorter";
 import Countries from "../../config/countries.json";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -24,47 +25,50 @@ export default function SetLocale() {
     searchLocale.name.length > 1 && matchSorter(Countries, searchLocale.name, { keys: ["name"] });
   searchPredictions.length = Math.min(searchPredictions.length, 5);
   const setNewLocale = () => {
-    dispatch(setLocale(searchLocale.code));
+    dispatch(setLocale(searchLocale.code))
     dispatch(showMessageWithTimeout("success", false, `Country set: ${searchLocale.name}`, 3000));
   };
+
   return (
-    <KeyboardAvoidingView style={styles.autocompleteContainer}>
-      <View style={{ flexDirection: "row" }}>
-        <TextInput
-          autoCompleteType="off"
-          style={styles.searchBox}
-          textContentType="none"
-          onChangeText={(value) => setSearchLocale({ name: value, code: "" })}
-          value={searchLocale.name}
-        />
-        <TouchableOpacity style={styles.setButton} onPress={setNewLocale}>
-          <Text style={{ color: "white" }}>Set country </Text>
-        </TouchableOpacity>
-      </View>
-      {searchPredictions.length > 0 && (
-        <FlatList
-          data={searchPredictions}
-          renderItem={({ item, index, separators }) => {
-            const fontWeight = index === 0 ? "700" : "500";
-            return (
-              <TouchableOpacity
-                style={styles.resultItem}
-                onShowUnderlay={separators.highlight}
-                onHideUnderlay={separators.unhighlight}
-                onPress={() => setSearchLocale(item)}
-              >
-                <Text style={{ ...styles.countryText, fontWeight }}>{item.name}</Text>
-              </TouchableOpacity>
-            );
-          }}
-          ItemSeparatorComponent={({ highlighted }) => (
-            <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
-          )}
-          keyExtractor={(item) => item.code}
-          style={styles.searchResultsContainer}
-        />
-      )}
-    </KeyboardAvoidingView>
+    <Container>
+      <KeyboardAvoidingView style={styles.autocompleteContainer}>
+        <View style={{ flexDirection: "row" }}>
+          <TextInput
+            autoCompleteType="off"
+            style={styles.searchBox}
+            textContentType="none"
+            onChangeText={(value) => setSearchLocale({ ...searchPredictions, name: value || '' })}
+            value={searchLocale.name || ''}
+          />
+          <TouchableOpacity style={styles.setButton} onPress={setNewLocale}>
+            <Text style={{ color: "white" }}>Set country </Text>
+          </TouchableOpacity>
+        </View>
+        {searchPredictions.length > 0 && (
+          <FlatList
+            data={searchPredictions}
+            renderItem={({ item, index, separators }) => {
+              const fontWeight = index === 0 ? "700" : "500";
+              return (
+                <TouchableOpacity
+                  style={styles.resultItem}
+                  onShowUnderlay={separators.highlight}
+                  onHideUnderlay={separators.unhighlight}
+                  onPress={() => setSearchLocale(item)}
+                >
+                  <Text style={{ ...styles.countryText, fontWeight }}>{item.name}</Text>
+                </TouchableOpacity>
+              );
+            }}
+            ItemSeparatorComponent={({ highlighted }) => (
+              <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
+            )}
+            keyExtractor={(item) => item.code}
+            style={styles.searchResultsContainer}
+          />
+        )}
+      </KeyboardAvoidingView>
+    </Container>
   );
 }
 const styles = StyleSheet.create({

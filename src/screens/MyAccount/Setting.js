@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler";
 
-export default function Setting({ children }) {
+export default function Setting({ onPress, children }) {
   return (
     <View style={styles.settingContainer}>
-      <TouchableOpacity onPress={() => console.log("pressed")}>
+      <TouchableOpacity onPress={onPress}>
         <Text style={styles.setting}>{children}</Text>
       </TouchableOpacity>
     </View>

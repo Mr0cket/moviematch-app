@@ -5,13 +5,11 @@ import styled from "styled-components/native";
 import { logOut } from "../../store/user/actions";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
-import Title from "../../components/Title";
 import SubTitle from "../../components/SubTitle";
-import SetLocale from "./SetLocale";
 import matchCountry from "../../lib/matchCountry";
 import { Entypo } from "@expo/vector-icons";
 import Setting from "./Setting";
-export default function MyAccount() {
+export default function MyAccount({navigation}) {
   const dispatch = useDispatch();
   const { locale, name, email } = useSelector((state) => state.user);
   const { width, height } = Dimensions.get("screen");
@@ -22,12 +20,11 @@ export default function MyAccount() {
       <SubTitle style={styles.subtitle}>Email </SubTitle>
       <Setting>{email}</Setting>
       <SubTitle style={styles.subtitle}>Country</SubTitle>
-      <Setting>
+      <Setting onPress={() => navigation.navigate("SetLocale")}>
         <Entypo name="location-pin" size={30} color="blue" />
         {matchCountry(locale) || "not set"} {locale && `(${locale})`}
       </Setting>
       <SubTitle style={styles.subtitle}>Change Country</SubTitle>
-      <SetLocale />
       <Button
         style={{ backgroundColor: "rgb(245, 201, 72)", marginTop: height / 4.5 }}
         onPress={() => dispatch(logOut())}

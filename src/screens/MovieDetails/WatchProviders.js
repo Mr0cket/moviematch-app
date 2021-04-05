@@ -17,7 +17,7 @@ export default function WatchProviders({ watchProviders, navigation }) {
         <Button
           style={{ backgroundColor: "blue" }}
           text={"Set Country"}
-          onPress={() => navigation.navigate("Account")}
+          onPress={() => navigation.navigate("SetLocale")} //Account
         />
       </>
     );
