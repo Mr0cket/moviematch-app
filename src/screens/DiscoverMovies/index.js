@@ -27,12 +27,14 @@ const ButtonRow = styled.View`
 export default function index({ navigation, route }) {
   const dispatch = useDispatch();
   const modalMovie = useSelector(selectMatchModal);
-  const stagingLists = useSelector(selectStagingList);
+  const stagingLists = useSelector(selectStagingList, (prevList, CurrList) => JSON.stringify(prevList) === JSON.stringify(CurrList));
   const [swipe, setSwipe] = useState({ dir: "", count: 0 });
+  const [isMounted, setMounted] = useState(false)
   useEffect(() => {
     // initial list request
-    if (stagingLists.length < 2) dispatch(fetchStagingList(true));
-  }, []);
+    if (stagingLists.length < 2) dispatch(fetchStagingList(true))
+    else setMounted(true)
+  }, [stagingLists]);
   const handleLike = (movie) => {
     dispatch(movieliked(movie));
   };
@@ -49,19 +51,24 @@ export default function index({ navigation, route }) {
         return handleDislike(movie);
     }
   };
+  const onAllSwiped = () => {
+    setMounted(false)
+    dispatch(fetchStagingList(false))
+  }
 
   if (stagingLists.length > 0) {
     console.log("here");
     return (
       <Container>
         <View style={{ width: width / 1.17, height: height / 1.26 }}>
-          <MovieStack
-            listId={0}
-            onAllSwiped={() => dispatch(fetchStagingList(false))}
-            handleSwipe={handleSwipe}
-            navigation={navigation}
-            swipe={swipe}
-          />
+          {isMounted &&
+            <MovieStack
+              listId={0}
+              onAllSwiped={onAllSwiped}
+              handleSwipe={handleSwipe}
+              navigation={navigation}
+              swipe={swipe}
+            />}
         </View>
         <ButtonRow>
           <Button
