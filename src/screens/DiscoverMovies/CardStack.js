@@ -16,21 +16,12 @@ const to = (i) => ({
 const AnimatedView = animated(View)
 
 function Stack ({ listId, stagingList, onAllSwiped, onSwipe, navigation }, parentRef) {
-  const [swiped] = useState(() => new Set())
+  const [swiped] = useState(new Set())
   const [interaction] = useState(new InteractionHandle())
   const [props, setSprings] = useSprings(stagingList.length, (i) => ({
     to: to(i),
     onRest: () => interaction.clearAnimation(i)
   }))
-  console.log('swiped', swiped.size)
-  useEffect(() => {
-    if (swiped.size === stagingList.length) {
-      interaction.runAfterAnimation(onAllSwiped())
-      return () => {
-        swiped.clear()
-      }
-    }
-  })
 
   const getCurrentItem = () => stagingList[stagingList.length - swiped.size - 1]
 
@@ -38,16 +29,16 @@ function Stack ({ listId, stagingList, onAllSwiped, onSwipe, navigation }, paren
     const movie = getCurrentItem()
     const dir = direction
     swiped.add(movie.movieId)
+    console.log(swiped)
     interaction.runAfterAnimation(() => {
       onSwipe(dir, movie)
     })
+    if (swiped.size === stagingList.length) {
+      interaction.runAfterAll(onAllSwiped)
+    }
   }
 
-  const handlePress = (index) => {
-    navigation.navigate('MovieDetails', {
-      movieId: stagingList[index].movieId
-    })
-  }
+  const handlePress = (movieId) => navigation.navigate('MovieDetails', { movieId })
 
   React.useImperativeHandle(parentRef, () => ({
     imperativeSwipe (direction = 'RIGHT') {
@@ -62,7 +53,7 @@ function Stack ({ listId, stagingList, onAllSwiped, onSwipe, navigation }, paren
   }))
 
   return props.map(({ x, y, rot, scale, opacity }, i) => {
-    const handle = useRef(PanResponder.create(configResponder(i, setSprings, handleSwipe, handlePress, interaction)))
+    const handle = useRef(PanResponder.create(configResponder(i, setSprings, handleSwipe, interaction)))
     return (
       <View key={stagingList[i].movieId} style={{ position: 'absolute' }}>
         <AnimatedView
@@ -76,7 +67,7 @@ function Stack ({ listId, stagingList, onAllSwiped, onSwipe, navigation }, paren
             ]
           }}
         >
-          <MovieCard poster={stagingList[i].posterUrl} />
+          <MovieCard poster={stagingList[i].posterUrl} handlePress={handlePress} movieId={stagingList[i].movieId} />
         </AnimatedView>
         <AnimatedView style={{ opacity }}>
           <MovieDetails movie={stagingList[i]} />

@@ -88,7 +88,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case CLEAR_STAGING: return { ...state, staging: [] }
+    case CLEAR_STAGING: return { ...state, staging: [state.staging[0]] }
     case LOG_OUT:
       return initialState;
     default:

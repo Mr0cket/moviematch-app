@@ -7,7 +7,7 @@ import { Entypo } from '@expo/vector-icons'
 
 // components
 import Button from './LikeButton'
-import { clearStagingList, fetchStagingList } from '../../store/staging/actions'
+import { fetchStagingList } from '../../store/staging/actions'
 import { movieDisliked, movieliked } from '../../store/socketActions'
 import Container from '../../components/Container'
 import { selectMatchModal, selectStagingList } from '../../store/movies/selectors'
@@ -24,7 +24,7 @@ const ButtonRow = styled.View`
 export default function index ({ navigation, route }) {
   const dispatch = useDispatch()
   const modalMovie = useSelector(selectMatchModal)
-  const stagingList = useSelector(selectStagingList)
+  const stagingList = useSelector(selectStagingList, (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
   const [isMounted, setMounted] = useState(false)
   const mountStack = (id) => setMounted(true)
   const unmountStack = (id) => setMounted(false)
@@ -34,10 +34,9 @@ export default function index ({ navigation, route }) {
   }
   useEffect(
     () => {
-      // initial list request
       if (stagingList.length < 2) dispatch(fetchStagingList(true))
       else mountStack(0)
-    }, [stagingList])
+    }, [stagingList, isMounted])
 
   const handleDislike = (movie) => {
     dispatch(movieDisliked(movie))
@@ -52,13 +51,14 @@ export default function index ({ navigation, route }) {
     }
   }
   const handleAllSwiped = (listId) => {
-    console.log('onAllSwiped, list:')
+    console.log('onAllSwiped called')
     unmountStack(listId)
-    dispatch(clearStagingList)
+    dispatch(fetchStagingList(false))
   }
 
   const stack = createRef()
   if (stagingList.length > 0) {
+    console.log(`stack is ${isMounted ? '' : 'un'}mounted`)
     return (
       <Container>
         <View style={{ width: width / 1.17, height: height / 1.26 }}>

@@ -1,5 +1,5 @@
 import animateOut from "./animateOut";
-export default function interactionGestures(index, setSprings, onSwipe, onPress, interaction) {
+export default function interactionGestures(index, setSprings, onSwipe, interaction) {
   let start = 0;
   return {
     onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -34,9 +34,9 @@ export default function interactionGestures(index, setSprings, onSwipe, onPress,
       if (touchDuration < 80 && !gone) {
         // check the length of the touch. if it is <~ 80ms,
         // it was a tap rather than a move gesture...?
-        console.log("tap detected")
+        // console.log("tap detected")
         setSprings((i) => (index !== i ? null : { x: 0, y: 0, scale: 1 }))
-        onPress(index)
+        // onPress(index)
       } else if (triggered) {
         console.log("swipe detected");
         animateOut(index, gestureState, setSprings);
