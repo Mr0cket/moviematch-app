@@ -2,6 +2,7 @@ import axios from "axios";
 import { apiUrl } from "../../config/constants";
 import { appDoneLoading, appLoading } from "../appState/actions";
 export const FETCHED_STAGING = "FETCHED_STAGING";
+export const CLEAR_STAGING = "CLEAR_STAGING";
 
 export const newStagingList = (movieList) => ({
   type: FETCHED_STAGING,
@@ -12,7 +13,7 @@ export const fetchStagingList = (initialLoad) => async (dispatch, getState) => {
   // get user token
   const { token } = getState().user;
   try {
-    dispatch(appLoading("staging"));
+    // dispatch(appLoading("staging"));
     const response = await axios.get(`${apiUrl}/stagingList`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -20,8 +21,12 @@ export const fetchStagingList = (initialLoad) => async (dispatch, getState) => {
     });
 
     dispatch(newStagingList(response.data));
-    dispatch(appDoneLoading());
+    // dispatch(appDoneLoading());
   } catch (error) {
     console.log("staging list err", error);
   }
 };
+
+export const clearStagingList = {
+  type: CLEAR_STAGING
+}

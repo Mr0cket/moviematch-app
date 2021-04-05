@@ -1,7 +1,10 @@
+import moment from "moment";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Genres from "../../components/Genres";
 import StarRating from "../../components/StarRating";
+
+const { width, height } = Dimensions.get("window");
 
 export default function MovieDetails({ movie }) {
   const { title, rating, releaseDate, mainGenre } = movie;
@@ -17,7 +20,7 @@ export default function MovieDetails({ movie }) {
       ? 20
       : 16;
   return (
-    <AnimatedView style={[styles.details, { opacity }]}>
+    <View style={styles.details}>
       <View style={{ flexDirection: "row" }}>
         <Text style={{ ...styles.title, fontSize: titleFontSize }}>{title + "  "} </Text>
         <Text style={styles.year}>
@@ -26,27 +29,10 @@ export default function MovieDetails({ movie }) {
       </View>
       <StarRating size={25} rating={rating} />
       <Genres genreList={mainGenre} />
-    </AnimatedView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
-  ios: {
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 10,
-    shadowOpacity: 0.3,
-    shadowColor: "black",
-    borderRadius: 15,
-  },
-  android: {
-    elevation: 21,
-    borderRadius: 15,
-    overflow: "hidden",
-  },
-  poster: {
-    resizeMode: "contain",
-    width: 352,
-    height: 528,
-  },
   title: {
     fontWeight: "700",
     textShadowOffset: { width: 1, height: 1 },
@@ -54,11 +40,12 @@ const styles = StyleSheet.create({
     textShadowRadius: 0.4,
   },
   details: {
-    width: "80%",
+    width: "100%",
     justifyContent: "flex-start",
-    marginTop: "2%",
-    marginLeft: 25,
-    marginRight: 25,
+    marginTop: height / 33,
+    backgroundColor: "rgb(242, 242, 242)",
+    height: height / 7.9,
+    overflow: "hidden",
   },
   year: {
     fontSize: 18,

@@ -1,4 +1,4 @@
-import { FETCHED_STAGING } from "../staging/actions";
+import { CLEAR_STAGING, FETCHED_STAGING } from "../staging/actions";
 import { LOG_OUT } from "../user/actions";
 import {
   FETCHED_LIKED_MOVIES,
@@ -88,6 +88,7 @@ export default (state = initialState, action) => {
         },
       };
     }
+    case CLEAR_STAGING: return { ...state, staging: [] }
     case LOG_OUT:
       return initialState;
     default:
