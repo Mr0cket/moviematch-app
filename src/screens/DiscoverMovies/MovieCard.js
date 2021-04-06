@@ -45,10 +45,11 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
     const multiplier = width * 2;
     setSpring({
       x: gesture.vx * multiplier,
-      opacity: 0,
-    });
+      opacity: 0
+    })
     await new Promise((resolve) => setTimeout(() => resolve(), 500))
-  };
+  }
+
   let startTime;
   const filthyPanHandlers = useRef(
     PanResponder.create({
@@ -90,17 +91,18 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
           // animate the card back to the starting position
           setSpring({ x: 0, y: 0, scale: 1, opacity: 1 });
         }
-      },
+      }
     })
-  ).current;
+  ).current
 
   React.useImperativeHandle(parentRef, () => ({
-    async swipe(dir = "RIGHT") {
-      const power = 2;
-      const sign = dir === "RIGHT" ? 1 : -1;
-      animateOut({ vx: power * sign });
-    },
-  }));
+    async swipe (dir = "RIGHT") {
+      const power = 2
+      const sign = dir === "RIGHT" ? 1 : -1
+      await animateOut({ vx: power * sign })
+      handleSwipe(dir, movie)
+    }
+  }))
 
   return (
     <View style={styles.cardContainer}>
@@ -129,8 +131,8 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
         <Genres genreList={mainGenre} />
       </AnimatedView>
     </View>
-  );
-});
+  )
+})
 
 export default MovieCard;
 const styles = StyleSheet.create({
@@ -164,8 +166,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-start",
     marginTop: height / 33,
-    // marginLeft: 25,
-    // marginRight: 25,
     backgroundColor: "rgb(242, 242, 242)",
     height: height / 7.9,
     overflow: "hidden",
