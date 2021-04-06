@@ -4,7 +4,7 @@ import moment from "moment";
 import StarRating from "./StarRating";
 import Genres from "./Genres";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Dimensions, View } from "react-native";
+import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("screen");
 const Row = styled.View`
   flex-direction: row;
@@ -41,13 +41,14 @@ const Rating = styled.Text`
   /* align-self: flex-start; */
 `;
 
-export default function MovieRow({ index, item, separators, navigation }) {
-  const { posterUrl, title, releaseDate, rating, mainGenre, overview, movieId } = item;
-
+function ItemRow ({ index, item, separators, navigation }) {
+  const { posterUrl, title, releaseDate, rating, mainGenre, overview, movieId } = item
+  console.log(index, title, 'rendered')
+  const NavigateToDetails = () => navigation.navigate("MovieDetails", { movieId })
   return (
     <Row>
       <TouchableOpacity
-        onPress={() => navigation.navigate("MovieDetails", { movieId })}
+        onPress={NavigateToDetails}
         style={{ width: width / 3, borderRadius: 10 }}
       >
         <MoviePoster source={{ uri: posterUrl }} />
@@ -65,5 +66,7 @@ export default function MovieRow({ index, item, separators, navigation }) {
         </Description>
       </MovieDetails>
     </Row>
-  );
+  )
 }
+const MovieRow = React.memo(ItemRow)
+export default MovieRow
