@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, RefreshControl } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieList } from "../../store/movies/actions";
 import { selectlikedMovies } from "../../store/movies/selectors";
@@ -12,12 +12,13 @@ export default function LikedMovies({ navigation }) {
   const dispatch = useDispatch();
   const likedMovies = useSelector(selectlikedMovies);
   const loading = useSelector(appLoading);
-
+  const fetchMovies = () => dispatch(fetchMovieList("liked"))
   useEffect(() => {
     // initial list request
-    if (likedMovies.length < 1) dispatch(fetchMovieList("liked"));
-  }, []);
-
+    if (likedMovies.length < 1) fetchMovies()
+  }, [])
+  const RenderItem = (props) => <MovieRow {...props} navigation={navigation} />
+  const keyExtractor = (item) => item.id.toString()
   // const moviesLimitedLoad = navigation.isFocused() ? likedMovies : likedMovies.slice(0, 10);
   return (
     <FlatList
@@ -29,19 +30,13 @@ export default function LikedMovies({ navigation }) {
         </>
       }
       data={likedMovies}
-      renderItem={(props) => MovieRow({ ...props, navigation })}
+      renderItem={RenderItem}
       initialNumToRender={4}
-      removeClippedSubviews={true}
-      keyExtractor={(item) => item.id.toString()}
+      removeClippedSubviews
+      keyExtractor={keyExtractor}
       refreshControl={
-        <RefreshControl refreshing={loading} onRefresh={() => dispatch(fetchMovieList("liked"))} />
+        <RefreshControl refreshing={loading} onRefresh={fetchMovies} />
       }
     />
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: "#d4d4f7",
-  },
-});
