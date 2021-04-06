@@ -12,7 +12,6 @@ export const fetchStagingList = (initialLoad) => async (dispatch, getState) => {
   // get user token
   const { token } = getState().user;
   try {
-    dispatch(appLoading("staging"));
     const response = await axios.get(`${apiUrl}/stagingList`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -20,7 +19,6 @@ export const fetchStagingList = (initialLoad) => async (dispatch, getState) => {
     });
 
     dispatch(newStagingList(response.data));
-    dispatch(appDoneLoading());
   } catch (error) {
     console.log("staging list err", error);
   }
