@@ -35,7 +35,6 @@ function Stack ({ stagingList, onAllSwiped, handleSwipe, navigation }, parentRef
       key={movie.id}
       navigation={navigation}
       handleSwipe={onSwipe}
-      // startInteraction={() => interaction}
     />
   ))
 }
