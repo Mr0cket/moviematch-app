@@ -1,13 +1,19 @@
-import React from 'react'
-import { View, StyleSheet, ActivityIndicator, Modal } from 'react-native'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, ActivityIndicator, Modal, Pressable } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { appDoneLoading } from '../store/appState/actions'
 import { appLoading, selectMessage } from '../store/appState/selectors'
 
 export default function Container ({ children, style }) {
+  const dispatch = useDispatch()
   const message = useSelector(selectMessage)
   const loading = useSelector(appLoading)
-  const backgroundColor = message && message.variant === 'success' ? 'green' : 'red'
+  const backgroundColor = message === null ? null : message.variant === 'success' ? 'green' : 'red'
+  const [responsive, setResponsive] = useState(false)
+  useEffect(() => {
+    setResponsive(false)
+  }, [loading])
   if (message) console.log(`App message: ${message.text}`)
 
   return (
@@ -16,10 +22,12 @@ export default function Container ({ children, style }) {
         <MessageText>{message && message.text}</MessageText>
       </MessageBox>
       {children}
-      <Modal visible={loading} animationType='fade' transparent>
-        <View style={styles.centeredView}>
-          <ActivityIndicator style={styles.modalView} color='grey' size='large' />
-        </View>
+      <Modal visible={!responsive && loading} onRequestClose={() => dispatch(appDoneLoading())} animationType='fade' transparent>
+        <Pressable onPress={() => setResponsive(true)}>
+          <View style={styles.centeredView}>
+            <ActivityIndicator style={styles.modalView} color='grey' size='large' />
+          </View>
+        </Pressable>
       </Modal>
     </View>
   )

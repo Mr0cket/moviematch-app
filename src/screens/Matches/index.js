@@ -19,6 +19,10 @@ export default function Matches({ navigation }) {
     if (matches.length < 1) dispatch(fetchMovieList("matches"));
   }, []);
 
+  const navigate = (movieId) => navigation.navigate('MovieDetails', { movieId })
+  const RenderItem = (props) => <MovieRow {...props} navigate={navigate} />
+  const keyExtractor = (item) => item.id.toString()
+
   // const matchesList = matches.map((movie) => <MovieRow key={movie.id} movie={movie} />);
   // const matchesWeakload = navigation.isFocused() ? matches : matches.slice(0, 10);
   return (
@@ -31,15 +35,15 @@ export default function Matches({ navigation }) {
         </>
       }
       data={matches}
-      renderItem={(props) => MovieRow({ ...props, navigation })}
-      keyExtractor={(item) => item.id.toString()}
+      renderItem={RenderItem}
+      keyExtractor={keyExtractor}
       refreshControl={
         <RefreshControl
           refreshing={loading}
           onRefresh={() => dispatch(fetchMovieList("matches"))}
         />
       }
-    ></FlatList>
+    />
   );
 
   /* return (

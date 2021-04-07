@@ -41,10 +41,10 @@ const Rating = styled.Text`
   /* align-self: flex-start; */
 `;
 
-function ItemRow ({ index, item, separators, navigation }) {
+function ItemRow ({ index, item, separators, navigate }) {
   const { posterUrl, title, releaseDate, rating, mainGenre, overview, movieId } = item
   console.log(index, title, 'rendered')
-  const NavigateToDetails = () => navigation.navigate("MovieDetails", { movieId })
+  const NavigateToDetails = () => navigate(movieId)
   return (
     <Row>
       <TouchableOpacity
@@ -54,7 +54,7 @@ function ItemRow ({ index, item, separators, navigation }) {
         <MoviePoster source={{ uri: posterUrl }} />
       </TouchableOpacity>
       <MovieDetails>
-        <TouchableOpacity onPress={() => navigation.navigate("MovieDetails", { movieId })}>
+        <TouchableOpacity onPress={NavigateToDetails}>
           <Title>{title} </Title>
         </TouchableOpacity>
         <Rating>{moment(releaseDate).format("MMM YYYY")} </Rating>
