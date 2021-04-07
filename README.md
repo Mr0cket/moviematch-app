@@ -15,7 +15,7 @@ I started coding in 2020 this is my portfolio assignment to build an MVP over a 
 
 My idea with this app was to make a fun game to help friends and partners decide what movies to watch.
 
-I use several key technologies to buid this app:
+app stack:
 
 - [React Native](https://reactnative.dev/) - A framework for building native react apps.
 - [Socket.IO](https://socket.io/) () - A solution for real time bi-directional communcation (server <=> client) using the WebSocket protocol. This allows user clients to interact with each other without needing the client to constantly check for updates.
