@@ -15,7 +15,7 @@ const pythagoras = (x, y) => {
   return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
 }
 
-const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRef) => {
+const MovieCard = React.forwardRef(({ index, movie, navigation, handleSwipe }, parentRef) => {
   const { movieId, posterUrl, title, rating, releaseDate, mainGenre } = movie
 
   const titleFontSize =
@@ -28,7 +28,8 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
           : title.length < 32
             ? 20
             : 16
-
+  const fromX = (Math.random() - 0.5) * 800
+  console.log('from x', fromX)
   const [{ x, y, scale, opacity }, setSpring] = useSpring(() => ({
     to: {
       x: 0,
@@ -37,11 +38,12 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
       opacity: 1
     },
     from: {
-      x: 0,
-      scale: 1.5,
+      x: fromX,
+      scale: 0.5,
       y: -1000,
       opacity: 0
-    }
+    },
+    delay: index * 200 + 100
   }))
   const animateOut = async (gesture, isTriggered) => {
     // swipe triggered, animate card out in the direction specified
@@ -91,7 +93,7 @@ const MovieCard = React.forwardRef(({ movie, navigation, handleSwipe }, parentRe
         console.log(touchDuration)
         const fastSwiped = (touchDuration < 80 && Math.abs(gestureState.dx) > 60)
         if (touchDuration < 80 && !fastSwiped) {
-          // check the length of the touch. if it is <~ 100ms, it was a tap rather than a move gesture...?
+          // check the length of the touch. if it is <~ 100ms, it was a tap rather than a move gesture...
           console.log('tap detected')
           console.log('dx', gestureState.dx)
           setSpring({ x: 0, y: 0, scale: 1 })

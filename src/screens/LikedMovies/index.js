@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { FlatList, RefreshControl } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchMovieList } from '../../store/movies/actions'
@@ -29,7 +29,7 @@ export default function LikedMovies ({ navigation }) {
       removeClippedSubviews
       keyExtractor={keyExtractor}
       refreshControl={
-        <RefreshControl refreshing={loading} onRefresh={fetchMovies} />
+        <RefreshControl refreshing={loading} onRefresh={() => fetchMovies('liked')} />
       }
     />
   )

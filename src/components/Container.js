@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   centeredView: {
+    backgroundColor: 'blue',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

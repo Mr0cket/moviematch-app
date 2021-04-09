@@ -9,7 +9,7 @@ import {
 } from "./actions";
 
 const initialState = {
-  token: null, //getToken(), // This might be a problem
+  token: null,
   name: null,
   email: null,
   party: [], // list of members in your party
@@ -18,7 +18,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      AsyncStorage.setItem("token", action.payload.token);
+      AsyncStorage.setItem("token", action.payload.token)
       return { ...state, ...action.payload };
 
     case LOG_OUT:

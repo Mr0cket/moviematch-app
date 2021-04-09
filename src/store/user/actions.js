@@ -101,9 +101,8 @@ export const getUserWithStoredToken = (token) => {
     // get token from the state
 
     // if we have no token, stop
-    if (!token) return;
+    if (!token) return null
 
-    dispatch(appLoading("user"));
     try {
       // if we do have a token,
       // check wether it is still valid or if it is expired
@@ -113,7 +112,6 @@ export const getUserWithStoredToken = (token) => {
 
       // token is still valid
       dispatch(tokenStillValid({ ...response.data, token }));
-      dispatch(appDoneLoading());
     } catch (error) {
       console.log("got here");
 
@@ -124,8 +122,7 @@ export const getUserWithStoredToken = (token) => {
       }
       // if we get a 4xx or 5xx response,
       // get rid of the token by logging out
-      dispatch(logOut());
-      dispatch(appDoneLoading());
+      dispatch(logOut())
     }
   };
 };

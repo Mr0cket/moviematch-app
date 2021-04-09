@@ -51,6 +51,7 @@ export const sendMovieLiked = () => {}
 
 export const fetchMovieList = (type) => async (dispatch, getState) => {
   const token = getState().user.token
+  if (!token) return
   try {
     const response = await axios.get(`${apiUrl}/movies/${type}`, {
       headers: { Authorization: `Bearer ${token}` }

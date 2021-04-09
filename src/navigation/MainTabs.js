@@ -19,7 +19,7 @@ import LikedMovies from "../screens/LikedMovies";
 
 const MainTabs = createMaterialTopTabNavigator();
 
-export default function MainTabsNavigator({ userToken }) {
+export default function MainTabsNavigator({ userToken, onLayoutReady }) {
   useEffect(() => {
     initSocket();
   }, []);
@@ -37,7 +37,7 @@ export default function MainTabsNavigator({ userToken }) {
         activeTintColor: "blue",
         inactiveTintColor: "black",
         showIcon: true,
-        showLabel: false,
+        showLabel: false
       }}
       style={{ paddingTop: Constants.statusBarHeight }}
     >
@@ -46,12 +46,10 @@ export default function MainTabsNavigator({ userToken }) {
         component={AccountNavigator}
         options={{
           tabBarIcon: ({ focused, color }) =>
-            focused ? (
-              <Ionicons name="person-circle-sharp" size={24} color="black" />
-            ) : (
-              <Ionicons name="person-circle-outline" size={24} color="black" />
-            ),
-          swipeEnabled: false,
+            focused
+              ? <Ionicons name="person-circle-sharp" size={24} color="black" />
+              : <Ionicons name="person-circle-outline" size={24} color="black" />,
+          swipeEnabled: true
         }}
       />
       <MainTabs.Screen
@@ -59,13 +57,9 @@ export default function MainTabsNavigator({ userToken }) {
         component={DiscoverMovies}
         options={{
           tabBarIcon: ({ focused, color }) =>
-            focused ? (
-              <AntDesign name="find" size={24} color="black" />
-            ) : (
-              // <MaterialCommunityIcons name="movie-search" size={24} color="black" />
-              <AntDesign name="find" size={24} color="black" />
-              // <MaterialCommunityIcons name="movie-search-outline" size={24} color="black" />
-            ),
+            focused
+              ? <AntDesign name="find" size={24} color="black" />
+              : <AntDesign name="find" size={24} color="black" />
         }}
       />
       <MainTabs.Screen
@@ -77,7 +71,7 @@ export default function MainTabsNavigator({ userToken }) {
               <MaterialIcons name="video-library" size={24} color="black" />
             ) : (
               <MaterialIcons name="video-library" size={24} color="black" />
-            ),
+            )
         }}
       />
       <MainTabs.Screen

@@ -1,23 +1,22 @@
-import React, { useEffect } from "react";
-import { FlatList, View, Text, ActivityIndicator, RefreshControl } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import Container from "../../components/Container";
-import { fetchMovieList } from "../../store/movies/actions";
-import { selectMatches } from "../../store/movies/selectors";
-import MovieRow from "../../components/MovieRow";
-import { appLoading } from "../../store/appState/selectors";
-import Title from "../../components/Title";
-import SubTitle from "../../components/SubTitle";
+import React, { useEffect } from 'react'
+import { FlatList, RefreshControl } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchMovieList } from '../../store/movies/actions'
+import { selectMatches } from '../../store/movies/selectors'
+import MovieRow from '../../components/MovieRow'
+import { appLoading } from '../../store/appState/selectors'
+import Title from '../../components/Title'
+import SubTitle from '../../components/SubTitle'
 
-export default function Matches({ navigation }) {
-  const dispatch = useDispatch();
-  const matches = useSelector(selectMatches);
-  const loading = useSelector(appLoading);
+export default function Matches ({ navigation }) {
+  const dispatch = useDispatch()
+  const matches = useSelector(selectMatches)
+  const loading = useSelector(appLoading)
 
   useEffect(() => {
     // initial list request
-    if (matches.length < 1) dispatch(fetchMovieList("matches"));
-  }, []);
+    if (matches.length < 1) dispatch(fetchMovieList('matches'))
+  }, [])
 
   const navigate = (movieId) => navigation.navigate('MovieDetails', { movieId })
   const RenderItem = (props) => <MovieRow {...props} navigate={navigate} />
@@ -40,11 +39,11 @@ export default function Matches({ navigation }) {
       refreshControl={
         <RefreshControl
           refreshing={loading}
-          onRefresh={() => dispatch(fetchMovieList("matches"))}
+          onRefresh={() => dispatch(fetchMovieList('matches'))}
         />
       }
     />
-  );
+  )
 
   /* return (
     <Container>

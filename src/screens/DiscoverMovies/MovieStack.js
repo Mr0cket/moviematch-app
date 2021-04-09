@@ -1,10 +1,10 @@
-import React, { createRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import React, { createRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useState } from "react";
 import MovieCard from "./MovieCard";
 
 function Stack ({ stagingList, onAllSwiped, handleSwipe, navigation }, parentRef) {
   const [swiped] = useState(() => new Set())
   // const [interaction] = useState(new InteractionHandle())
-  // const stagingList = useSelector(selectStagingList);
+  const [delayed, setDelayed] = useState(true)
   const onSwipe = (direction, movie) => {
     swiped.add(movie.id)
     handleSwipe(direction, movie)
@@ -14,6 +14,9 @@ function Stack ({ stagingList, onAllSwiped, handleSwipe, navigation }, parentRef
       swiped.clear()
     }
   }
+  useLayoutEffect(() => {
+    setTimeout(() => setDelayed(false), 800)
+  }, [])
   const childRefs = useMemo(() =>
     Array.from({ length: stagingList.length }).map((_) => createRef(), [])
   )
@@ -27,9 +30,10 @@ function Stack ({ stagingList, onAllSwiped, handleSwipe, navigation }, parentRef
         childRefs[index].current.swipe(dir)
       }
     }))
-
+  if (delayed) return null
   return stagingList.map((movie, i) => (
     <MovieCard
+      index={i}
       movie={movie}
       ref={childRefs[i]}
       key={movie.id}
